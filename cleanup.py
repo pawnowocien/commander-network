@@ -1,13 +1,13 @@
 import pandas as pd
 from consts import SKIP_INCLUDING, EXTRACT_INCLUDING
 
-def create_diff_csv(larger_file: str = "data/download_all.csv", 
-                    smaller_file: str = "data/download_filter.csv", 
-                    output_file: str = "data/download_diff.csv",
+def create_diff_csv(larger_filename: str = "data/download_all.csv", 
+                    smaller_filename: str = "data/download_filter.csv", 
+                    output_filename: str = "data/download_diff.csv",
                     skip_including: list[str] = SKIP_INCLUDING,
                     extract_including: list[str] = EXTRACT_INCLUDING):
-    larger_file = pd.read_csv(larger_file)
-    smaller_file = pd.read_csv(smaller_file)
+    larger_file = pd.read_csv(larger_filename)
+    smaller_file = pd.read_csv(smaller_filename)
 
     ids_larger = set(larger_file['pageid'])
     ids_smaller = set(smaller_file['pageid'])
@@ -24,7 +24,7 @@ def create_diff_csv(larger_file: str = "data/download_all.csv",
 
     len_dropped = len_before - len(diff_df)
     print(f"Dropped {len_dropped} rows")
-    diff_df.to_csv(output_file, index=False)
+    diff_df.to_csv(output_filename, index=False)
 
 def print_titles_and_links(file: str = "data/download_diff.csv", just_links: bool = False):
     def make_link(title: str) -> str:

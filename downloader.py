@@ -1,4 +1,3 @@
-import wikipediaapi
 import os
 import time
 from consts import USER_AGENT, WAIT_REQUEST_SEC
@@ -7,12 +6,14 @@ import logging
 import datetime
 
 def setup_logging():
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
     exact_date = datetime.datetime.now()
-    filename = f"wiki_download_{exact_date.strftime('%Y-%m-%d_%H-%M-%S')}.log"
+    path = f"logs/wiki_download_{exact_date.strftime('%Y-%m-%d_%H-%M-%S')}.log"
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
-        filename=filename,
+        filename=path,
         filemode='w'
     )
 
@@ -33,11 +34,14 @@ DEFAULT_PARAMS = {
 }
 
 
-def download_pages(titles: list[str], output_dir="data/wiki_pages"):
-    for title in titles:
+def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
+    for i, title in enumerate(titles):
+        print(f"{i}/{len(titles)}")
+        
         if is_saved(output_dir, title):
             logging.warning(f"Page '{title}' already downloaded. Skipping.")
             continue
+
         download_page(title, output_dir)
         time.sleep(WAIT_REQUEST_SEC)
 
@@ -45,7 +49,7 @@ def is_saved(output_dir: str, title: str) -> bool:
     path = os.path.join(output_dir, f"{title}.txt")
     return os.path.exists(path)
     
-def download_page(title: str, output_dir="data/wiki_pages"):
+def download_page(title: str, output_dir="data/wiki_pages") -> None:
     params = {
         **DEFAULT_PARAMS,
         "titles": title
@@ -55,28 +59,25 @@ def download_page(title: str, output_dir="data/wiki_pages"):
 
     try:
         page = data['query']['pages'][0]
-        if "missing" in page: return False
+        if "missing" in page:
+            return
         
         wikitext = page['revisions'][0]['slots']['main']['content']
     except (KeyError, IndexError) as e: 
         logging.error(f"Error processing page '{title}': {e}")
-        return False
+        return
     
-    return save_nonexistent(output_dir, title, wikitext)
+    save_overwrite(output_dir, title, wikitext)
 
-def save_nonexistent(output_dir: str, title: str, wikitext: str):
+def save_overwrite(output_dir: str, title: str, wikitext: str) -> None:
     path = os.path.join(output_dir, f"{title}.txt")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    elif os.path.exists(path):
-        logging.warning(f"Page '{title}' already downloaded. Skipping.")
-        return False
 
     with open(path, "w", encoding="utf-8") as f:
         f.write(wikitext)
     logging.info(f"Downloaded '{title}' to '{path}'")
-    return True
 
 
 def get_titles_from_csv(file: str = "data/download_combined.csv") -> list[str]:
