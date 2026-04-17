@@ -3,22 +3,9 @@ import time
 from consts import USER_AGENT, WAIT_REQUEST_SEC
 import requests
 import logging
-import datetime
+from log_utils import setup_logging_download
 
-def setup_logging():
-    if not os.path.exists("logs"):
-        os.makedirs("logs")
-    exact_date = datetime.datetime.now()
-    path = f"logs/wiki_download_{exact_date.strftime('%Y-%m-%d_%H-%M-%S')}.log"
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        filename=path,
-        filemode='w'
-    )
-
-setup_logging()
-
+setup_logging_download()
 
 WIKI_API_URL = "https://en.wikipedia.org/w/api.php"
 HEADERS = {
