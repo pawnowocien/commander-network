@@ -5,6 +5,8 @@ import requests
 import logging
 import datetime
 
+from utils import page_title_to_filename
+
 def setup_logging():
     if not os.path.exists("logs"):
         os.makedirs("logs")
@@ -70,7 +72,7 @@ def download_page(title: str, output_dir="data/wiki_pages") -> None:
     save_overwrite(output_dir, title, wikitext)
 
 def save_overwrite(output_dir: str, title: str, wikitext: str) -> None:
-    path = os.path.join(output_dir, f"{title}.txt")
+    path = os.path.join(output_dir, f"{page_title_to_filename(title)}.txt")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
