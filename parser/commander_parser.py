@@ -1,146 +1,10 @@
-import logging
-import os
-
 import mwparserfromhell as mwp
-from consts import BR_NAMES, FILES_TO_SKIP, FLAG_ICON_TEMPLATE_NAMES, INFOBOX_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES
-from dataclasses import dataclass
-from log_utils import setup_logging_parse
-import test_objects
-from utils import get_all_wiki_files
-from enum import Enum
-
-setup_logging_parse()
-
-@dataclass
-class InvalidParse:
-    def __str__(self) -> str:
-        return "Invalid parse"
-
-@dataclass
-class Country:
-    name: str
-
-    def __str__(self) -> str:
-        return self.name
-
-@dataclass 
-class Commander:
-    name: str
-    allegiance: Country | None
-
-    def __str__(self) -> str:
-        if self.allegiance:
-            return f"{self.name} ({self.allegiance.name})"
-        return self.name
-
-@dataclass
-class Battle:
-    name: str | InvalidParse
-    side1Countries: list[Country] | InvalidParse
-    side2Countries: list[Country] | InvalidParse
-
-    side1Commanders: list[Commander] | InvalidParse
-    side2Commanders: list[Commander] | InvalidParse
-
-    def _list_to_str(self, lst: list[Country] | list[Commander] | InvalidParse, indent: int = 4) -> str:
-        if isinstance(lst, InvalidParse):
-            return " " * indent + "Invalid parse"
-        elif not lst:
-            return " " * indent + "None"
-        else:
-            res = ""
-            for item in lst:
-                res += " " * indent + str(item) + "\n"
-            return res[:-1]
-
-    def __str__(self) -> str:
-        res = f"{self.name}:\n"
-        res += f"{self._list_to_str(self.side1Countries)}\n"
-        res += f"{self._list_to_str(self.side1Commanders, 8)}\n"
-        res += f"{self._list_to_str(self.side2Countries)}\n"
-        res += f"{self._list_to_str(self.side2Commanders, 8)}\n"
-        return res
-
-class CommanderListType(Enum):
-    PLAINLIST = 1
-    UBL = 2
-    BR = 3
-    SINGLE = 4
-    EMPTY = 5
-    PLAINLIST_UPPER = 6
-    UNBULLETED_LIST = 7
-    NO_LIST_MULTI = 8
-    UBLI = 9
-
-def parse_file(file_path: str) -> Battle | None:
-    logging.info(f"Parsing file: {file_path}")
-
-    with open(file_path, "r", encoding="utf-8") as f:
-        content = f.read()
-    wikicode = mwp.parse(content)
-
-    infobox = get_battle_infobox(wikicode)
-    if not infobox:
-        logging.warning("No battle infobox found in file: %s", file_path)
-        return None
-
-    return get_battle_info(infobox)
-
-def get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Template | None:
-    templates = wikicode.filter_templates()
-    for template in templates:
-        if template.name.strip().lower() in INFOBOX_NAMES:
-            return template
-    return None
-
-def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle | None:
-    # TODO
-    conflict_name = "UNKNOWN"
-    wiki_conflict = infobox.get("conflict", default=None)
-    if wiki_conflict:
-        conflict_name = wiki_conflict.value.strip_code().strip()
-    else:
-        logging.warning("No conflict name found in infobox")
-    name = conflict_name
-
-    side1 = infobox.get("combatant1", default=None)
-    side2 = infobox.get("combatant2", default=None)
-    if not side1 or not side2:
-        logging.warning("No combatant1 or combatant2 found in infobox: %s", infobox)
-        return Battle(name, InvalidParse(), InvalidParse(), InvalidParse(), InvalidParse())
-    countries1 = wiki_to_countries(side1.value)
-    countries2 = wiki_to_countries(side2.value)
-
-    commander1 = infobox.get("commander1", default=None)
-    commander2 = infobox.get("commander2", default=None)
-    if not commander1 or not commander2:
-        logging.warning("No commander1 or commander2 found in infobox: %s", infobox)
-        return Battle(name, countries1, countries2, InvalidParse(), InvalidParse())
-    commanders1 = wiki_to_commanders(commander1.value)
-    commanders2 = wiki_to_commanders(commander2.value)
-
-    return Battle(name, countries1, countries2, commanders1, commanders2)
-
-def wiki_to_battle_name(name: mwp.wikicode.Wikicode) -> str:
-    return name.strip_code().strip()
-    
-
-def wiki_to_countries(combatant_code: mwp.wikicode.Wikicode) -> list[Country]:
-    countries = []
-    for node in combatant_code.nodes:
-        # With flagicons
-        if isinstance(node, mwp.nodes.Template):
-            if node.name.strip().lower() == "flagcountry":
-                country_name = node.get(1).value.strip_code().strip()
-                countries.append(Country(name=country_name))
-        # Without flagicons
-        elif isinstance(node, mwp.nodes.Wikilink):
-            country_name = node.title.strip_code().strip()
-            countries.append(Country(name=country_name))
-    return countries
+from consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES
+from parser.models import InvalidParse, Commander, Country, CommanderListType
+import logging
 
 
-def wiki_to_commanders(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | InvalidParse:
+def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | InvalidParse:
     match get_commander_list_type(commander_code):
         case CommanderListType.PLAINLIST:
             logging.info("Detected plainlist commander format")
@@ -263,9 +127,6 @@ def single_ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]
     
     lst = []
 
-
-    first_template = ubl_templates[0]
-
     # flagicon? list[commander]
     if is_template_flagicon(commander_code.filter_templates()[0]):
         country = commander_code.filter_templates()[0].get(1).value.strip_code().strip() if commander_code.filter_templates() else None
@@ -361,47 +222,3 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander:
         else:
             logging.error("Detected commander with multiple allegiances (%s). Wikicode: %s", commander.name, code_for_logs)
     return commander
-
-def print_list_alt(lst: list | InvalidParse):
-    if isinstance(lst, InvalidParse):
-        print("Invalid parse")
-        return
-    for item in lst:
-        print(item)
-
-
-
-
-
-
-
-
-def parse_all():
-    for file_path in get_all_wiki_files():
-        file_path = os.path.normpath(file_path)
-        filename = file_path.split(os.sep)[-1]
-        if filename in FILES_TO_SKIP:
-            logging.info("Skipping file: %s", file_path)
-            continue
-        parse_file(file_path)
-
-def test_com_pattern(wikicode: mwp.wikicode.Wikicode):
-    print_list_alt(wiki_to_commanders(wikicode))
-    print("----")
-
-
-
-
-if __name__ == "__main__":
-    # test_com_pattern(test_objects.com_ubl_many_flags)
-    # test_com_pattern(test_objects.com_ubl_one_flag)
-    # test_com_pattern(test_objects.com_multi_flag_person)
-    
-    # test_com_pattern(test_objects.com_ubl_flag_no_flag)
-
-    # for com in test_objects.all_com_test_cases:
-    #     test_com_pattern(com)
-    # test_com_pattern(test_objects.com_br2)
-    # test_com_pattern(test_objects.com_weird_format)
-    
-    parse_all()
