@@ -1,10 +1,26 @@
 import mwparserfromhell as mwp
 
 com_ubl = mwp.parse("""{{ubl|Bernd Wegener{{KIA}}|Klaus Hansen{{KIA}}}}""")
+com_ubl_one_flag = mwp.parse(
+    "{{flagicon|French Third Republic}} {{ubl|[[Joseph Joffre]]|[[Ferdinand Foch]]|[[Émile Fayolle]]}} "
+    "{{Flagicon|UKGBI}} {{ubl|[[Douglas Haig]]|[[Henry Rawlinson, 1st Baron Rawlinson|Henry Rawlinson]]|[[Hubert Gough]]| [[Edmund Allenby]]}}")
+com_ubl_many_flags = mwp.parse("{{ubl|{{flagicon|UKGBI}} [[Douglas Haig, 1st Earl Haig|Douglas Haig]]|{{flagicon|French Third Republic}} [[Ferdinand Foch]]|{{flagicon|French Third Republic}} [[Émile Fayolle]]|{{flagicon|UKGBI}} [[Henry Rawlinson, 1st Baron Rawlinson|Henry Rawlinson]]|{{flagicon|UKGBI}} [[Hubert Gough]]}}")
+
+# Actions of St Eloi Craters
+com_ubl_flag_no_flag = mwp.parse("{{ubl|{{flagicon|UKGBI}} [[Douglas Haig]]|[[Edwin Alderson]]}}")
+
+# Battles of the Isonzo
+com_ubli = mwp.parse("{{ubli| [[Luigi Cadorna]]|{{flagdeco|Kingdom of Italy}} [[Pietro Frugoni]]|{{flagdeco|Kingdom of Italy}} [[Settimio Piacentini]]|{{flagdeco|Kingdom of Italy}} [[Luigi Capello]]|{{flagdeco|Kingdom of Italy}} [[Prince Emanuele Filiberto, Duke of Aosta|Prince Emanuele Filiberto]]}}")
+
+# Battle of Flers–Courcelette
+com_multi_flag_person = mwp.parse("{{ubl|{{flagicon|German Empire}} {{flagicon|Kingdom of Bavaria}} [[Rupprecht, Crown Prince of Bavaria|Crown Prince Rupprecht]]|{{flagicon|German Empire}} [[Fritz von Below]]}}")
 
 com_br = mwp.parse("{{flagicon|German Empire}} [[Friedrich Freiherr Kress von Kressenstein]]<br />"
                    "{{flagicon|Ottoman Empire}} [[Fevzi Çakmak|Fevzi Pasha]]<br />"
                    "{{flagicon|Ottoman Empire}} [[İsmet İnönü|İsmet Bey]]")
+
+# Attack of the Dead Men
+com_br2 = mwp.parse("{{flagicon|German Empire}} [[Paul von Hindenburg]]<br/>{{flagicon|German Empire}} [[Rudolf von Freudenberg]]")
 
 com_single = mwp.parse("{{flagicon|UKGBI}} [[Charles Levenax Haldane]]")
 
@@ -62,3 +78,31 @@ com_unbulleted_list = mwp.parse("{{unbulleted list | [[Erich Ludendorff]] | "
 com_no_list_multi = mwp.parse("""{{flagicon|British Empire}} [[Aylmer Hunter-Weston]]
  
  {{flagicon|British Empire}} [[Joseph Trumpeldor]]""")
+
+# First Battle of Gaza
+# has (tr), /, a commander without link and a commander with a red link
+com_weird_format = mwp.parse(
+    "{{flagicon|Ottoman Empire}} [[Djemal Pasha|Ahmed Djemal]] Paşa<br />"
+    "{{flagicon|German Empire}} [[Friedrich Freiherr Kress von Kressenstein]] {{small|(actual)}}<br />"
+    "{{flagicon|Ottoman Empire}} Colonel [[Rüştü Sakarya|Mehmet Rüştü]]<br/ > "
+    "{{flagicon|Ottoman Empire}} Lieutenant Colonel [[Edip Servet Tör|Edip Servet]] ([[:tr:Edip_Servet_Tör|tr]])<br />"
+    "{{flagicon|German Empire}} Major Tiller<br />"
+    "{{flagicon|Venezuela|1905}}/{{flagicon|Ottoman Empire}} [[Rafael de Nogales Méndez|Rafael de Nogales]]")
+
+all_com_test_cases = [
+    com_ubl,
+    com_ubl_one_flag,
+    com_ubl_many_flags,
+    com_br,
+    com_br2,
+    com_single,
+    com_plainlist,
+    com_none,
+    com_upper_plainlist,
+    com_flagdeco,
+    com_flagdeco2,
+    com_multiple_plainlist,
+    com_almost_empty,
+    com_unbulleted_list,
+    com_no_list_multi
+]

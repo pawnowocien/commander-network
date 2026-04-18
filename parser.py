@@ -2,7 +2,7 @@ import logging
 import os
 
 import mwparserfromhell as mwp
-from consts import FILES_TO_SKIP_FOR_NOW, INFOBOX_NAMES
+from consts import BR_NAMES, FILES_TO_SKIP, FLAG_ICON_TEMPLATE_NAMES, INFOBOX_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES
 from dataclasses import dataclass
 from log_utils import setup_logging_parse
 import test_objects
@@ -70,8 +70,9 @@ class CommanderListType(Enum):
     PLAINLIST_UPPER = 6
     UNBULLETED_LIST = 7
     NO_LIST_MULTI = 8
+    UBLI = 9
 
-def parse_file(file_path: str):
+def parse_file(file_path: str) -> Battle | None:
     logging.info(f"Parsing file: {file_path}")
 
     with open(file_path, "r", encoding="utf-8") as f:
@@ -80,11 +81,10 @@ def parse_file(file_path: str):
 
     infobox = get_battle_infobox(wikicode)
     if not infobox:
-        # TODO
+        logging.warning("No battle infobox found in file: %s", file_path)
         return None
 
-    battle_info = get_battle_info(infobox)
-    return battle_info
+    return get_battle_info(infobox)
 
 def get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Template | None:
     templates = wikicode.filter_templates()
@@ -93,7 +93,7 @@ def get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Te
             return template
     return None
 
-def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle:
+def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle | None:
     # TODO
     conflict_name = "UNKNOWN"
     wiki_conflict = infobox.get("conflict", default=None)
@@ -102,10 +102,15 @@ def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle:
     else:
         logging.warning("No conflict name found in infobox")
     name = conflict_name
-    side1 = infobox.get("combatant1").value
-    side2 = infobox.get("combatant2").value
-    countries1 = wiki_to_countries(side1)
-    countries2 = wiki_to_countries(side2)
+
+    side1 = infobox.get("combatant1", default=None)
+    side2 = infobox.get("combatant2", default=None)
+    if not side1 or not side2:
+        logging.warning("No combatant1 or combatant2 found in infobox: %s", infobox)
+        return Battle(name, InvalidParse(), InvalidParse(), InvalidParse(), InvalidParse())
+    countries1 = wiki_to_countries(side1.value)
+    countries2 = wiki_to_countries(side2.value)
+
     commander1 = infobox.get("commander1", default=None)
     commander2 = infobox.get("commander2", default=None)
     if not commander1 or not commander2:
@@ -113,6 +118,7 @@ def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle:
         return Battle(name, countries1, countries2, InvalidParse(), InvalidParse())
     commanders1 = wiki_to_commanders(commander1.value)
     commanders2 = wiki_to_commanders(commander2.value)
+
     return Battle(name, countries1, countries2, commanders1, commanders2)
 
 def wiki_to_battle_name(name: mwp.wikicode.Wikicode) -> str:
@@ -145,6 +151,9 @@ def wiki_to_commanders(commander_code: mwp.wikicode.Wikicode) -> list[Commander]
         case CommanderListType.UBL:
             logging.info("Detected ubl commander format")
             return ubl_to_list(commander_code)
+        case CommanderListType.UBLI:
+            logging.info("Detected ubli commander format")
+            return ubli_to_list(commander_code)
         case CommanderListType.UNBULLETED_LIST:
             logging.info("Detected unbulleted list commander format")
             return unbulleted_to_list(commander_code)
@@ -170,7 +179,7 @@ def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderL
     for node in commander_code.nodes:
         templates = mwp.parse(str(node)).filter_templates()
         if not templates:
-            if "<br />" in str(node):
+            if contains_br(node):
                 return CommanderListType.BR
             continue
 
@@ -180,9 +189,11 @@ def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderL
             return CommanderListType.PLAINLIST_UPPER
         elif templates[0].name.strip().lower() == "ubl":
             return CommanderListType.UBL
+        elif templates[0].name.strip().lower() == "ubli":
+            return CommanderListType.UBLI
         elif templates[0].name.strip().lower() == "unbulleted list":
             return CommanderListType.UNBULLETED_LIST
-        elif "<br />"  in str(node).lower():
+        elif contains_br(node):
             return CommanderListType.BR
     
     stripped_code = str(commander_code).strip()
@@ -194,6 +205,12 @@ def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderL
         return CommanderListType.SINGLE
     else:
         return CommanderListType.NO_LIST_MULTI
+
+def contains_br(node: mwp.nodes.Node) -> bool:
+    for br_name in BR_NAMES:
+        if br_name in str(node):
+            return True
+    return False
 
 def plainlist_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
     lst = []
@@ -224,44 +241,62 @@ def plainlist_upper_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Comma
 def ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
     lst = []
 
-    ubls = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ubl")
-    if not ubls:
-        logging.warning("No ubl templates found. Wikicode: %s", commander_code)
-        return lst
-    
-    # TODO we lose flagicons here
-    if len(ubls) == 1:
-        country_name = None
-        countries = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "flagicon")
-        if countries:
-            country_name = countries[0].get(1).value.strip_code().strip()
-            if len(countries) > 1:
-                logging.warning("Expected at most one flagicon template, got %d. Wikicode: %s", len(countries), commander_code)
-                return []
-            
-        for param in ubls[0].params:
-            commander = get_commander(mwp.parse(param.value.strip()))
-            if country_name:
-                commander.allegiance = Country(name=country_name)
+    current_code = ""
+    for node in commander_code.nodes:
+        current_code += str(node)
+        if isinstance(node, mwp.nodes.Template) and node.name.strip().lower() == "ubl":
+            lst.extend(single_ubl_to_list(mwp.parse(current_code)))
+            current_code = ""
 
+    return lst
+
+def single_ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+    """
+    Can be either:
+    - `flagicon? list[commander]`
+    - `list[flagicon? commander]`
+    """
+    ubl_templates = get_ubl_templates(commander_code)
+    if not ubl_templates or len(ubl_templates) != 1:
+        logging.error("Expected exactly one ubl template for single ubl commander format, got %d. Wikicode: %s", len(ubl_templates), commander_code)
+        return []
+    
+    lst = []
+
+
+    first_template = ubl_templates[0]
+
+    # flagicon? list[commander]
+    if is_template_flagicon(commander_code.filter_templates()[0]):
+        country = commander_code.filter_templates()[0].get(1).value.strip_code().strip() if commander_code.filter_templates() else None
+        for param in ubl_templates[0].params:
+            commander = get_commander(mwp.parse(param.value.strip()))
+            if country and commander.allegiance:
+                logging.error("Detected commander with multiple allegiances in single ubl commander format. Wikicode: %s", commander_code)
+            elif country:
+                commander.allegiance = Country(name=country)
             lst.append(commander)
 
-        
-        return lst
-    
-    current_country = None
-    for node in commander_code.nodes:
-        if isinstance(node, mwp.nodes.Template) and node.name.strip().lower() == "flagicon":
-            country_name = node.get(1).value.strip_code().strip()
-            current_country = Country(name=country_name)
-        elif isinstance(node, mwp.nodes.Template) and node.name.strip().lower() == "ubl":
-            if current_country is None:
-                logging.warning("Found ubl template without preceding flagicon. Wikicode: %s", commander_code)
-            for param in node.params:
-                commander = get_commander(mwp.parse(param.value.strip()))
-                commander.allegiance = current_country
-                lst.append(commander)
+    # list[flagicon? commander]
+    else:
+        for param in ubl_templates[0].params:
+            commander = get_commander(mwp.parse(param.value.strip()))
+            if not commander:
+                logging.warning("Could not parse commander in list[flagicon? commander] format. Wikicode: %s", commander_code)
+                continue
+            lst.append(commander)
     return lst
+
+def get_flagicon_templates(wikicode: mwp.wikicode.Wikicode) -> list[mwp.nodes.template.Template]:
+    return wikicode.filter_templates(matches=lambda t: t.name.strip().lower() in FLAG_ICON_TEMPLATE_NAMES)
+def get_ubl_templates(wikicode: mwp.wikicode.Wikicode) -> list[mwp.nodes.template.Template]:
+    return wikicode.filter_templates(matches=lambda t: t.name.strip().lower() == "ubl")
+
+def is_template_flagicon(template: mwp.nodes.template.Template) -> bool:
+    return template.name.strip().lower() in FLAG_ICON_TEMPLATE_NAMES
+
+def ubli_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+    return ubl_to_list(mwp.parse(str(commander_code).replace("{{ubli|", "{{ubl|")))
 
 def unbulleted_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
     return ubl_to_list(mwp.parse(str(commander_code).replace("unbulleted list", "ubl")))
@@ -269,8 +304,14 @@ def unbulleted_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]
 def br_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
     lst = []
 
-    brs = commander_code.split("<br />")
-    for br in brs:
+    parts = [str(commander_code)]
+    for br_name in BR_NAMES:
+        tmp = []
+        for part in parts:
+            for br in part.split(br_name):
+                tmp.append(br)
+        parts = tmp.copy()
+    for br in parts:
         lst.append(get_commander(mwp.parse(br.strip())))
     return lst
 
@@ -290,15 +331,35 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander:
         commander_code = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "nowrap")[0].get(1).value
 
     commander = Commander(None, None)
+
+    commander_multi_allegiance = False
+
+    code_for_logs = str(commander_code)
     for temp in commander_code.filter_templates():
         if temp.name.strip().lower() in ["flagicon", "flagdeco"]:
             country_name = temp.get(1).value.strip_code().strip()
+            if commander.allegiance:
+                commander_multi_allegiance = True
             commander.allegiance = Country(name=country_name)
             commander_code.remove(temp)
+
     
-    clean_name = commander_code.strip_code().strip()
-    if clean_name and len(clean_name) > 1:
-        commander.name = clean_name
+    wikilinks = commander_code.filter_wikilinks()
+    if wikilinks and len(wikilinks) == 1:
+        commander.name = wikilinks[0].title.strip_code().strip()
+    else:
+        logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
+        clean_name = commander_code.strip_code().strip()
+        if clean_name and len(clean_name) > 1:
+            commander.name = clean_name
+
+    if wikilinks and len(wikilinks) > 1:
+        logging.warning("Detected multiple wikilinks in commander code, there could be a better naming. Wikicode: %s", code_for_logs)
+    if commander_multi_allegiance:
+        if commander.name in MULTI_ALLEGIANCE_COMMANDER_NAMES:
+            logging.warning("Detected commander with multiple allegiances, it's a known case (%s)", (commander.name))
+        else:
+            logging.error("Detected commander with multiple allegiances (%s). Wikicode: %s", commander.name, code_for_logs)
     return commander
 
 def print_list_alt(lst: list | InvalidParse):
@@ -308,27 +369,39 @@ def print_list_alt(lst: list | InvalidParse):
     for item in lst:
         print(item)
 
-if __name__ == "__main__":
-    # print_list_alt(wiki_to_commanders(test_objects.com_br))
-    # print_list_alt(wiki_to_commanders(test_objects.com_plainlist))
-    # print_list_alt(wiki_to_commanders(test_objects.com_ubl))
 
-    # print_list_alt(wiki_to_commanders(test_objects.com_flagdeco2))
-    # print_list_alt(wiki_to_commanders(test_objects.com_multiple_plainlist))
 
-    # print(wiki_to_commanders(test_objects.com_almost_empty))
-    # print_list_alt(wiki_to_commanders(test_objects.com_almost_empty))
-    
-    # print_list_alt(wiki_to_commanders(test_objects.com_no_list_multi))
 
-    # exit(0)
 
+
+
+
+def parse_all():
     for file_path in get_all_wiki_files():
         file_path = os.path.normpath(file_path)
         filename = file_path.split(os.sep)[-1]
-        if filename in FILES_TO_SKIP_FOR_NOW:
-            logging.warning("Skipping file: %s", file_path)
+        if filename in FILES_TO_SKIP:
+            logging.info("Skipping file: %s", file_path)
             continue
         parse_file(file_path)
-        # print(parse_file(file_path))
+
+def test_com_pattern(wikicode: mwp.wikicode.Wikicode):
+    print_list_alt(wiki_to_commanders(wikicode))
+    print("----")
+
+
+
+
+if __name__ == "__main__":
+    # test_com_pattern(test_objects.com_ubl_many_flags)
+    # test_com_pattern(test_objects.com_ubl_one_flag)
+    # test_com_pattern(test_objects.com_multi_flag_person)
     
+    # test_com_pattern(test_objects.com_ubl_flag_no_flag)
+
+    # for com in test_objects.all_com_test_cases:
+    #     test_com_pattern(com)
+    # test_com_pattern(test_objects.com_br2)
+    # test_com_pattern(test_objects.com_weird_format)
+    
+    parse_all()

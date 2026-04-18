@@ -11,7 +11,8 @@ def setup_logging(name: str):
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
         filename=path,
-        filemode='w'
+        filemode='w',
+        encoding='utf-8'
     )
 
 def setup_logging_download():
