@@ -1,5 +1,5 @@
 import mwparserfromhell as mwp
-from parser.models import Country
+from models.models import Country
 
 # Works for simple cases
 def parse_combatant(combatant_code: mwp.wikicode.Wikicode) -> list[Country]:

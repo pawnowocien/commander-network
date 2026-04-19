@@ -22,6 +22,9 @@ com_br = mwp.parse("{{flagicon|German Empire}} [[Friedrich Freiherr Kress von Kr
 # Attack of the Dead Men
 com_br2 = mwp.parse("{{flagicon|German Empire}} [[Paul von Hindenburg]]<br/>{{flagicon|German Empire}} [[Rudolf von Freudenberg]]")
 
+# Battle of Ardahan
+com_br3 = mwp.parse("{{flagicon image|Flag_of_Russia_(1914-1917).svg}} [[Nikolai Istomin]]<br>{{flagicon image|Flag_of_Russia_(1914-1917).svg}} [[Illarion Vorontsov-Dashkov]]<br>")
+
 com_single = mwp.parse("{{flagicon|UKGBI}} [[Charles Levenax Haldane]]")
 
 com_plainlist = mwp.parse("""{{plainlist|
@@ -89,6 +92,27 @@ com_weird_format = mwp.parse(
     "{{flagicon|German Empire}} Major Tiller<br />"
     "{{flagicon|Venezuela|1905}}/{{flagicon|Ottoman Empire}} [[Rafael de Nogales Méndez|Rafael de Nogales]]")
 
+com_single_ill = mwp.parse("{{ill|Heinrich von Kummer (General, 1874)|lt=Heinrich von Kummer|de}}")
+
+# Battle of Doss Alto
+com_question_mark = mwp.parse("{{flagicon|Austria-Hungary}} ?")
+
+# Persian campaign (World War I) TODO - this campaign is 3-way
+com_tree_list = mwp.parse("""{{tree list}}
+* {{flagicon|Ottoman Empire}} '''[[Mehmed V]]'''
+* {{flagicon|Ottoman Empire}} '''[[Enver Pasha]]'''
+* {{flagicon|Ottoman Empire}} [[Halil Kut]]
+* {{flagicon|Ottoman Empire}} [[Ali İhsan Pasha|Ali Ihsan Pasha]]
+* {{flagicon|Ottoman Empire}} [[Kâzım Karabekir|Kâzım (Karabekir) Bey]]
+* {{flagicon|Ottoman Empire}} [[Nazif Kayacık|Nazif (Kayacık) Bey]]
+* {{flagicon|German Empire}} '''[[Kaiser Wilhelm II]]'''
+* {{flagicon|German Empire}} [[Georg von Kaunitz]]
+* {{flagicon|German Empire}} [[Wilhelm Wassmuss]]
+* {{flagicon|German Empire}} {{ill|Arthur Bopp|de|Arthur Bopp}}
+* {{flagicon|German Empire}} Captain Angman
+* [[Simko Shikak]]<ref name="Bruinessen 2006 18–21">{{cite book|last=Bruinessen|first=Martin|author-link=Martin van Bruinessen|editor1-last=Atabaki|editor1-first=Touraj|editor1-link=Touraj Atabaki|chapter=Chapter 5: A Kurdish warlord on the Turkish-Persian frontier in the early Twentieth century: Isma'il Aqa Simko|title=Iran and the First World War: Battleground of the Great Powers|series=Library of modern Middle East studies, 43|publisher=[[I.B. Tauris]]|location=London; New York|pages=18–21|chapter-url=https://www.academia.edu/3555229|year=2006|isbn=9781860649646|oclc=56455579}}</ref>
+{{tree list/end}}""")
+
 all_com_test_cases = [
     com_ubl,
     com_ubl_one_flag,
@@ -104,5 +128,7 @@ all_com_test_cases = [
     com_multiple_plainlist,
     com_almost_empty,
     com_unbulleted_list,
-    com_no_list_multi
+    com_no_list_multi,
+    com_question_mark,
+    com_tree_list,
 ]

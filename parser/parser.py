@@ -4,10 +4,11 @@ import os
 import mwparserfromhell as mwp
 from consts import FILES_TO_SKIP, INFOBOX_NAMES
 from log_utils import setup_logging_parse
+from parser import test_objects
 from parser.combatant_parser import parse_combatant
 from parser.commander_parser import parse_commander
 from utils import get_all_wiki_files
-from parser.models import Battle, InvalidParse
+from models.models import Battle, InvalidParse
 
 setup_logging_parse()
 
@@ -70,14 +71,18 @@ def print_list_alt(lst: list | InvalidParse):
     for item in lst:
         print(item)
 
-def parse_all():
+def parse_all_files() -> list[Battle]:
+    battles = []
     for file_path in get_all_wiki_files():
         file_path = os.path.normpath(file_path)
         filename = file_path.split(os.sep)[-1]
         if filename in FILES_TO_SKIP:
             logging.info("Skipping file: %s", file_path)
             continue
-        parse_file(file_path)
+        battle = parse_file(file_path)
+        if battle:
+            battles.append(battle)
+    return battles
 
 def test_com_pattern(wikicode: mwp.wikicode.Wikicode):
     print_list_alt(parse_commander(wikicode))
@@ -85,4 +90,6 @@ def test_com_pattern(wikicode: mwp.wikicode.Wikicode):
 
 
 if __name__ == "__main__":    
-    parse_all()
+    parse_all_files()
+    # test_com_pattern(test_objects.com_tree_list)
+    # parse_commander(test_objects.com_single_ill)

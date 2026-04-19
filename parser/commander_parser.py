@@ -1,43 +1,56 @@
 import mwparserfromhell as mwp
 from consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES
-from parser.models import InvalidParse, Commander, Country, CommanderListType
+from models.models import InvalidParse, Commander, Country, CommanderListType
 import logging
 
 
 def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | InvalidParse:
+    commanders = []
     match get_commander_list_type(commander_code):
         case CommanderListType.PLAINLIST:
             logging.info("Detected plainlist commander format")
-            return plainlist_to_list(commander_code)
+            commanders = plainlist_to_list(commander_code)
         case CommanderListType.PLAINLIST_UPPER:
             logging.info("Detected Plainlist commander format")
-            return plainlist_upper_to_list(commander_code)
+            commanders = plainlist_upper_to_list(commander_code)
+        case CommanderListType.TREE_LIST:
+            logging.info("Detected tree list commander format")
+            commanders = tree_list_to_list(commander_code)
         case CommanderListType.UBL:
             logging.info("Detected ubl commander format")
-            return ubl_to_list(commander_code)
+            commanders = ubl_to_list(commander_code)
         case CommanderListType.UBLI:
             logging.info("Detected ubli commander format")
-            return ubli_to_list(commander_code)
+            commanders = ubli_to_list(commander_code)
         case CommanderListType.UNBULLETED_LIST:
             logging.info("Detected unbulleted list commander format")
-            return unbulleted_to_list(commander_code)
+            commanders = unbulleted_to_list(commander_code)
         case CommanderListType.BR:
             logging.info("Detected br commander format")
-            return br_to_list(commander_code)
+            commanders = br_to_list(commander_code)
         case CommanderListType.SINGLE:
             logging.info("Detected single commander format")
-            return [get_commander(commander_code)]
+            commanders = [get_commander(commander_code)]
         case CommanderListType.NO_LIST_MULTI:
             logging.info("Detected no-list multi-line commander format")
-            return no_list_multi_to_list(commander_code)
+            commanders = no_list_multi_to_list(commander_code)
         case CommanderListType.EMPTY:
             logging.warning("Detected empty commander format")
             return []
         case None:
             logging.error("Could not determine commander list type for code: %s", commander_code)
             return InvalidParse()
+        case _:
+            logging.error("Unhandled commander list type for code: %s", commander_code)
+            return InvalidParse()
+    return clear_list(commanders)
 
-    return InvalidParse()
+def clear_list(commander_list: list[Commander | None]) -> list[Commander]:
+    lst = []
+    for commander in commander_list:
+        if commander:
+            lst.append(commander)
+    return lst
 
 def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderListType | None:
     for node in commander_code.nodes:
@@ -51,6 +64,8 @@ def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderL
             return CommanderListType.PLAINLIST
         elif templates[0].name.strip() == "Plainlist":
             return CommanderListType.PLAINLIST_UPPER
+        elif templates[0].name.strip().lower() == "tree list":
+            return CommanderListType.TREE_LIST
         elif templates[0].name.strip().lower() == "ubl":
             return CommanderListType.UBL
         elif templates[0].name.strip().lower() == "ubli":
@@ -76,9 +91,8 @@ def contains_br(node: mwp.nodes.Node) -> bool:
             return True
     return False
 
-def plainlist_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+def plainlist_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     lst = []
-
 
     plainlists = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "plainlist")
     if not plainlists or len(plainlists) != 1:
@@ -96,13 +110,19 @@ def plainlist_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
 
     return lst
 
-def plainlist_upper_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+def plainlist_upper_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     commander_code = str(commander_code)
     commander_code = commander_code.replace("{{Plainlist}}", "{{plainlist|")
     commander_code = commander_code.replace("{{Endplainlist}}", "}}")
     return plainlist_to_list(mwp.parse(commander_code))
 
-def ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+def tree_list_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
+    commander_code = str(commander_code)
+    commander_code = commander_code.replace("{{tree list}}", "{{plainlist|")
+    commander_code = commander_code.replace("{{tree list/end}}", "}}")
+    return plainlist_to_list(mwp.parse(commander_code))
+
+def ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     lst = []
 
     current_code = ""
@@ -114,7 +134,7 @@ def ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
 
     return lst
 
-def single_ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+def single_ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     """
     Can be either:
     - `flagicon? list[commander]`
@@ -141,11 +161,7 @@ def single_ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]
     # list[flagicon? commander]
     else:
         for param in ubl_templates[0].params:
-            commander = get_commander(mwp.parse(param.value.strip()))
-            if not commander:
-                logging.warning("Could not parse commander in list[flagicon? commander] format. Wikicode: %s", commander_code)
-                continue
-            lst.append(commander)
+            lst.append(get_commander(mwp.parse(param.value.strip())))
     return lst
 
 def get_flagicon_templates(wikicode: mwp.wikicode.Wikicode) -> list[mwp.nodes.template.Template]:
@@ -162,7 +178,7 @@ def ubli_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
 def unbulleted_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
     return ubl_to_list(mwp.parse(str(commander_code).replace("unbulleted list", "ubl")))
 
-def br_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+def br_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     lst = []
 
     parts = [str(commander_code)]
@@ -176,7 +192,7 @@ def br_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
         lst.append(get_commander(mwp.parse(br.strip())))
     return lst
 
-def no_list_multi_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander]:
+def no_list_multi_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     lst = []
     lines = str(commander_code).split("\n")
     for line in lines:
@@ -186,10 +202,18 @@ def no_list_multi_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Command
         lst.append(get_commander(mwp.parse(line)))
     return lst
 
-def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander:
+def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
+    if not commander_code or str(commander_code).strip() == "":
+        logging.warning("Empty commander code")
+        return None
+
     # Skip nowrap template
     if commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "nowrap"):
         commander_code = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "nowrap")[0].get(1).value
+
+    # Skip ill template
+    if commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ill"):
+        commander_code = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ill")[0].get(1).value
 
     commander = Commander(None, None)
 
@@ -211,6 +235,13 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander:
     else:
         logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
         clean_name = commander_code.strip_code().strip()
+
+        if clean_name == "?":
+            logging.warning("Commander name is a '?', setting commander to None. Wikicode: %s", code_for_logs)
+            return None
+        elif "?" in clean_name:
+            print(clean_name)
+
         if clean_name and len(clean_name) > 1:
             commander.name = clean_name
 
@@ -221,4 +252,7 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander:
             logging.warning("Detected commander with multiple allegiances, it's a known case (%s)", (commander.name))
         else:
             logging.error("Detected commander with multiple allegiances (%s). Wikicode: %s", commander.name, code_for_logs)
+
+    if not commander.name:
+        logging.error("Commander has no name. Wikicode: %s", code_for_logs)
     return commander
