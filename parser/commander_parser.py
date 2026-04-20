@@ -222,18 +222,33 @@ def br_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
 
 def no_list_multi_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     lst = []
-    lines = str(commander_code).split("\n")
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-        lst.append(get_commander(mwp.parse(line)))
+
+    current_chunk = mwp.wikicode.Wikicode([])
+    for node in commander_code.nodes:
+        if isinstance(node, mwp.nodes.Text):
+            parts = node.value.split('\n')
+            for i, part in enumerate(parts):
+                if i > 0:
+                    if str(current_chunk).strip():
+                        lst.append(get_commander(current_chunk))
+                    current_chunk = mwp.wikicode.Wikicode([])
+                
+                if part:
+                    current_chunk.append(mwp.nodes.Text(part))
+        
+        else:
+            current_chunk.append(node)
+            
+    if str(current_chunk).strip():
+        lst.append(get_commander(current_chunk))
     return lst
 
 def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
     if not commander_code or str(commander_code).strip() == "":
         logging.warning("Empty commander code")
         return None
+
+    code_for_logs = str(commander_code)
 
     # Skip nowrap template
     if commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "nowrap"):
@@ -243,11 +258,16 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
     if commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ill"):
         commander_code = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ill")[0].get(1).value
 
+    for tag in commander_code.filter_tags():
+        if str(tag.tag).lower() in ["ref"]:
+            commander_code.remove(tag)
+
+
+    # Get country
+
     commander = Commander(None, None)
-
     commander_multi_allegiance = False
-
-    code_for_logs = str(commander_code)
+    
     for temp in commander_code.filter_templates():
         if temp.name.strip().lower() in ["flagicon", "flagdeco"]:
             country_name = temp.get(1).value.strip_code().strip()
@@ -255,14 +275,31 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
                 commander_multi_allegiance = True
             commander.allegiance = Country(name=country_name)
             commander_code.remove(temp)
+        elif temp.name.strip().lower() in ["kia", "wia", "mia"]:
+            commander_code.remove(temp)
 
-    
+    for link in commander_code.filter_wikilinks():
+        title = str(link.title).strip().lower()
+        if title.startswith(("file:", "image:")):
+            filename = title.split(":", 1)[1].strip()
+            if commander.allegiance:
+                commander_multi_allegiance = True
+            commander.allegiance = Country(name=filename)
+            commander_code.remove(link)
+        
+        # Handle "Petsamo_expeditions.txt" case
+        if "wounded in action" in title.lower():
+            commander_code.remove(link)
+
     wikilinks = commander_code.filter_wikilinks()
     if wikilinks and len(wikilinks) == 1:
         commander.name = wikilinks[0].title.strip_code().strip()
     else:
         logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
-        clean_name = commander_code.strip_code().strip()
+        clean_name = clean_corner_cases(commander_code.strip_code())
+        if not clean_name:
+            logging.warning("Commander name is empty after cleaning corner cases, setting commander to None. Wikicode: %s", code_for_logs)
+            return None
 
         if clean_name in ["?", "Unknown", "Unknown officer", "unknown"]:
             logging.warning("Commander name is a '?', setting commander to None. Wikicode: %s", code_for_logs)
@@ -284,3 +321,30 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
     if not commander.name:
         logging.error("Commander has no name. Wikicode: %s", code_for_logs)
     return commander
+
+
+
+def clean_corner_cases(name: str) -> str | None:
+    # Example - Romanian campaign (1917)
+    for date_pat in ["(from", "(until", "(after", "(before"]:
+        if date_pat in name.lower():
+            return None
+
+    # ()        - Petsamo Expeditions (after removing WIA link)
+    # '''       - Battle of the Southern Carpathians
+    to_remove = ["()", "'''"]
+
+    for item in to_remove:
+        name = name.replace(item, "")
+    name = name.strip()
+
+    
+    banned = ["15th Division (North Army):", "1st Army:", "2nd Army:", # Battle of the Southern Carpathians
+              ]
+    if name in banned:
+        return None
+
+
+    if not name:
+        return None
+    return name

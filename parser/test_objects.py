@@ -128,6 +128,24 @@ com_collapsible_list = mwp.parse(""" {{Collapsible list
 |{{flagicon|Austria-Hungary}} [[Schlamm]]{{POW}}
 }}""")
 
+# Battle of Halen
+com_plainlist_other = mwp.parse("""{{Plain list|
+* {{flagicon|Belgium}} [[Léon de Witte de Haelen|Léon De Witte]]
+* {{flagicon|Belgium}} [[Adolf Proost]]
+}}""")
+
+# Battle of Choloki
+com_weird_flag_format = mwp.parse("""{{flagicon|Transcaucasian Democratic Federative Republic
+}} [[Giorgi Mazniashvili]]""")
+
+# Siege of Mora
+com_ref = mwp.parse("{{flagicon|British Empire}} [[Frederick Hugh Cunliffe]]<br>{{flagicon|British Empire}} R. W. Fox<br>"
+                    "{{flagicon|French Third Republic}} Brisett<br>{{flagicon|French Third Republic}} Ferrandi<ref name=\"TSB\">Fecitte.</ref>")
+
+# Petsamo expeditions
+com_wia = mwp.parse("{{flagicon|United Kingdom}} Captain Vincent Brown ([[Wounded in action|WIA]])<br>{{flagicon|United Kingdom|naval}} Captain James Farie")
+
+
 all_com_test_cases = [
     com_ubl,
     com_ubl_one_flag,

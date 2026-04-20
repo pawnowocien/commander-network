@@ -1,41 +1,8 @@
-'''1st Army:
-Battle of the Southern Carpathians
------
-(Vali of Baghdad) Javi Pashahttps://www.qdl.qa/en/archive/81055/vdc_100023514019.0x00001a
+(Vali of Baghdad) Javi Pasha
 Fao Landing
------
-(after 12 August)
-Romanian Campaign (1917)
------
-(from August 12th)
-Battle of Mărășești
 -----
 (possibly Kpt. Karsten von Heydebreck)
 Action of 15 August 1917
------
-(until 12 August)
-Romanian Campaign (1917)
------
-(until August 11th)
-Battle of Mărășești
------
-15th Division (North Army):
-Battle of the Southern Carpathians
------
-1st Army:
-Romanian Campaign (1917)
------
-23px Charles P. Nelson
-Battle of Durazzo
------
-23px|border|link Pavlo Skoropadskyi
-Battle of Zhmerynka
------
-25px Roy Campbell Smith
-Scuttling of SMS Cormoran
------
-2nd Army:
-Battle of the Southern Carpathians, Romanian Campaign (1917)
 -----
 :az:Əhməd Həmdi Qaraağazadə
 Battle of Goychay
@@ -107,7 +74,7 @@ Adrian Nepenin
 Naval warfare of World War I
 -----
 Agha Petros
-Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Defense of Van, Mesopotamian campaign
+Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Charah (1918), Battle of Seray Mountain, Battle of Sharqat, Battle of Suldouze, Battle of Ushno (1918), Defense of Van, Mesopotamian campaign, Persian campaign, Urmia clashes
 -----
 Ahmad Helmy
 Sinai and Palestine campaign
@@ -299,7 +266,7 @@ Anastasios Papoulas
 Noemvriana
 -----
 Andranik Ozanian
-Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Dilman, Urmia clashes
+Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Dilman, Persian campaign, Urmia clashes
 -----
 Andrea Graziani
 Battle of Doss Alto
@@ -343,7 +310,7 @@ Battle of Galicia
 Anton Zaltsa
 Battle of Kraśnik
 -----
-Antoni Reutt (WIA)
+Antoni Reutt
 Battle of Pakoslaw
 -----
 Antonin de Selliers de Moranville
@@ -580,6 +547,9 @@ Battle of Jassin
 Captain James Farie
 First Petsamo expedition
 -----
+Captain Vincent Brown
+First Petsamo expedition
+-----
 Captain von Crailsheim
 Second Battle of Garua
 -----
@@ -694,6 +664,9 @@ Charles Mangin
 Charles Melliss
 Battle of Shaiba
 -----
+Charles P. Nelson (admiral)
+Battle of Durazzo
+-----
 Charles P. Summerall
 Battle of Soissons
 -----
@@ -736,7 +709,7 @@ First Battle of Garua
 Col. J. van Deventer
 Battle of Kakamas
 -----
-Col. LargeauStrachan 2004. p. 34
+Col. Largeau
 Battle of Kusseri
 -----
 Col. MacLear
@@ -852,6 +825,9 @@ Persian campaign
 -----
 Davidov
 Invasion of Åland
+-----
+Dawid Mar Shimun
+Battle of Charah (1918), Persian campaign
 -----
 Denis Auguste Duchêne
 Second Battle of the Aisne, Third Battle of the Aisne
@@ -1132,7 +1108,7 @@ Battle of Verdun, Battle of the Ardennes, First Battle of Champagne, First Battl
 Fernando Tamagnini de Abreu e Silva
 German Spring Offensive, 1918
 -----
-FerrandiFecitte.
+Ferrandi
 Siege of Mora
 -----
 Ferreira Gil
@@ -1143,12 +1119,6 @@ Battle of Hareira and Sheria, Charge at Sheria, Southern Palestine offensive
 -----
 Fevzi Çakmak
 Battle of Beersheba, Battle of Krithia Vineyard, Battle of Mughar Ridge, Battle of Nazareth, Battle of Tabsor, Battle of Tel el Khuweilfe, Battle of Tell 'Asur, Battle of Tulkarm, Capture of Afula and Beisan, Capture of Jenin, Sinai and Palestine campaign
------
-File:Flag of the Assyrian Volunteers.svg
-Battle of Seray Mountain, Battle of Ushno (1918)
------
-File:Socialist red flag.svg
-Battle of Zhmerynka
 -----
 Fitawrari Habte Giyorgis Ras Kebede Mengesha
 Battle of Segale
@@ -1397,7 +1367,7 @@ George Milne
 Balkans theatre, Battle of Doiran, Vardar offensive
 -----
 George Milne, 1st Baron Milne
-Occupation of Istanbul
+Battle of Doiran, Occupation of Istanbul
 -----
 George Qandas
 Battle of El Tor
@@ -2155,7 +2125,7 @@ Persian campaign
 Kamil Bey
 Battle of Bir el Abd (the Abd well)
 -----
-Kapitänleutnant Richard Feldt
+Kapitänleutnant
 Attack on Orleans
 -----
 Karabekir
@@ -2365,10 +2335,10 @@ Battle of Lioma
 Lt. Col. August Stange Bey
 Battle of Ardahan
 -----
-Lt. Col. C. T. MairO'Neill 1918, p. 46.
+Lt. Col. C. T. Mair
 Battle of Nsanakong
 -----
-Lt. Milbratcasualty list of the Schutztruppe in Cameroon 1914–1916 (german)
+Lt. Milbrat
 Battle of Tepe
 -----
 Lt. Siegfried Kallmeyer
@@ -2464,8 +2434,14 @@ Portuguese campaign in Mozambique
 Major general Ignaz Fleischmann
 Battle of Makivka
 -----
+Malik Khiyo
+Battle of Seray Mountain
+-----
 Malik Khoshaba
-Mesopotamian campaign
+Battle of Charah (1918), Battle of Seray Mountain, Battle of Suldouze, Battle of Ushno (1918), Mesopotamian campaign, Persian campaign, Urmia clashes
+-----
+Malik Yaqo
+Battle of Charah (1918), Battle of Sharqat, Persian campaign
 -----
 Mandume ya Ndemufayo
 West Africa campaign
@@ -2788,10 +2764,6 @@ Battle of Ruovesi
 Oskar Potiorek
 Balkans theatre, Battle of Cer, Battle of the Drina
 -----
-Oskar Potiorek
- Liborius Ritter von Frank
-Battle of Kolubara
------
 Oskar Rantala
 Battle of Rautu, Battle of Viipuri
 -----
@@ -2863,6 +2835,9 @@ Battle of Krzywoploty
 -----
 POW
 Battle of Seray Mountain
+-----
+Pallasch
+Battle on Istrana
 -----
 Panagiotis Danglis
 Balkans theatre, Vardar offensive
@@ -2944,6 +2919,9 @@ Great Retreat
 -----
 Pavle Jurišić Šturm
 Balkans theatre, Battle of Cer, Battle of Florina, Battle of Malka Nidzhe, Battle of the Drina, Kosovo offensive
+-----
+Pavlo Skoropadskyi
+Battle of Zhmerynka
 -----
 Pavlos Kountouriotis
 Naval warfare of World War I
@@ -3032,6 +3010,9 @@ Tarnopol offensive
 Pyotr Oganovsky
 Battle of Manzikert, Defense of Van
 -----
+Pyotr Ptakhin
+Battle of Zhmerynka
+-----
 R. Bruce Campbell
 Battle of Fismes and Fismette
 -----
@@ -3053,13 +3034,6 @@ Battle of Zborov
 Radomir Putnik
 Balkans theatre, Battle of Cer, Kosovo offensive
 -----
-Radomir Putnik
- Živojin Mišić
- Stepa Stepanović
- Pavle Jurišić Šturm
- Miloš Božanović
-Battle of Kolubara
------
 Rafael de Nogales Méndez
 Defense of Van, First Battle of Gaza, Second Battle of Gaza
 -----
@@ -3068,6 +3042,9 @@ Battle of Jassin
 -----
 Ramadan Ali (Fur Army)
 Invasion of Darfur
+-----
+Raphael Khan
+Battle of Ushno (1918)
 -----
 Rear Admiral Bellini
 Battle of Durazzo (1915)
@@ -3165,6 +3142,9 @@ Battle of Rarańcza
 Rosslyn Wemyss, 1st Baron Wester Wemyss
 Naval warfare of World War I, U-boat campaign
 -----
+Roy Campbell Smith
+Scuttling of SMS Cormoran
+-----
 Rudolf Schneider (captain)
 Raid on Lowca and Parton
 -----
@@ -3222,6 +3202,9 @@ Battle of the Nek
 Sergei Sheydeman
 Battle of the Vistula River, Battle of Łódź
 -----
+Sergey Kashevich
+Battle of Zhmerynka
+-----
 Sergey Kirov
 Battle of Goychay
 -----
@@ -3233,6 +3216,9 @@ Battle of Doberdò, Isonzo front
 -----
 Shevket Bay
 Kermanshah operation
+-----
+Shimun XIX Benyamin
+Persian campaign, Urmia clashes
 -----
 Siege of Najaf (1918)#Rebels
 
@@ -3397,7 +3383,7 @@ Torsten Aminoff
 Battle of Länkipohja
 -----
 Tovmas Nazarbekian
-Battle of Dilman, Battle of Karakilisa, Battle of Muş
+Battle of Dilman, Battle of Karakilisa, Battle of Muş, Persian campaign
 -----
 Traian Găiseanu
 Second Battle of Cobadin
@@ -3422,12 +3408,6 @@ Battle of Hämeenlinna
 -----
 Ulrich von Coler
 Battle of Viipuri
------
-Unknown
-, Action of 17 March 1917, Action of 5 November 1916, Attack on Orleans, Battle of Amara, Battle of Ambos Nogales, Battle of Aqaba, Battle of Arras (1915), Battle of Ayun Kara, Battle of Caribou Hill, Battle of Dibrivka, Battle of Fismes and Fismette, Battle of Jastków, Battle of Kitcheners' Wood, Battle of Krzywoploty, Battle of Kämärä, Battle of Laski and Anielin, Battle of Nasiriyah (1915), Battle of Ngaundere, Battle of Pakoslaw, Battle of Rafah, Battle of Rarańcza, Battle of Sentinella Pass, Battle of Sheikh Othman, Battle of Syrjäntaka, Battle of Tornio, Battle of Ukoko, Battle of Ushno (1918), Battle of Valenciennes (1918), Battle of Virbalis, Battle on Istrana, Bombardment of Madras, Capture of Tiberias, Cavalry charge of Burkel, First Battle of Morlancourt, Invasion of Cheikh Said, Landing at Cape Domesnes, Raid on Bir el Hassana, Raid on Nekhl, Raid on the Beersheba to Hafir el Auja railway, Second Battle of Jaunde, Second Battle of Mons, Second Battle of Morlancourt, Second attack on Anzac Cove, Trabzon campaign (1918)
------
-Unknown officer
-Charge of Rokitna
 -----
 Until 26 July:
 Battle of Baku
@@ -3660,9 +3640,6 @@ Battle of Łódź
 Wolfgang Weck
 Maziua raid, Portuguese campaign in Mozambique
 -----
-Wounded in action
-First Petsamo expedition
------
 Władysław Anders
 Battle of Bobruysk
 -----
@@ -3699,74 +3676,14 @@ Battle of Rafajlowa
 Zygmunt Zieliński (1858–1925)
 Battle of Cârlibaba, Battle of Mołotków
 -----
-[[George Milne, 1st Baron Milne|George Milne
-Battle of Doiran
------
-]]
-Battle of Doiran
------
-border|20px Agha Petros
-Battle of Charah (1918), Battle of Seray Mountain, Battle of Sharqat, Battle of Suldouze, Persian campaign, Urmia clashes
------
-border|20px Andranik Ozanian
-Persian campaign
------
-border|20px Dawid Mar Shimun
-Battle of Charah (1918), Persian campaign
------
-border|20px Malik Khoshaba
-Battle of Charah (1918), Battle of Seray Mountain, Battle of Suldouze, Persian campaign, Urmia clashes
------
-border|20px Malik Yaqo
-Battle of Charah (1918), Battle of Sharqat, Persian campaign
------
-border|20px Mar Benyamin Shimun
-Urmia clashes
------
-border|20px Shimun XIX Benyamin
-Persian campaign
------
-border|20px Tovmas Nazarbekian
-Persian campaign
------
-border|22px Agha Petros
-Battle of Ushno (1918)
------
-border|22px Malik Khoshaba
-Battle of Ushno (1918)
------
 gen. Maksymowicz
 Battle of Bobruysk
 -----
 gen. Romanowskij
 Battle of Bobruysk
 -----
-unknown
-Action at Lukigura River, Battle of Mołotków
------
 von Crailsheim
 Battle of Gurin
------
-{{Collapsible list
-Battle on Istrana
------
-{{Plain list|
-Battle of Halen, Battle of Mulhouse (Mülhausen), Battle of Pozières, Battle of St Quentin Canal, Capture of Damascus
------
-{{flagicon|Transcaucasian Democratic Federative Republic
-Battle of Choloki
------
-| Pallasch
-Battle on Istrana
------
-|bullets = yes
-Battle on Istrana
------
-|title = Known List:
-Battle on Istrana
------
-}}
-Battle of Halen, Battle of Mulhouse (Mülhausen), Battle of Pozières, Battle of St Quentin Canal, Battle on Istrana, Capture of Damascus
 -----
 Édouard Michel du Faing d'Aigremont
 Battle of Buggenhout
