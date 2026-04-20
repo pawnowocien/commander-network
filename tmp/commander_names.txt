@@ -481,8 +481,8 @@ Battle of Krechowce
 Bolesław Roja
 Battle of Jastków, Battle of Mołotków
 -----
-Brig. Gen. Frederick Cunliffe
-Battle of Banjo, Battle of Ngaundere
+Bowyer-Smijth
+Battle of Banjo
 -----
 Brigadier General Frederick Hugh Cunliffe
 Second Battle of Garua
@@ -508,32 +508,23 @@ Battle of Sellenberk, Nagyszeben Offensive
 C. G. E. Mannerheim
 Battle of Tampere
 -----
+C. H. P. Carter
+First Battle of Garua
+-----
+C. T. Mair
+Battle of Nsanakong
+-----
 C. V. F. Townshend
 Battle of Amara
 -----
 C. W. Malm
 Battle of Varkaus
 -----
-Cap. Bowyer-Smijth
-Battle of Banjo
------
-Cap. Haedicke
-Battle of Jabassi
------
-Cap. Jeanjean
-Battle of Laï
------
-Cap. Kurt Rügland
-First Battle of Garua
------
 Cap. Schipper
 Battle of Gurin
 -----
 Capt Stanley John
 Battle of Lioma
------
-Captain
-Battle of Ngaundere, Battle of Nsanakong
 -----
 Captain Angman
 Persian campaign
@@ -583,12 +574,6 @@ Occupation of Istanbul
 Carvalho Araújo
 Action of 14 October 1918
 -----
-Cdr. L. W. Braithwaite
-First Battle of Edea
------
-Cdr. Max Looff
-Battle of the Rufiji Delta
------
 Cecil H. Fox
 Battle off Texel
 -----
@@ -623,7 +608,7 @@ Charles Crewe
 Tabora offensive
 -----
 Charles Dobell
-Sinai and Palestine campaign
+Second Battle of Jaunde, Sinai and Palestine campaign
 -----
 Charles Elwell
 Battle of Bita Paka
@@ -703,32 +688,14 @@ Battle of Seicheprey
 Coen Brits
 Battle of Kisaki
 -----
-Col. C. H. P. Carter
-First Battle of Garua
------
 Col. J. van Deventer
 Battle of Kakamas
------
-Col. Largeau
-Battle of Kusseri
------
-Col. MacLear
-Battle of Tepe
------
-Col. Mayer
-First Battle of Edea, Second Battle of Edea
------
-Col. Miquelard
-Battle of Ukoko
 -----
 Col. P. C. B. Skinner
 Battle of Trekkopjes
 -----
 Colmar Freiherr von der Goltz
 Battle of Dujaila, Battle of Sheikh Sa'ad, Battle of Wadi, First Battle of Hanna, Mesopotamian campaign, Siege of Kut
------
-Colonel
-Battle of Arara
 -----
 Colonel Avetisov
 Battle of Binagadi
@@ -871,6 +838,9 @@ Third Battle of Petrozsény
 Dumitru Stratilescu
 Pitești–Târgoviște Retreat
 -----
+E. H. Gorges
+Battle of Jabassi
+-----
 E.J. Welby
 Battle of Sandfontein
 -----
@@ -879,6 +849,9 @@ Battle of Kolun, Veresmart Offensive
 -----
 Eberhard Gudowius
 Battle of Bukoba
+-----
+Edehbole
+Battle on Istrana
 -----
 Edgar Askin Wiggin
 Battle of Katia, Second Raid on the Suez Canal
@@ -917,7 +890,7 @@ Edward Brooke
 Action off Lerwick
 -----
 Edward Bulfin
-Battle of Jerusalem, Battle of Mughar Ridge, Battle of Sharon, Battle of Tabsor, Battle of Tell 'Asur, Battle of Tulkarm, Capture of Damascus, Capture of the Wadi el Hesi, Pursuit to Haritan, Sinai and Palestine campaign, Third Battle of Gaza
+Battle of Jaffa, Battle of Jerusalem, Battle of Mughar Ridge, Battle of Sharon, Battle of Tabsor, Battle of Tell 'Asur, Battle of Tulkarm, Capture of Damascus, Capture of the Wadi el Hesi, Pursuit to Haritan, Sinai and Palestine campaign, Third Battle of Gaza
 -----
 Edward Bulfin(XX Corps)
 Battle of Megiddo
@@ -1123,6 +1096,9 @@ Battle of Beersheba, Battle of Krithia Vineyard, Battle of Mughar Ridge, Battle 
 Fitawrari Habte Giyorgis Ras Kebede Mengesha
 Battle of Segale
 -----
+Fowle
+Battle of Ngaundere
+-----
 Franchet d'Espèrey
 Second Battle of the Aisne
 -----
@@ -1184,7 +1160,7 @@ Frederick Herman
 Battle of Ambos Nogales
 -----
 Frederick Hugh Cunliffe
-Kamerun campaign, Siege of Mora
+Battle of Banjo, Battle of Ngaundere, Kamerun campaign, Siege of Mora
 -----
 Frederick Selous
 Battle of Behobeho
@@ -1296,12 +1272,6 @@ Battle of Kitcheners' Wood
 -----
 Garrison commander:
 
------
-Gen. Charles Dobell
-Second Battle of Jaunde
------
-Gen. E. H. Gorges
-Battle of Jabassi
 -----
 Gen. Stewart
 Battle of Bukoba
@@ -1497,6 +1467,9 @@ Battle of Goychay, Battle of Kurdamir
 -----
 Hadar Ali Khan
 Action at Lukigura River
+-----
+Haedicke
+Battle of Jabassi
 -----
 Hafiz Hakki Pasha
 Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ
@@ -1945,6 +1918,9 @@ Battle of Courtrai, Battle of the Lys and the Escaut, 1918, Fifth Battle of Ypre
 Jean Eugène Pierre Maroix
 Togoland campaign
 -----
+Jean Philpin de Piépape
+Battle of Arara
+-----
 Jindřich Varhaník
 Battle of Doss Alto
 -----
@@ -2173,6 +2149,9 @@ Battle of Mărășești
 Karol Durski-Trzaska
 Battle of Mołotków
 -----
+Kessler
+Battle on Istrana
+-----
 Kezim Pasa
 Battle of Bash Abaran
 -----
@@ -2221,6 +2200,9 @@ Battle of Viipuri
 Kuno von Steuben
 Vardar offensive
 -----
+Kurt Freiherr von Crailsheim-Rügland
+First Battle of Garua
+-----
 Kurt Röder
 Naulila Incident
 -----
@@ -2239,8 +2221,14 @@ Battle of Karakilisa, Battle of Kut, Mesopotamian campaign, Persian campaign
 Kâzım Özalp
 Defense of Van
 -----
+L. W. Braithwaite
+First Battle of Edea
+-----
 Lachlan Chisholm Wilson
 Capture of Jenin, Capture of Tiberias
+-----
+Largeau
+Battle of Kusseri
 -----
 Lavr Kornilov
 Kerensky offensive, Tarnopol offensive
@@ -2272,17 +2260,8 @@ Baltic Naval War
 Liborius Ritter von Frank
 Balkans theatre, Battle of Cer, Battle of the Drina
 -----
-Lieutenant
-Battle on Istrana
------
-Lieutenant Colonel
-Battle of Arara, Battle of Ngaundere
------
 Lieutenant Colonel Edip Servet (tr)
 First Battle of Gaza
------
-Lieutenant General Edward Bulfin
-Battle of Jaffa
 -----
 Liman von Sanders
 Battle of Jisr Benat Yakub, Gallipoli campaign, Naval operations in the Dardanelles campaign
@@ -2323,6 +2302,9 @@ Balkans theatre, First Battle of the Marne
 Louis Pivet
 Naval warfare of World War I
 -----
+Louis Romieu
+Battle of Arara
+-----
 Louis Ruquoy
 Battle of Passchendaele (Third Battle of Ypres), Second Battle of Passchendaele
 -----
@@ -2334,15 +2316,6 @@ Battle of Lioma
 -----
 Lt. Col. August Stange Bey
 Battle of Ardahan
------
-Lt. Col. C. T. Mair
-Battle of Nsanakong
------
-Lt. Milbrat
-Battle of Tepe
------
-Lt. Siegfried Kallmeyer
-Battle of Kusseri
 -----
 Lucjan Malcz
 Battle of Arras (1915)
@@ -2393,7 +2366,7 @@ Ma'sud Miraza
 Defence of Iwardo
 -----
 MacLear
-First Battle of Garua
+Battle of Tepe, First Battle of Garua
 -----
 Magnus von Eberhardt
 Battle of Serre
@@ -2412,9 +2385,6 @@ First Battle of Garua
 -----
 Maj. Willibald von Stuemer
 Battle of Bukoba
------
-Major General S. W. Hare
-Battle of Arara
 -----
 Major J.R. Bassett
 Raid on Bir el Hassana
@@ -2489,7 +2459,7 @@ Max Leonhardi
 Action off Lerwick
 -----
 Max Looff
-Battle of Zanzibar
+Battle of Zanzibar, Battle of the Rufiji Delta
 -----
 Max Reymann
 Sinking of
@@ -2526,6 +2496,9 @@ Battle of Gumbinnen, East Prussian campaign
 -----
 Maximilian von Spee
 Battle of Coronel, Battle of the Falkland Islands, Bombardment of Papeete, Naval warfare of World War I
+-----
+Mayer
+First Battle of Edea, Second Battle of Edea
 -----
 Mehmed Subhi Bey
 Battle of Basra (1914)
@@ -2587,8 +2560,17 @@ Battle of Vilppula
 Miklós Horthy
 Battle of the Strait of Otranto, Naval warfare of World War I
 -----
+Milbrat
+Battle of Tepe
+-----
 Milenko Milićević
 Romania in World War I
+-----
+Milne-Howe
+Battle of Nsanakong
+-----
+Miquelard
+Battle of Ukoko
 -----
 Mitsuomi Kamio
 Siege of Tsingtao
@@ -2865,6 +2847,9 @@ Battle of the Crna Bend (1917)
 -----
 Paul Heinrich
 Action of 11–12 December 1917
+-----
+Paul Jeanjean
+Battle of Laï
 -----
 Paul Maistre
 Battle of La Malmaison, Battle of Lorette Hill, German spring offensive, Hundred Days Offensive, Meuse–Argonne offensive
@@ -3224,7 +3209,7 @@ Siege of Najaf (1918)#Rebels
 
 -----
 Siegfried Kallmeyer
-Siege of Mora
+Battle of Kusseri, Siege of Mora
 -----
 Siegfried Westerkamp
 Action off Lerwick
@@ -3288,6 +3273,9 @@ Balkans theatre, Battle of Cer, Battle of Dobro Pole, Battle of Niš (1915), Bat
 -----
 Stepan Shaumian
 Battle of Baku, Battle of Goychay, Battle of Kurdamir
+-----
+Steuart Hare
+Battle of Arara
 -----
 Stjepan Sarkotić
 Battle of Lovćen, Montenegrin campaign
@@ -3540,6 +3528,9 @@ Baltic Naval War
 -----
 Walter N. Vernou
 Action of 15 October 1917
+-----
+Webb-Bowen
+Battle of Ngaundere
 -----
 Wehib Pasha
 Battle of Choloki, Battle of ErzincanЭрзинджанское сражениеԵրզնկայի ճակատամարտErzincan Savaşı, Battle of Karakilisa, Battle of Mastara, Trabzon campaign (1918)

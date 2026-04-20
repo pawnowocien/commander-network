@@ -53,3 +53,9 @@ EXCEPTIONS = [
     ]
 
 FILES_TO_SKIP = FILES_NO_INFOBOXES + FILES_REDIRECTS + EXCEPTIONS
+RANK_WIKILINKS_TO_REMOVE = [
+    'colonel', 'lieutenant colonel', 'major general', 'general', 'captain', 'lieutenant',
+    'field marshal', 'admiral', 'major', 'commander', 'brigadier', 'brigadier general',
+    'rear admiral', 'vice admiral', 'commodore', 'air marshal', 'air commodore',
+    'marshal', 'lieutenant-colonel', 'major-general', 'lieutenant general', 'lieutenant-general'
+]

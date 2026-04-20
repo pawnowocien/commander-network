@@ -1,5 +1,5 @@
 import mwparserfromhell as mwp
-from consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES
+from consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES, RANK_WIKILINKS_TO_REMOVE
 from models.models import InvalidParse, Commander, Country, CommanderListType
 import logging
 
@@ -279,7 +279,7 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
             commander_code.remove(temp)
 
     for link in commander_code.filter_wikilinks():
-        title = str(link.title).strip().lower()
+        title = link.title.strip_code().strip().lower()
         if title.startswith(("file:", "image:")):
             filename = title.split(":", 1)[1].strip()
             if commander.allegiance:
@@ -288,7 +288,10 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
             commander_code.remove(link)
         
         # Handle "Petsamo_expeditions.txt" case
-        if "wounded in action" in title.lower():
+        elif "wounded in action" in title:
+            commander_code.remove(link)
+
+        elif title in RANK_WIKILINKS_TO_REMOVE:
             commander_code.remove(link)
 
     wikilinks = commander_code.filter_wikilinks()
