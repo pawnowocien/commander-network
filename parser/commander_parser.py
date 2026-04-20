@@ -3,6 +3,8 @@ from consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, MULTI_ALLEGIANCE_COMMANDE
 from models.models import InvalidParse, Commander, Country, CommanderListType
 import logging
 
+from parser.name_dict import COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
+
 
 def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | InvalidParse:
     commanders = []
@@ -296,7 +298,7 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
 
     wikilinks = commander_code.filter_wikilinks()
     if wikilinks and len(wikilinks) == 1:
-        commander.name = wikilinks[0].title.strip_code().strip()
+        commander.name = clean_corner_cases(wikilinks[0].title.strip_code())
     else:
         logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
         clean_name = clean_corner_cases(commander_code.strip_code())
@@ -347,7 +349,23 @@ def clean_corner_cases(name: str) -> str | None:
     if name in banned:
         return None
 
+    for letter in LETTER_DICT.keys():
+        if letter in name:
+            name = name.replace(letter, LETTER_DICT[letter])
+    
+    for first_name in SIMPLE_NAME_DICT.keys():
+        split_name = name.split(" ")
+        if split_name[0] == first_name:
+            name = SIMPLE_NAME_DICT[first_name]
+            for i in range(1, len(split_name)):
+                name += " " + split_name[i]
+            break
 
+    for full_name in COMPLEX_NAME_DICT.keys():
+        if full_name == name:
+            name = COMPLEX_NAME_DICT[full_name]
+            break
+    
     if not name:
         return None
     return name
