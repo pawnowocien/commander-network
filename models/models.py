@@ -64,3 +64,4 @@ class CommanderListType(Enum):
     NO_LIST_MULTI = 8
     UBLI = 9
     TREE_LIST = 10
+    COLLAPSIBLE_LIST = 11

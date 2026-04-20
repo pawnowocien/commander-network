@@ -113,6 +113,21 @@ com_tree_list = mwp.parse("""{{tree list}}
 * [[Simko Shikak]]<ref name="Bruinessen 2006 18–21">{{cite book|last=Bruinessen|first=Martin|author-link=Martin van Bruinessen|editor1-last=Atabaki|editor1-first=Touraj|editor1-link=Touraj Atabaki|chapter=Chapter 5: A Kurdish warlord on the Turkish-Persian frontier in the early Twentieth century: Isma'il Aqa Simko|title=Iran and the First World War: Battleground of the Great Powers|series=Library of modern Middle East studies, 43|publisher=[[I.B. Tauris]]|location=London; New York|pages=18–21|chapter-url=https://www.academia.edu/3555229|year=2006|isbn=9781860649646|oclc=56455579}}</ref>
 {{tree list/end}}""")
 
+# Air Battle on Istrana
+com_collapsible_list = mwp.parse(""" {{Collapsible list
+|bullets = yes
+|title = '''Known List:'''
+|{{flagdeco|German Empire}} [[Georg Est]]{{KIA}}
+|{{flagdeco|German Empire}} [[Franz Hertling]]{{KIA}}
+|{{flagicon|Austria-Hungary}} [[Lieutenant|Lt.]] Kessler{{POW}}
+|{{flagdeco|German Empire}} [[Lieutenant|Lt.]] Edehbole{{KIA}}
+|{{flagdeco|German Empire}} [[Karl Uecker]]{{KIA}}
+|{{flagdeco|German Empire}} [[Heinrich Pfeiffer (aviator)|Heinrich Pfeiffer]]{{KIA}}
+|{{flagicon|Austria-Hungary}} Pallasch{{POW}}
+|{{flagicon|Austria-Hungary}} [[Pohlmann (aviator)|Pohlmann]]{{POW}}
+|{{flagicon|Austria-Hungary}} [[Schlamm]]{{POW}}
+}}""")
+
 all_com_test_cases = [
     com_ubl,
     com_ubl_one_flag,
@@ -131,4 +146,5 @@ all_com_test_cases = [
     com_no_list_multi,
     com_question_mark,
     com_tree_list,
+    com_collapsible_list,
 ]

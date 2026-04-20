@@ -16,6 +16,9 @@ def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | 
         case CommanderListType.TREE_LIST:
             logging.info("Detected tree list commander format")
             commanders = tree_list_to_list(commander_code)
+        case CommanderListType.COLLAPSIBLE_LIST:
+            logging.info("Detected collapsible list commander format, treating as plainlist")
+            commanders = collapsible_list_to_list(commander_code)
         case CommanderListType.UBL:
             logging.info("Detected ubl commander format")
             commanders = ubl_to_list(commander_code)
@@ -64,6 +67,8 @@ def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderL
             return CommanderListType.PLAINLIST
         elif templates[0].name.strip() == "Plainlist":
             return CommanderListType.PLAINLIST_UPPER
+        elif templates[0].name.strip() == "Collapsible list":
+            return CommanderListType.COLLAPSIBLE_LIST
         elif templates[0].name.strip().lower() == "tree list":
             return CommanderListType.TREE_LIST
         elif templates[0].name.strip().lower() == "ubl":
@@ -121,6 +126,19 @@ def tree_list_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander |
     commander_code = commander_code.replace("{{tree list}}", "{{plainlist|")
     commander_code = commander_code.replace("{{tree list/end}}", "}}")
     return plainlist_to_list(mwp.parse(commander_code))
+
+def collapsible_list_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
+    code = ""
+    for part in str(commander_code).split("\n"):
+        if "{{Collapsible list" in part:
+            code += part.replace("{{Collapsible list", "{{plainlist|") + "\n"
+        elif part.strip().startswith("|"):
+            if part[1:].strip().startswith(("title", "bullets")):
+                continue
+            code += "* " + part[1:] + "\n"
+        elif part.strip() == "}}":
+            code += "}}"
+    return plainlist_to_list(mwp.parse(code))
 
 def ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     lst = []
