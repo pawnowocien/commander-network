@@ -236,7 +236,7 @@ def get_commander(commander_code: mwp.wikicode.Wikicode) -> Commander | None:
         logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
         clean_name = commander_code.strip_code().strip()
 
-        if clean_name == "?":
+        if clean_name in ["?", "Unknown", "Unknown officer", "unknown"]:
             logging.warning("Commander name is a '?', setting commander to None. Wikicode: %s", code_for_logs)
             return None
         elif "?" in clean_name:
