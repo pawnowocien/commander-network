@@ -49,6 +49,7 @@ EXCEPTIONS = [
     "Battle_of_the_Yser.txt",           # Wrong formatting (flags as commander names)
     "Raid_on_Jifjafa.txt",              # Wrong formatting (flags as commander names)
     "Battle_of_the_Scarpe_(1918).txt",  # Weird formatting (has <!-- don't know {{flagicon|German Empire}} ???--> in commander2)
+    "Battle_of_Kolubara.txt",           # ubl with "*"
     ]
 
 FILES_TO_SKIP = FILES_NO_INFOBOXES + FILES_REDIRECTS + EXCEPTIONS

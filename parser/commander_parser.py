@@ -10,6 +10,9 @@ def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | 
         case CommanderListType.PLAINLIST:
             logging.info("Detected plainlist commander format")
             commanders = plainlist_to_list(commander_code)
+        case CommanderListType.PLAINLIST2:
+            logging.info("Detected Plain list commander format")
+            commanders = plainlist2_to_list(commander_code)
         case CommanderListType.PLAINLIST_UPPER:
             logging.info("Detected Plainlist commander format")
             commanders = plainlist_upper_to_list(commander_code)
@@ -17,7 +20,7 @@ def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[Commander] | 
             logging.info("Detected tree list commander format")
             commanders = tree_list_to_list(commander_code)
         case CommanderListType.COLLAPSIBLE_LIST:
-            logging.info("Detected collapsible list commander format, treating as plainlist")
+            logging.info("Detected collapsible list commander format")
             commanders = collapsible_list_to_list(commander_code)
         case CommanderListType.UBL:
             logging.info("Detected ubl commander format")
@@ -65,6 +68,8 @@ def get_commander_list_type(commander_code: mwp.wikicode.Wikicode) -> CommanderL
 
         if templates[0].name.strip() == "plainlist":
             return CommanderListType.PLAINLIST
+        if templates[0].name.strip() == "Plain list":
+            return CommanderListType.PLAINLIST2
         elif templates[0].name.strip() == "Plainlist":
             return CommanderListType.PLAINLIST_UPPER
         elif templates[0].name.strip() == "Collapsible list":
@@ -114,6 +119,11 @@ def plainlist_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander |
         lst.append(get_commander(mwp.parse(line)))
 
     return lst
+
+def plainlist2_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
+    commander_code = str(commander_code)
+    commander_code = commander_code.replace("{{Plain list|", "{{plainlist|")
+    return plainlist_to_list(mwp.parse(commander_code))
 
 def plainlist_upper_to_list(commander_code: mwp.wikicode.Wikicode) -> list[Commander | None]:
     commander_code = str(commander_code)

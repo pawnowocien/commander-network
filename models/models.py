@@ -65,3 +65,4 @@ class CommanderListType(Enum):
     UBLI = 9
     TREE_LIST = 10
     COLLAPSIBLE_LIST = 11
+    PLAINLIST2 = 12
