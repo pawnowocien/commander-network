@@ -345,6 +345,9 @@ def clean_corner_cases(name: str) -> str | None:
 
     
     banned = ["15th Division (North Army):", "1st Army:", "2nd Army:", # Battle of the Southern Carpathians
+              "Garrison commander:", "Among others",                   # 1916 uprising in Hilla
+              "No centralized leadership",                             # 1915 uprising in Karbala
+              "Until 26 July:"                                         # Battle of Baku
               ]
     if name in banned:
         return None

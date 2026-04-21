@@ -11,7 +11,8 @@ WAIT_REQUEST_SEC = 1.0
 INFOBOX_NAMES = ["infobox military conflict", "warbox", "battle", "infobox battle", "Mines_in_the_Battle_of_Messines_(1917)", ]
 
 FLAG_ICON_TEMPLATE_NAMES = ["flagicon", "flagdeco"]
-BR_NAMES = ["<br />", "<br/>", "{{br}}", "<br>", "<Br>", "<BR />", "<br/ >", "<BR>"]
+BR_NAMES = ["<br />", "<br/>", "{{br}}", "<br>", "<Br>", "<BR />", "<br/ >", "<BR>", 
+            "{{clear}}"]    # {{clear}} is only used German bombing of Monrovia, it's not really a <br> but it serves the same purpose
 
 MULTI_ALLEGIANCE_COMMANDER_NAMES = [
     "Crown Prince Rupprecht", "Rupprecht, Crown Prince of Bavaria",

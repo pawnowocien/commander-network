@@ -2,7 +2,7 @@ import logging
 import os
 
 import mwparserfromhell as mwp
-from consts import FILES_TO_SKIP, INFOBOX_NAMES
+from consts import BR_NAMES, FILES_TO_SKIP, INFOBOX_NAMES
 from log_utils import setup_logging_parse
 from parser import test_objects
 from parser.combatant_parser import parse_combatant
@@ -36,12 +36,9 @@ def get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Te
 
 def get_battle_info(infobox: mwp.nodes.template.Template, alt_title: str | None = None) -> Battle | None:
     # TODO
-    conflict_name = ""
-    wiki_conflict = infobox.get("conflict", default=None)
-    if wiki_conflict:
-        conflict_name = wiki_conflict.value.strip_code().strip()
 
-    if not conflict_name or conflict_name.strip() == "":
+    conflict_name = get_conflict_name(infobox)
+    if conflict_name == "":
         if alt_title:
             logging.warning("No conflict name found. Using alt title: %s", alt_title)
             conflict_name = alt_title
@@ -67,6 +64,19 @@ def get_battle_info(infobox: mwp.nodes.template.Template, alt_title: str | None 
     commanders2 = parse_commander(commander2.value)
 
     return Battle(conflict_name, countries1, countries2, commanders1, commanders2)
+
+def get_conflict_name(infobox: mwp.nodes.template.Template) -> str:
+    wiki_conflict = infobox.get("conflict", default=None)
+    if wiki_conflict:
+        conflict_name = str(wiki_conflict.value)
+        for br in BR_NAMES:
+            if br in conflict_name:
+                name = conflict_name.split(br)[0].strip()
+                logging.warning("Conflict name contains line break, choosing the first title: %s", name)
+                return name
+            
+        return wiki_conflict.value.strip_code().strip()
+    return ""
 
 def wiki_to_battle_name(name: mwp.wikicode.Wikicode) -> str:
     return name.strip_code().strip()

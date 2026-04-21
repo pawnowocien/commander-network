@@ -74,7 +74,7 @@ Adrian Nepenin
 Naval warfare of World War I
 -----
 Agha Petros
-Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Charah (1918), Battle of Seray Mountain, Battle of Sharqat, Battle of Suldouze, Battle of Ushno (1918), Defense of Van, Mesopotamian campaign, Persian campaign, Urmia clashes
+Battle of Bitlis, Battle of Charah (1918), Battle of Seray Mountain, Battle of Sharqat, Battle of Suldouze, Battle of Ushno (1918), Defense of Van, Mesopotamian campaign, Persian campaign, Urmia clashes
 -----
 Ahmad Helmy
 Sinai and Palestine campaign
@@ -89,7 +89,7 @@ Ahmed Djemal
 Battle of Haifa, Battle of Jerusalem, Battle of Wadi Musa, Capture of Jericho, Charge at Irbid, First Battle of Gaza, Raid on the Suez Canal, Second Battle of Gaza, Second Raid on the Suez Canal, Sinai and Palestine campaign
 -----
 Ahmed Izzet Pasha
-Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Muş
+Battle of Bitlis, Battle of Muş
 -----
 Ahmed Tevfik Pasha
 1916 Battle of Taif
@@ -116,7 +116,7 @@ Albrecht of Württemberg
 Battle of Buggenhout, Battle of the Ardennes, Capture of Hill 60, First Battle of Ypres, First Battle of the Marne, German spring offensive, Hundred Days Offensive, Meuse–Argonne offensive, Second Battle of Ypres
 -----
 Aleksei Brusilov
-Battle of Galicia, Battle of Gnila Lipa, Battle of Kowel, Battle of Kraków, Battle of Limanowa, Battle of the San river, Brusilov offensive(Fourth Battle of Galicia), Great Retreat, Kerensky offensive, Rovno Offensive, Second Brusilov offensive
+Battle of Galicia, Battle of Gnila Lipa, Battle of Kowel, Battle of Kraków, Battle of Limanowa, Battle of the San river, Brusilov offensive, Great Retreat, Kerensky offensive, Rovno Offensive, Second Brusilov offensive
 -----
 Aleksei Evert
 Baranovichi offensive, Battle of Galicia, Battle of Komarow, Battle of Kraków, Battle of the Four Rivers, Battle of the Vistula River, Lake Naroch offensive
@@ -125,7 +125,7 @@ Aleksei Gutor
 Kerensky offensive
 -----
 Aleksei Kaledin
-Battle of Kostiuchnówka, Battle of Lutsk, Brusilov offensive(Fourth Battle of Galicia), Second Brusilov offensive
+Battle of Kostiuchnówka, Battle of Lutsk, Brusilov offensive, Second Brusilov offensive
 -----
 Aleksei Kuropatkin
 Lake Naroch offensive
@@ -155,7 +155,7 @@ Alexander Lösch
 Naulila Incident
 -----
 Alexander Myshlayevsky
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ
+Battle of Sarikamish
 -----
 Alexander Ragoza
 Baranovichi offensive, Battle of Konary, Battle of Mărășești
@@ -179,13 +179,13 @@ Alexander von Krobatin
 Battle of Vittorio Veneto
 -----
 Alexander von Linsingen
-Battle of Kowel, Brusilov offensive(Fourth Battle of Galicia), First Battle of Ypres, Second Brusilov offensive, Vistula-Bug offensive
+Battle of Kowel, Brusilov offensive, First Battle of Ypres, Second Brusilov offensive, Vistula-Bug offensive
 -----
 Alexandru Averescu
 Battle of Mărăști, Battle of Predeal Pass, Battle of Transylvania, Battle of the Southern Carpathians, Dobruja Campaign, First Battle of Cobadin, Flămânda Offensive, Romania in World War I, Romanian Campaign (1917), Romanian campaign (1916), Second Battle of Cobadin, Third Battle of Oituz
 -----
 Alexandru Cӑlinescu
-Battle of Robănești(Charge of Robănești)
+Battle of Robănești
 -----
 Alexandru Hartel
 Second Battle of Cobadin
@@ -244,14 +244,11 @@ Battle of Buggenhout
 Alves Roçadas
 Battle of Naulila, German Campaign in Angola, West Africa campaign
 -----
-Among others
-1916 uprising in Hilla
------
 Anastasios Papoulas
 Noemvriana
 -----
 Andranik Ozanian
-Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Dilman, Persian campaign, Urmia clashes
+Battle of Bitlis, Battle of Dilman, Persian campaign, Urmia clashes
 -----
 Andrea Graziani
 Battle of Doss Alto
@@ -317,7 +314,7 @@ Archduke Joseph August of Austria
 Battle of Vittorio Veneto
 -----
 Archduke Joseph Ferdinand
-Battle of Kraków, Battle of Limanowa, Battle of Lutsk, Battle of Sieniawa, Battle of the San river, Battle of Łowczówek, Brusilov offensive(Fourth Battle of Galicia), Gorlice–Tarnów offensive, Second Brusilov offensive
+Battle of Kraków, Battle of Limanowa, Battle of Lutsk, Battle of Sieniawa, Battle of the San river, Battle of Łowczówek, Brusilov offensive, Gorlice–Tarnów offensive, Second Brusilov offensive
 -----
 Archibald Bisset Smith
 Action of 10 March 1917
@@ -329,7 +326,7 @@ Archibald Paris (Royal Marines officer)
 Siege of Antwerp
 -----
 Arif Baytın
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 Armand Charles Phillipe
 Battle of Terron
@@ -554,7 +551,7 @@ Cesare Battisti (politician)
 Battle of Monte Corno
 -----
 Cevat Pasha
-Battle of Hill 60, Brusilov offensive(Fourth Battle of Galicia), Gallipoli campaign, Landing at Suvla Bay, Mesopotamian campaign, Second Brusilov offensive
+Battle of Hill 60, Brusilov offensive, Gallipoli campaign, Landing at Suvla Bay, Mesopotamian campaign, Second Brusilov offensive
 -----
 Cevat Pasha(Eighth Army)
 Battle of Megiddo
@@ -668,7 +665,7 @@ Colonel Taylor
 Battle of Nurunyu
 -----
 Conrad von Hötzendorf
-Battle of Asiago, Battle of Doberdò, Battle of Galicia, Battle of Hill 383, Battle of Komarow, Battle of Kowel, Battle of Kraków, Battle of Kraśnik, Battle of Limanowa, Battle of Podgora, Battle of the Piave River, Battle of the Vistula River, Brusilov offensive(Fourth Battle of Galicia), Fifth Battle of the Isonzo, First Battle of the Isonzo, Fourth Battle of the Isonzo, Gorlice–Tarnów offensive, Great Retreat, Isonzo front, Rovno Offensive, Second Battle of the Isonzo, Second Brusilov offensive, Seventh Battle of the Isonzo, Sixth Battle of the Isonzo, Third Battle of the Isonzo, White War
+Battle of Asiago, Battle of Doberdò, Battle of Galicia, Battle of Hill 383, Battle of Komarow, Battle of Kowel, Battle of Kraków, Battle of Kraśnik, Battle of Limanowa, Battle of Podgora, Battle of the Piave River, Battle of the Vistula River, Brusilov offensive, Fifth Battle of the Isonzo, First Battle of the Isonzo, Fourth Battle of the Isonzo, Gorlice–Tarnów offensive, Great Retreat, Isonzo front, Rovno Offensive, Second Battle of the Isonzo, Second Brusilov offensive, Seventh Battle of the Isonzo, Sixth Battle of the Isonzo, Third Battle of the Isonzo, White War
 -----
 Constantin Cristescu
 Battle of Mărășești, Romanian Campaign (1917)
@@ -718,7 +715,7 @@ Battle of Haifa
 Damjan Popović
 Ovche Pole Offensive
 -----
-Daniel Edward Howard  (President of Liberia)  Thomas J. R. Faulkner (Mayor of Monrovia)
+Daniel Edward Howard
 German bombing of Monrovia
 -----
 Daniel Patrick Driscoll
@@ -752,7 +749,7 @@ Dmitri Parsky
 Riga offensive
 -----
 Dmitry Shcherbachev
-Battle of Mărăști, Battle of the San river, Battle of the Strypa River, Brusilov offensive(Fourth Battle of Galicia), Romania in World War I, Second Brusilov offensive
+Battle of Mărăști, Battle of the San river, Battle of the Strypa River, Brusilov offensive, Romania in World War I, Second Brusilov offensive
 -----
 Douglas Haig
 (Schwaben Redoubt), Action of 22 August 1917, Action of 22 October 1917, Action of 25 September 1917, Action of the Cockcroft, 19 August 1917, Action on the Polderhoek Spur, Actions of 30 September – 4 October 1917, Actions of St Eloi Craters, Attack on the Boar's Head, Attack on the Gommecourt Salient, Attacks on High Wood, Attacks on the Butte de Warlencourt, Battle of Albert (1916), Battle of Amiens, Battle of Arras, Battle of Broodseinde, Battle of Cambrai (1917), Battle of Delville Wood, Battle of Festubert, Battle of Flers–Courcelette, Battle of Ginchy, Battle of Guillemont, Battle of Langemarck, Battle of Le Transloy, Battle of Loos, Battle of Messines, Battle of Mons, Battle of Morval, Battle of Neuve-Chapelle, Battle of Passchendaele (Third Battle of Ypres), Battle of Pilckem Ridge, Battle of Polygon Wood, Battle of Pozières, Battle of Thiepval Ridge, Battle of the Ancre, Battle of the Ancre Heights, Battle of the Menin Road Ridge, Battle of the Somme, Capture of Beaumont-Hamel, Capture of Combles, Capture of Contalmaison, Capture of Eaucourt l'Abbaye, Capture of Fricourt, Capture of Gueudecourt, Capture of La Boisselle, Capture of Le Sars, Capture of Lesbœufs, Capture of Mametz, Capture of Martinpuich, Capture of Montauban, Capture of Oppy Wood, Capture of Ovillers, Capture of Stuff Redoubt, Capture of Trônes Wood, Capture of Westhoek, Capture of Wytschaete, Fighting for Mouquet Farm, First Battle of Passchendaele, First attack on Bullecourt, First day on the Somme, Gas attacks at Wulverghem, German Spring Offensive, 1918, German attack on Lagnicourt ( [Operation Battering Ram]), German attack on Vimy Ridge (), German phosgene attack, German spring offensive, Gheluvelt Plateau actions, July–August 1917, Hawthorn Ridge Redoubt, Hohenzollern Redoubt action, 2–18 March 1916, Hundred Days Offensive, Leipzig Salient, Lochnagar mine, Loss of the Kink Salient, Night action of 1/2 December 1917, Nivelle offensive, Operation Alberich, Operation Hush, Operation Michael, Operations on the Ancre, January–March 1917, Regina Trench, Second Battle of Artois, Second Battle of Villers-Bretonneux, Second Battle of the Somme (1918), The Bluff, The German Attack on Vimy Ridge, 21 May 1916 (), Western Front 1917, Winter operations 1914–1915, Y Sap mine
@@ -803,7 +800,7 @@ Eduard von Below
 Battle of Saint-Mihiel
 -----
 Eduard von Böhm-Ermolli
-Balkans theatre, Battle of Cer, Battle of Galicia, Battle of Zborov, Battle of the Four Rivers, Battle of the San river, Brusilov offensive(Fourth Battle of Galicia), Gorlice–Tarnów offensive, Kerensky offensive, Operation Faustschlag, Second Brusilov offensive
+Balkans theatre, Battle of Cer, Battle of Galicia, Battle of Zborov, Battle of the Four Rivers, Battle of the San river, Brusilov offensive, Gorlice–Tarnów offensive, Kerensky offensive, Operation Faustschlag, Second Brusilov offensive
 -----
 Eduardo Costa
 Maziua raid, Portuguese campaign in Mozambique
@@ -959,7 +956,7 @@ Fedir Shchus
 Battle of Dibrivka
 -----
 Felix Graf von Bothmer
-Battle of the Strypa River, Brusilov offensive(Fourth Battle of Galicia), Kerensky offensive, Second Brusilov offensive, Tarnopol offensive
+Battle of the Strypa River, Brusilov offensive, Kerensky offensive, Second Brusilov offensive, Tarnopol offensive
 -----
 Fenton Aylmer
 Battle of Dujaila, Battle of Sheikh Sa'ad, Battle of Wadi, First Battle of Hanna
@@ -1103,7 +1100,7 @@ Friedrich-Wilhelm von Chappuis
 Battle of Nurunyu
 -----
 Fritz Bronsart von Schellendorf
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ
+Battle of Sarikamish
 -----
 Fritz Lüdecke
 Battle of Más a Tierra
@@ -1142,7 +1139,7 @@ Gaimmegam Hasan Bey
 Battle of Binagadi
 -----
 Galip Pasha
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 Gallo Shabo
 Defence of Iwardo
@@ -1152,9 +1149,6 @@ Battle of Karakilisa
 -----
 Garnet Hughes
 Battle of Kitcheners' Wood
------
-Garrison commander:
-1916 uprising in Hilla
 -----
 General Kuntze
 Action of the Hohenzollern Redoubt
@@ -1244,7 +1238,7 @@ Georgi Todorov (general)
 Balkans theatre, Battle of Dobro Pole, Battle of Kosturino, Battle of Krivolak, Kosovo offensive, Ovche Pole Offensive, Vardar offensive
 -----
 Georgy Bergmann
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 Georgy Bulatsel
 Battle of Tampere
@@ -1337,7 +1331,7 @@ Haedicke
 Battle of Jabassi
 -----
 Hafiz Hakki Pasha
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ
+Battle of Sarikamish
 -----
 Haji Samad
 Urmia clashes
@@ -1409,7 +1403,7 @@ Harry Triscott Brooking
 Action of Khan Baghdadi
 -----
 Hasan Izzet Pasha
-Battle of ErzincanЭрзинджанское сражениеԵրզնկայի ճակատամարտErzincan Savaşı
+Battle of Erzincan
 -----
 Hauptmann Rausch Emil
 Battle of Nsanakong
@@ -1643,7 +1637,7 @@ Ijuin Gorō
 Naval warfare of World War I
 -----
 Illarion Ivanovich Vorontsov-Dashkov
-Battle of Ardahan, Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Ardahan, Battle of Sarikamish, Bergmann Offensive
 -----
 Imam Yahya
 Battle of Ad-Dakim
@@ -2306,7 +2300,7 @@ Mihailo Živković
 Fall of Belgrade (1915)
 -----
 Mikhail Alekseyev
-Battle of Vilnius, Brusilov offensive(Fourth Battle of Galicia), Bug–Narew offensive, First Riga offensive, Great Retreat, Narew Offensive, Riga–Šiauliai offensive, Second Brusilov offensive, Vistula-Bug offensive
+Battle of Vilnius, Brusilov offensive, Bug–Narew offensive, First Riga offensive, Great Retreat, Narew Offensive, Riga–Šiauliai offensive, Second Brusilov offensive, Vistula-Bug offensive
 -----
 Mikhail Bakhirev
 Battle of Gotland, Battle of Moon Sound, Operation Albion
@@ -2315,7 +2309,7 @@ Mikhail Dieterichs
 Battle of the Crna Bend (1917)
 -----
 Mikhail Diterikhs
-Brusilov offensive(Fourth Battle of Galicia), Second Brusilov offensive
+Brusilov offensive, Second Brusilov offensive
 -----
 Mikhail Svechnikov
 Battle of Viipuri
@@ -2369,7 +2363,7 @@ Mustafa Hilmi Pasha
 Dobruja Campaign, First Battle of Cobadin, Romania in World War I, Romanian campaign (1916), Second Battle of Cobadin
 -----
 Mustafa Kemal Atatürk
-Battle for Baby 700, Battle for No.3 Post, Battle of Aleppo (1918), Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of Chunuk Bair, Battle of Hill 60, Battle of Jisr Benat Yakub, Battle of Megiddo, Battle of Muş, Battle of Nablus, Battle of Sari Bair, Battle of Scimitar Hill, Battle of Sharon, Battle of the Nek, Battle's of Çapakçur, Capture of Damascus, Capture of Jisr ed Damieh, Charge at Haritan, Charge at Kaukab, Charge at Khan Ayash, Charge at Kiswe, Gallipoli campaign, Landing at Anzac Cove, Landing at Suvla Bay, Pursuit to Haritan, Sinai and Palestine campaign, Third Transjordan attack
+Battle for Baby 700, Battle for No.3 Post, Battle of Aleppo (1918), Battle of Bitlis, Battle of Chunuk Bair, Battle of Hill 60, Battle of Jisr Benat Yakub, Battle of Megiddo, Battle of Muş, Battle of Nablus, Battle of Sari Bair, Battle of Scimitar Hill, Battle of Sharon, Battle of the Nek, Battle's of Çapakçur, Capture of Damascus, Capture of Jisr ed Damieh, Charge at Haritan, Charge at Kaukab, Charge at Khan Ayash, Charge at Kiswe, Gallipoli campaign, Landing at Anzac Cove, Landing at Suvla Bay, Pursuit to Haritan, Sinai and Palestine campaign, Third Transjordan attack
 -----
 Mustafa Kemal Bey
 Action of Khan Baghdadi
@@ -2432,7 +2426,7 @@ Nikolai Lokhvitsky
 Second Battle of the Aisne, Second Battle of the Marne
 -----
 Nikolai Nikolaevich Yudenich
-Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi, Battle of ErzincanЭрзинджанское сражениеԵրզնկայի ճակատամարտErzincan Savaşı, Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive, Trebizond Campaign
+Battle of Bitlis, Battle of Erzincan, Battle of Sarikamish, Bergmann Offensive, Trebizond Campaign
 -----
 Nikolai Pavlovich Bobyr
 Siege of Novogeorgievsk
@@ -2448,9 +2442,6 @@ Action of 10 March 1917
 -----
 Nikolay Iudovich Ivanov
 Battle of Dunajetz, Battle of Gnila Lipa, Battle of Kraśnik, Battle of Limanowa, Gorlice–Tarnów offensive
------
-No centralized leadership
-1915 uprising in Karbala
 -----
 Noel Laurence
 Action of 5 November 1916
@@ -2549,7 +2540,7 @@ Otto von Emmich
 Battle of Liège
 -----
 Otto von Feldmann
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ
+Battle of Sarikamish
 -----
 Otto von Garnier
 Battle of Néry, Battle of Smorgon
@@ -2621,10 +2612,10 @@ Paul von Hindenberg
 Battle of Vilnius
 -----
 Paul von Hindenburg
-1st Battle of Przasnysz, Attack of the Dead Men, Battle of Amiens, Battle of Augustów (1914), Battle of Humin-Bolimów, Battle of Tannenberg, Battle of Verdun, Battle of the Four Rivers, Battle of the Somme, Battle of the Vistula River, Battle of Łomża, Battle of Łódź, Brusilov offensive(Fourth Battle of Galicia), Bug–Narew offensive, East Prussian campaign, First Battle of the Masurian Lakes, First Riga offensive, First attack on Bullecourt, German attack on Lagnicourt ( [Operation Battering Ram]), German spring offensive, Great Retreat, Hundred Days Offensive, Meuse–Argonne offensive, Narew Offensive, Riga–Šiauliai offensive, Second Battle of Bolimów, Second Battle of the Masurian Lakes, Second Brusilov offensive, Western Front 1917
+1st Battle of Przasnysz, Attack of the Dead Men, Battle of Amiens, Battle of Augustów (1914), Battle of Humin-Bolimów, Battle of Tannenberg, Battle of Verdun, Battle of the Four Rivers, Battle of the Somme, Battle of the Vistula River, Battle of Łomża, Battle of Łódź, Brusilov offensive, Bug–Narew offensive, East Prussian campaign, First Battle of the Masurian Lakes, First Riga offensive, First attack on Bullecourt, German attack on Lagnicourt ( [Operation Battering Ram]), German spring offensive, Great Retreat, Hundred Days Offensive, Meuse–Argonne offensive, Narew Offensive, Riga–Šiauliai offensive, Second Battle of Bolimów, Second Battle of the Masurian Lakes, Second Brusilov offensive, Western Front 1917
 -----
 Paul von Kneussl
-Battle of Robănești(Charge of Robănești), First Battle of the Jiu Valley
+Battle of Robănești, First Battle of the Jiu Valley
 -----
 Paul von Lettow-Vorbeck
 Battle of Dutumi, Battle of Jassin, Battle of Kibata, Battle of Kisaki, Battle of Kondoa Irangi, Battle of Lioma, Battle of Mahiwa, Battle of Mlali, Battle of Namacurra, Battle of Nambanje, Battle of Ngomano, Battle of Tanga, East African campaign, Mahenge offensive, Portuguese campaign in Mozambique
@@ -2702,7 +2693,7 @@ Pietro Frugoni
 Battle of Asiago, Fifth Battle of the Isonzo, First Battle of the Isonzo, Fourth Battle of the Isonzo, Isonzo front, Second Battle of the Isonzo, Third Battle of the Isonzo
 -----
 Platon Lechitsky
-Battle of Kraków, Battle of the Four Rivers, Battle of the Strypa River, Brusilov offensive(Fourth Battle of Galicia), Rovno Offensive, Zolota Lypa – Dniestr battle
+Battle of Kraków, Battle of the Four Rivers, Battle of the Strypa River, Brusilov offensive, Rovno Offensive, Zolota Lypa – Dniestr battle
 -----
 Pohlmann (aviator)
 Battle on Istrana
@@ -3019,6 +3010,9 @@ Action of 15 August 1917
 Thomas Erskine Wardle
 Action of 29 February 1916
 -----
+Thomas J. R. Faulkner
+German bombing of Monrovia
+-----
 Thomas Morland
 Capture of Hill 60
 -----
@@ -3038,7 +3032,7 @@ Tom von Prince
 Battle of Tanga, East African campaign
 -----
 Topal Osman
-Battle of ErzincanЭрзинджанское сражениеԵրզնկայի ճակատամարտErzincan Savaşı, Battle of Goychay
+Battle of Erzincan, Battle of Goychay
 -----
 Topias Harju
 Battle of Hyvinkää
@@ -3065,16 +3059,13 @@ Trommer Paşa
 Battle of Krithia Vineyard
 -----
 Tsar Nicholas II
-Battle of Dunajetz, Battle of Vilnius, Battle of the Vistula River, Brusilov offensive(Fourth Battle of Galicia), East Prussian campaign, Gorlice–Tarnów offensive, Great Retreat, Persian campaign
+Battle of Dunajetz, Battle of Vilnius, Battle of the Vistula River, Brusilov offensive, East Prussian campaign, Gorlice–Tarnów offensive, Great Retreat, Persian campaign
 -----
 Tuomas Hyrskymurro
 Battle of Hämeenlinna
 -----
 Ulrich von Coler
 Battle of Viipuri
------
-Until 26 July:
-Battle of Baku
 -----
 Vasili Altfater
 Operation Albion
@@ -3161,7 +3152,7 @@ Vladimir Karpovich Kotlinsky
 Attack of the Dead Men
 -----
 Vladimir Sakharov
-Battle of Kowel, Brusilov offensive(Fourth Battle of Galicia), Romania in World War I, Rovno Offensive, Second Brusilov offensive
+Battle of Kowel, Brusilov offensive, Romania in World War I, Rovno Offensive, Second Brusilov offensive
 -----
 Vladimir Vasilyevich Smirnov
 Battle of Humin-Bolimów, Battle of the Four Rivers, Second Battle of Bolimów, Second Battle of the Vistula River
@@ -3200,7 +3191,7 @@ Webb-Bowen
 Battle of Ngaundere
 -----
 Wehib Pasha
-Battle of Choloki, Battle of ErzincanЭрзинджанское сражениеԵրզնկայի ճակատամարտErzincan Savaşı, Battle of Karakilisa, Battle of Mastara, Trabzon campaign (1918)
+Battle of Choloki, Battle of Erzincan, Battle of Karakilisa, Battle of Mastara, Trabzon campaign (1918)
 -----
 Werner von Frankenberg und Proschlitz
 Second Raid on the Suez Canal
@@ -3302,13 +3293,13 @@ Yrjö Kallinen
 Battle of Oulu
 -----
 Yusuf Izzet Pasha
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 Zbigniew Dunin-Wasowicz
 Charge of Rokitna
 -----
 Ziya Yergök
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 Zolotin
 Battle of Rafajlowa
@@ -3335,10 +3326,10 @@ Gallipoli campaign, Naval operations in the Dardanelles campaign
 Defense of Azakh
 -----
 İhsan Sökmen
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 İsmail Enver Pasha
-Balkans theatre, Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive, First Battle of Amman, First Battle of the Jordan, Gallipoli campaign, Persian campaign, Second Transjordan attack on Shunet Nimrin and Es Salt
+Balkans theatre, Battle of Sarikamish, Bergmann Offensive, First Battle of Amman, First Battle of the Jordan, Gallipoli campaign, Persian campaign, Second Transjordan attack on Shunet Nimrin and Es Salt
 -----
 İsmail Hakkı Okday
 Battle of Sharqat
@@ -3347,7 +3338,7 @@ Battle of Sharqat
 Battle of Beersheba, Battle of El Buqqar Ridge, Capture of Damascus, Charge at Khan Ayash, Charge at Kiswe, First Battle of Ramadi, Sinai and Palestine campaign
 -----
 Şerif İlden
-Battle of Sarikamish Сражение при Сарыкамыше-Srazhenie pri Sarykamyshe Sarıkamış Muharebesi Սարիկամիշի Ճակատամարտ, Bergmann Offensive
+Battle of Sarikamish, Bergmann Offensive
 -----
 Živojin Mišić
 Balkans theatre, Battle of Dobro Pole, Battle of Kajmakčalan, Battle of the Crna Bend, Kosovo offensive, Vardar offensive
