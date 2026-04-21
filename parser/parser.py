@@ -24,7 +24,8 @@ def parse_file(file_path: str) -> Battle | None:
         logging.warning("No battle infobox found in file: %s", file_path)
         return None
 
-    return get_battle_info(infobox)
+    alt_battle_name = file_path.split(os.sep)[-1].replace(".txt", "").replace("__", "/").replace("_", " ")
+    return get_battle_info(infobox, alt_title=alt_battle_name)
 
 def get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Template | None:
     templates = wikicode.filter_templates()
@@ -33,21 +34,27 @@ def get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Te
             return template
     return None
 
-def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle | None:
+def get_battle_info(infobox: mwp.nodes.template.Template, alt_title: str | None = None) -> Battle | None:
     # TODO
-    conflict_name = "UNKNOWN"
+    conflict_name = ""
     wiki_conflict = infobox.get("conflict", default=None)
     if wiki_conflict:
         conflict_name = wiki_conflict.value.strip_code().strip()
-    else:
-        logging.warning("No conflict name found in infobox")
-    name = conflict_name
+
+    if not conflict_name or conflict_name.strip() == "":
+        if alt_title:
+            logging.warning("No conflict name found. Using alt title: %s", alt_title)
+            conflict_name = alt_title
+        else:
+            logging.error("No conflict name found, even alt title is not available. Skipping battle.")
+            return None
+        
 
     side1 = infobox.get("combatant1", default=None)
     side2 = infobox.get("combatant2", default=None)
     if not side1 or not side2:
         logging.warning("No combatant1 or combatant2 found in infobox: %s", infobox)
-        return Battle(name, InvalidParse(), InvalidParse(), InvalidParse(), InvalidParse())
+        return Battle(conflict_name, InvalidParse(), InvalidParse(), InvalidParse(), InvalidParse())
     countries1 = parse_combatant(side1.value)
     countries2 = parse_combatant(side2.value)
 
@@ -55,11 +62,11 @@ def get_battle_info(infobox: mwp.nodes.template.Template) -> Battle | None:
     commander2 = infobox.get("commander2", default=None)
     if not commander1 or not commander2:
         logging.warning("No commander1 or commander2 found in infobox: %s", infobox)
-        return Battle(name, countries1, countries2, InvalidParse(), InvalidParse())
+        return Battle(conflict_name, countries1, countries2, InvalidParse(), InvalidParse())
     commanders1 = parse_commander(commander1.value)
     commanders2 = parse_commander(commander2.value)
 
-    return Battle(name, countries1, countries2, commanders1, commanders2)
+    return Battle(conflict_name, countries1, countries2, commanders1, commanders2)
 
 def wiki_to_battle_name(name: mwp.wikicode.Wikicode) -> str:
     return name.strip_code().strip()
@@ -80,8 +87,10 @@ def parse_all_files() -> list[Battle]:
             logging.info("Skipping file: %s", file_path)
             continue
         battle = parse_file(file_path)
-        if battle:
+        if battle and battle.name:
             battles.append(battle)
+        else:
+            logging.error("Battle doesn't have a name, skipping: %s", file_path)
     return battles
 
 def test_com_pattern(wikicode: mwp.wikicode.Wikicode):
@@ -91,5 +100,6 @@ def test_com_pattern(wikicode: mwp.wikicode.Wikicode):
 
 if __name__ == "__main__":    
     parse_all_files()
-    # test_com_pattern(test_objects.com_tree_list)
+    # test_com_pattern(test_objects.com_wia)
     # parse_commander(test_objects.com_single_ill)
+    # TODO Petsamo_expeditions.txt has two infoboxes
