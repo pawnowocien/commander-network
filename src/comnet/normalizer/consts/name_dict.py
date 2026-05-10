@@ -1,13 +1,23 @@
+# For normalizing letters in names
 LETTER_DICT = {
     "ß": "ss"
 }
 
+# For common (first) names that are often spelt differently, but refer to the same person.
+# Sorry if the names are not in the correct language!
 SIMPLE_NAME_DICT = {
     "Aleksei": "Aleksei",
     "Alexei": "Aleksei",
     "Alexey": "Aleksei",
 }
 
+# For names with extra info in parentheses, or other weird cases
+CLEAN_NAME_DICT = {
+    "(possibly Kpt. Karsten von Heydebreck)": "Karsten von Heydebreck",
+    "(Vali of Baghdad) Javi Pasha": "Javi Pasha",
+}
+
+# For duplicates
 COMPLEX_NAME_DICT = {
     "Albrecht of Württemberg": "Albrecht of Württemberg",
     "Albrecht, Duke of Württemberg": "Albrecht of Württemberg",
@@ -307,214 +317,3 @@ COMPLEX_NAME_DICT = {
     "Mustafa Kemal Atatürk": "Mustafa Kemal Atatürk",
     "Mustafa Kemal Pasha": "Mustafa Kemal Atatürk",
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# bugged:
-# Action of 15 August 1917
-# Battle of Durazzo
-# Battle of Mărășești
-# Battle of the Southern Carpathians
-# Battle of Zhmerynka
-# Fao Landing
-# Romanian Campaign (1917)
-# Scuttling of SMS Cormoran
-# "Battle of BitlisБитлисское сражениеԲաղեշի ճակատամարտBitlis Muharebesi"
-
-
-# weird:
-# Battle of Goychay
-# Battle of Krivolak
-# Bergmann Offensive
-# Battle of Sentinella Pass
-# Portuguese campaign in Mozambique
-# Battle of the Vistula River
-
-
-# -----
-# Among others
-
-# -----
-# Austria–Hungary#History
-# Battle of Monte Corno
-# -----
-# -----
-# Captain
-# Battle of Ngaundere, Battle of Nsanakong
-
-# -----
-# von Crailsheim
-# Battle of Gurin
-# -----
-# {{Collapsible list
-# Battle on Istrana
-# -----
-# {{Plain list|
-# Battle of Halen, Battle of Mulhouse (Mülhausen), Battle of Pozières, Battle of St Quentin Canal, Capture of Damascus
-# -----
-# {{flagicon|Transcaucasian Democratic Federative Republic
-# Battle of Choloki
-# -----
-# | Pallasch
-# Battle on Istrana
-# -----
-# |bullets = yes
-# Battle on Istrana
-# -----
-# |title = Known List:
-# Battle on Istrana
-# -----
-# }}
-# Battle of Halen, Battle of Mulhouse (Mülhausen), Battle of Pozières, Battle of St Quentin Canal, Battle on Istrana, Capture of Damascus
-# -----
-# FerrandiFecitte.
-# Siege of Mora
-# -----
-# File:Flag of the Assyrian Volunteers.svg
-# Battle of Seray Mountain, Battle of Ushno (1918)
-# -----
-# File:Socialist red flag.svg
-# Battle of Zhmerynka
-# -----
-# Friedrich Wilhelm, Fürst zu Hohenlohe-Kirchberg
-# Battle of Valmy
-# ----- ^ 1792 xd
-# -----
-# High Command:
-# Romanian Campaign (1917)
-# -----
-# Karabekir
-# Siege of Kut
-# -----
-# Kingdom of Italy #History
-# Battle of Monte Corno
-# -----
-# Oskar Potiorek
-#  Liborius Ritter von Frank
-# Battle of Kolubara
-# -----
-# Lieutenant
-# Battle on Istrana
-# -----
-# Lieutenant Colonel
-# Battle of Arara, Battle of Ngaundere
-# -----
-# POW
-# Battle of Seray Mountain
-# -----
-# Percy Lake
-# Mesopotamian campaign
-# -----
-# Punitive force commander:
-
-# -----
-# Radomir Putnik
-#  Živojin Mišić
-#  Stepa Stepanović
-#  Pavle Jurišić Šturm
-#  Miloš Božanović
-# Battle of Kolubara
-# -----
-# Siege of Najaf (1918)#Rebels
-
-# -----
-# Support:
-# Battle of Łowczówek
-# -----
-# Tribesmen leader
-# Operations in the Tochi
-# -----
-# Unknown
-# , Action of 17 March 1917, Action of 5 November 1916, Attack on Orleans, Battle of Amara, Battle of Ambos Nogales, Battle of Aqaba, Battle of Arras (1915), Battle of Ayun Kara, Battle of Caribou Hill, Battle of Dibrivka, Battle of Fismes and Fismette, Battle of Jastków, Battle of Kitcheners' Wood, Battle of Krzywoploty, Battle of Kämärä, Battle of Laski and Anielin, Battle of Nasiriyah (1915), Battle of Ngaundere, Battle of Pakoslaw, Battle of Rafah, Battle of Rarańcza, Battle of Sentinella Pass, Battle of Sheikh Othman, Battle of Syrjäntaka, Battle of Tornio, Battle of Ukoko, Battle of Ushno (1918), Battle of Valenciennes (1918), Battle of Virbalis, Battle on Istrana, Bombardment of Madras, Capture of Tiberias, Cavalry charge of Burkel, First Battle of Morlancourt, Invasion of Cheikh Said, Landing at Cape Domesnes, Raid on Bir el Hassana, Raid on Nekhl, Raid on the Beersheba to Hafir el Auja railway, Second Battle of Jaunde, Second Battle of Mons, Second Battle of Morlancourt, Second attack on Anzac Cove, Trabzon campaign (1918)
-# -----
-# Unknown officer
-# Charge of Rokitna
-# -----
-# Until 26 July:
-# Battle of Baku
-# -----
-# Wounded in action
-# First Petsamo expedition
-# -----
-# [[George Milne, 1st Baron Milne|George Milne
-# Battle of Doiran
-# -----
-# ]]
-# Battle of Doiran
-# -----
-# border|20px Agha Petros
-# Battle of Charah (1918), Battle of Seray Mountain, Battle of Sharqat, Battle of Suldouze, Persian campaign, Urmia clashes
-# -----
-# border|20px Andranik Ozanian
-# Persian campaign
-# -----
-# border|20px Dawid Mar Shimun
-# Battle of Charah (1918), Persian campaign
-# -----
-# border|20px Malik Khoshaba
-# Battle of Charah (1918), Battle of Seray Mountain, Battle of Suldouze, Persian campaign, Urmia clashes
-# -----
-# border|20px Malik Yaqo
-# Battle of Charah (1918), Battle of Sharqat, Persian campaign
-# -----
-# border|20px Mar Benyamin Shimun
-# Urmia clashes
-# -----
-# border|20px Shimun XIX Benyamin
-# Persian campaign
-# -----
-# border|20px Tovmas Nazarbekian
-# Persian campaign
-# -----
-# border|22px Agha Petros
-# Battle of Ushno (1918)
-# -----
-# border|22px Malik Khoshaba
-# Battle of Ushno (1918)
-# -----
-# unknown
-# Action at Lukigura River, Battle of Mołotków
-# -----
-# von Crailsheim
-# Battle of Gurin
-# -----
-# {{Collapsible list
-# Battle on Istrana
-# -----
-# {{Plain list|
-# Battle of Halen, Battle of Mulhouse (Mülhausen), Battle of Pozières, Battle of St Quentin Canal, Capture of Damascus
-# -----
-# {{flagicon|Transcaucasian Democratic Federative Republic
-# Battle of Choloki
-# -----
-# | Pallasch
-# Battle on Istrana
-# -----
-# |bullets = yes
-# Battle on Istrana
-# -----
-# |title = Known List:
-# Battle on Istrana
-# -----
-# }}
-# Battle of Halen, Battle of Mulhouse (Mülhausen), Battle of Pozières, Battle of St Quentin Canal, Battle on Istrana, Capture of Damascus
-# -----'''

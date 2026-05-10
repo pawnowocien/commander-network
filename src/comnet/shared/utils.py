@@ -3,6 +3,9 @@ import os
 def page_title_to_filename(title: str) -> str:
     return title.replace("/", "__")
 
+def raw_name_to_link(name: str) -> str:
+    return f"https://en.wikipedia.org/wiki/{name}"
+
 def get_all_wiki_files(directory: str = "data/wiki_pages") -> list[str]:
     return [os.path.join(directory, f) for f in os.listdir(directory)]
 

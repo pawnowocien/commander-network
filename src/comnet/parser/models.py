@@ -1,5 +1,7 @@
-from dataclasses import dataclass
 from enum import Enum
+from dataclasses import dataclass
+
+from comnet.shared.consts import WIKI_PREFIX
 
 
 @dataclass
@@ -7,17 +9,17 @@ class InvalidParse:
     def __str__(self) -> str:
         return "Invalid parse"
 
-@dataclass
-class Country:
+@dataclass (unsafe_hash=True) # TODO
+class ParseCountry:
     name: str
 
     def __str__(self) -> str:
         return self.name
 
-@dataclass 
-class Commander:
+@dataclass(unsafe_hash=True) # TODO
+class ParseCommander:
     name: str
-    allegiance: Country | None
+    allegiance: ParseCountry | None
 
     def __str__(self) -> str:
         if self.allegiance:
@@ -25,15 +27,17 @@ class Commander:
         return self.name
 
 @dataclass
-class Battle:
+class ParseBattle:
+    raw_name: str
+
     name: str | InvalidParse
-    side1Countries: list[Country] | InvalidParse
-    side2Countries: list[Country] | InvalidParse
+    side1Countries: list[ParseCountry] | InvalidParse
+    side2Countries: list[ParseCountry] | InvalidParse
 
-    side1Commanders: list[Commander] | InvalidParse
-    side2Commanders: list[Commander] | InvalidParse
+    side1Commanders: list[ParseCommander] | InvalidParse
+    side2Commanders: list[ParseCommander] | InvalidParse
 
-    def _list_to_str(self, lst: list[Country] | list[Commander] | InvalidParse, indent: int = 4) -> str:
+    def _list_to_str(self, lst: list[ParseCountry] | list[ParseCommander] | InvalidParse, indent: int = 4) -> str:
         if isinstance(lst, InvalidParse):
             return " " * indent + "Invalid parse"
         elif not lst:
@@ -52,6 +56,8 @@ class Battle:
         res += f"{self._list_to_str(self.side2Commanders, 8)}\n"
         return res
     
+    def get_link(self) -> str:
+        return WIKI_PREFIX + self.raw_name
 
 class CommanderListType(Enum):
     PLAINLIST = 1

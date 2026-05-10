@@ -1,4 +1,7 @@
-from comnet.shared.utils import get_redirects
+WIKI_PREFIX = "https://en.wikipedia.org/wiki/"
+
+
+
 
 
 SKIP_INCLUDING = ["battleship", "Battleship", "Battlefield", "List_of", "order_of_battle", "(film)"]
@@ -38,6 +41,7 @@ FILES_NO_INFOBOXES = [
     "Mines_in_the_Battle_of_Messines_(1917).txt",   # not a battle
     "SMS_Cap_Trafalgar.txt",                        # not a battle
     ]
+from comnet.shared.utils import get_redirects
 FILES_REDIRECTS = get_redirects()
 
 EXCEPTIONS = [

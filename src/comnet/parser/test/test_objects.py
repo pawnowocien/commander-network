@@ -60,6 +60,22 @@ com_flagdeco2 = mwp.parse("{{flagdeco|Austria-Hungary}} [[Franz Graf Conrad von 
                           "{{flagdeco|German Empire}} [[Felix von Bothmer]]<br />"
                           "{{flagdeco|Ottoman Empire}} [[Cevat Pasha]]")
 
+# Battle of Antrea
+com_flagicon_image = mwp.parse("{{flagicon image|Flag of Finland 1918 (state).svg}} [[Herman Wärnhjelm]] <br>"
+                               "{{flagicon image|Flag of Finland 1918 (state).svg}} [[Aarne Sihvo]]")
+
+# Battle of Taif (1916)
+com_flag_icon = mwp.parse("{{Flag icon|Arab Revolt}} [[Abdullah I of Jordan|Abdullah bin Hussein]]<br/>{{Flag icon|Arab Revolt}} [[Faajir bin Sheliweh al-'Atawi]]")
+
+# Second Battle of Cobadin
+com_flagicon = mwp.parse("{{flagicon|Kingdom of Romania}} [[Alexandru Averescu]]<br/>" \
+"{{flagicon|Kingdom of Romania}} {{ill|Alexandru Socec|ro}}<br/>" \
+"{{flagicon|Kingdom of Romania}} {{ill|Alexandru Hartel|ro}}<br/>" \
+"{{flagicon|Kingdom of Romania}} {{ill|Constantin Scărișoreanu|ro}}<br />" \
+"{{flagicon|Kingdom of Romania}} {{ill|Traian Găiseanu|ro}}<br/>" \
+"{{flagicon|Kingdom of Romania}} [[Eremia Grigorescu]]<br/>" \
+"{{flagicon image|Flag_of_Russia_(1914-1917).svg}} [[Andrei Zayonchkovski]]")
+
 # First Battle of Ypres
 com_multiple_plainlist = mwp.parse("""{{Plainlist}}
 * {{flagicon|German Empire}} [[Erich von Falkenhayn]]

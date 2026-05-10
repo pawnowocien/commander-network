@@ -3,9 +3,8 @@ import time
 from consts import USER_AGENT, WAIT_REQUEST_SEC
 import requests
 import logging
-import datetime
-from log_utils import setup_logging_download
-from utils import page_title_to_filename
+from comnet.shared.log_utils import setup_logging_download
+from comnet.shared.utils import page_title_to_filename
 
 setup_logging_download()
 
