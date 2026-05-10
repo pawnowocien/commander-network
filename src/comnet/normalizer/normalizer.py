@@ -1,19 +1,22 @@
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME, NAME_TO_COUNTRY
 from comnet.normalizer.consts.name_dict import CLEAN_NAME_DICT, COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
 from comnet.parser.models import InvalidParse, ParseBattle, ParseCommander, ParseCountry
-from comnet.shared.models import Battle, Commander, Country
+from comnet.shared.models import Battle, Commander, Country, Side
 
 
 def normalize_battles(parsed_battles: list[ParseBattle]) -> list[Battle]:
     battles = []
     for parsed_battle in parsed_battles:
+        sides = []
+        for parsed_side in parsed_battle.sides:
+            countries = _normalize_countries(parsed_side.countries)
+            commanders = _normalize_commanders(parsed_side.commanders)
+            sides.append(Side(countries, commanders))
+            
         battle = Battle(
             raw_name=parsed_battle.raw_name,
             name=_normalize_battle_name(parsed_battle.name),
-            side1Countries=_normalize_countries(parsed_battle.side1Countries),
-            side2Countries=_normalize_countries(parsed_battle.side2Countries),
-            side1Commanders=_normalize_commanders(parsed_battle.side1Commanders),
-            side2Commanders=_normalize_commanders(parsed_battle.side2Commanders),
+            sides=sides
         )
         battles.append(battle)
     return battles

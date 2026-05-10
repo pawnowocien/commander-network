@@ -19,7 +19,7 @@ class Country:
             return NotImplemented
         return self.name <= other.name
 
-@dataclass(frozen=True) # TODO
+@dataclass(frozen=True)
 class Commander:
     name: str
     allegiance: Country | None
@@ -28,17 +28,18 @@ class Commander:
         if self.allegiance:
             return f"{self.name} ({self.allegiance.name})"
         return self.name
+    
+@dataclass(frozen=True)
+class Side:
+    countries: list[Country]
+    commanders: list[Commander]
 
 @dataclass(frozen=True)
 class Battle:
     raw_name: str
 
     name: str
-    side1Countries: list[Country]
-    side2Countries: list[Country]
-
-    side1Commanders: list[Commander]
-    side2Commanders: list[Commander]
+    sides: list[Side]
 
     @staticmethod
     def _list_to_str(lst: list[Country] | list[Commander], indent: int = 4) -> str:
@@ -55,8 +56,7 @@ class Battle:
 
     def __str__(self) -> str:
         res = f"{self.name}:\n"
-        res += f"{self._list_to_str(self.side1Countries)}\n"
-        res += f"{self._list_to_str(self.side1Commanders, 8)}\n"
-        res += f"{self._list_to_str(self.side2Countries)}\n"
-        res += f"{self._list_to_str(self.side2Commanders, 8)}\n"
+        for side in self.sides:
+            res += f"{self._list_to_str(side.countries)}\n"
+            res += f"{self._list_to_str(side.commanders, 8)}\n"
         return res

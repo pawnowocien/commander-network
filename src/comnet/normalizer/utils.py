@@ -5,11 +5,33 @@ import os.path
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME
 from comnet.shared.utils import raw_name_to_link
 
+def get_all_battles() -> list[Battle]:
+    from comnet.parser.parser import parse_files
+    return normalize_battles(parse_files())
+
+def get_commanders(battle_list: list[Battle]) -> set[Commander]:
+    commanders = set()
+    for battle in battle_list:
+        for side in battle.sides:
+            for commander in side.commanders:
+                if commander.name:
+                    commanders.add(commander)
+    return commanders
+
+def get_countries(battle_list: list[Battle]) -> set[Country]:
+    countries = set()
+    for battle in battle_list:
+        for side in battle.sides:
+            for commander in side.commanders:
+                if commander.allegiance:
+                    countries.add(commander.allegiance)
+    return countries
+
 def get_all_commander_names(battle_list: list[Battle]) -> dict[str, set[str]]:
     names = {}
     for battle in battle_list:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
+        for side in battle.sides:
+            for commander in side.commanders:
                 if not commander.name:
                     print(f"Warning: Commander with empty name in battle {battle.name}")
                 else:
@@ -28,15 +50,6 @@ def save_commander_names(battle_list: list[Battle], file_path: str = "tmp/comman
             battles = ", ".join(sorted(names[name]))
             f.write(f"{name}\n{battles}\n-----\n")
 
-def get_all_commanders(battle_list: list[Battle]) -> set[Commander]:
-    commanders = set()
-    for battle in battle_list:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
-                if commander.name:
-                    commanders.add(commander)
-    return commanders
-
 def get_commanders_country(commander: Commander) -> str | None:
     if commander.allegiance:
         allegiance_str = str(commander.allegiance)
@@ -49,8 +62,8 @@ def save_commanders_and_countries(battle_list: list[Battle], file_path: str = "t
     dict_commanders: dict[str, set[str]] = {}
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     for battle in battle_list:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
+        for side in battle.sides:
+            for commander in side.commanders:
                 if commander.name not in dict_commanders:
                     dict_commanders[commander.name] = set()
                 country = get_commanders_country(commander)
@@ -82,8 +95,8 @@ def save_commanders_without_allegiance(battle_list: list[Battle]) -> None:
     commanders = dict()
     commanders_with_allegiance = set()
     for battle in battle_list:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
+        for side in battle.sides:
+            for commander in side.commanders:
                 if commander.name not in commanders:
                     commanders[commander.name] = set()
                 commanders[commander.name].add(raw_name_to_link(battle.raw_name))
@@ -110,8 +123,8 @@ def save_commanders_without_allegiance(battle_list: list[Battle]) -> None:
 def print_commanders_with_allegiance(battle_list: list[Battle]) -> None:
     dict_commanders = {}
     for battle in battle_list:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
+        for side in battle.sides:
+            for commander in side.commanders:
                 if commander.name not in dict_commanders:
                     dict_commanders[commander.name] = (set(), set())
                 country = get_commanders_country(commander)
@@ -133,47 +146,18 @@ def print_commanders_with_allegiance(battle_list: list[Battle]) -> None:
 def get_all_countries_list(battle_list: list[Battle]) -> list[Country]:
     countries: set[Country] = set()
     for battle in battle_list:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
+        for side in battle.sides:
+            for commander in side.commanders:
                 country = commander.allegiance
                 if country:
                     countries.add(country)
     return sorted(countries, key=lambda c: str(c))
         
-
 if __name__ == "__main__":
-    from comnet.parser.parser import parse_files
+    battles = get_all_battles()
+    commanders = get_commanders(battles)
+    countries = get_countries(battles)
 
-    battles = normalize_battles(parse_files())
-
-    country_dict = {}
-    parsed_commanders = set()
-    for battle in battles:
-        for commander_list in [battle.side1Commanders, battle.side2Commanders]:
-            for commander in commander_list:
-                if commander.name in parsed_commanders:
-                    continue
-                parsed_commanders.add(commander.name)
-                if commander.allegiance:
-                    country_name = commander.allegiance.name
-                    if country_name not in country_dict:
-                        country_dict[country_name] = 0
-                    country_dict[country_name] += 1
-    
-    for country_name in sorted(country_dict, key=lambda c: country_dict[c], reverse=True):
-        print(f"{country_name}: {country_dict[country_name]}")
-            
-
-    save_commanders_without_allegiance(normalize_battles(parse_files()))
-    # with open("tmp/countries.txt", "w", encoding="utf-8") as f:
-    #     for country in get_all_countries_list(normalize_battles(parse_files())):
-    #         f.write(f"{country}\n")
-
-    # for battle in normalize_battles(parse_files()):
-    #     if "Nagyszeben" in battle.name:
-    #         print(battle)
-
-    # get_all_countries_list(normalize_battles(parse_files()))
-    # save_commanders_and_countries(parse_files())
-    # save_commander_countries(get_all_commanders(parse_all_files()))
-    # print(get_all_commanders(parse_all_files()))
+    print(f"Total battles: {len(battles)}")
+    print(f"Total commanders: {len(commanders)}")
+    print(f"Total countries: {len(countries)}")

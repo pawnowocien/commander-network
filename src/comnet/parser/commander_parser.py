@@ -354,6 +354,7 @@ def _clean_corner_cases(name: str) -> str | None:
         "Garrison commander:", "Among others", "Punitive force commander:", # 1916 uprising in Hilla
         "No centralized leadership",                                        # 1915 uprising in Karbala
         "Until 26 July:",                                                   # Battle of Baku
+        "From 26 July:",                                                    # Battle of Baku
         "Support:",                                                         # Battle of Łowczówek
         "High Command:",                                                    # Romanian Campaign (1917)
     ]

@@ -27,15 +27,16 @@ class ParseCommander:
         return self.name
 
 @dataclass
+class ParseSide:
+    countries: list[ParseCountry] | InvalidParse
+    commanders: list[ParseCommander] | InvalidParse
+
+@dataclass
 class ParseBattle:
     raw_name: str
 
     name: str | InvalidParse
-    side1Countries: list[ParseCountry] | InvalidParse
-    side2Countries: list[ParseCountry] | InvalidParse
-
-    side1Commanders: list[ParseCommander] | InvalidParse
-    side2Commanders: list[ParseCommander] | InvalidParse
+    sides: list[ParseSide]
 
     def _list_to_str(self, lst: list[ParseCountry] | list[ParseCommander] | InvalidParse, indent: int = 4) -> str:
         if isinstance(lst, InvalidParse):
@@ -50,10 +51,9 @@ class ParseBattle:
 
     def __str__(self) -> str:
         res = f"{self.name}:\n"
-        res += f"{self._list_to_str(self.side1Countries)}\n"
-        res += f"{self._list_to_str(self.side1Commanders, 8)}\n"
-        res += f"{self._list_to_str(self.side2Countries)}\n"
-        res += f"{self._list_to_str(self.side2Commanders, 8)}\n"
+        for side in self.sides:
+            res += f"{self._list_to_str(side.countries)}\n"
+            res += f"{self._list_to_str(side.commanders, 8)}\n"
         return res
     
     def get_link(self) -> str:
