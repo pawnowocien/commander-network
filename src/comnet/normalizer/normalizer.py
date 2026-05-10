@@ -43,7 +43,7 @@ def _normalize_commander(commander: ParseCommander) -> Commander:
     normalized_name = _normalize_commander_name(commander.name)
     normalized_allegiance = _normalize_allegiance(commander.allegiance, normalized_name)
 
-    country = Country(normalized_allegiance)
+    country = Country(", ".join(normalized_allegiance)) # TODO hack for now
     return Commander(normalized_name, country)
 
 
@@ -76,21 +76,27 @@ def _normalize_commander_name(name: str) -> str:
     return name.strip()
 
 
-def _normalize_allegiance(allegiance: ParseCountry | None, norm_name: str) -> str:
-    if allegiance:
-        country = allegiance.name
+def _normalize_allegiance(allegiance: list[ParseCountry], norm_name: str) -> set[str]:
+    countries = set()
 
-        if not country in NORMALIZE_COUNTRY_NAME:
+    for country in allegiance:
+        country_name = country.name
+
+        if not country_name in NORMALIZE_COUNTRY_NAME:
             
             # TODO log
-            return "(!) " + country
-        return NORMALIZE_COUNTRY_NAME[country]
+            countries.add("(!) " + country_name)
+            continue
+        countries.add(NORMALIZE_COUNTRY_NAME[country_name])
+
+    if len(countries) > 0:
+        return countries
 
     if norm_name in NAME_TO_COUNTRY:
-        return NAME_TO_COUNTRY[norm_name]
+        return {NAME_TO_COUNTRY[norm_name]}
 
     # print("No allegiance for commander: %s" % commander.name)
-    return "None"
+    return set()
 
 
 def _normalize_battle_name(name: str | InvalidParse) -> str:

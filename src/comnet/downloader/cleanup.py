@@ -1,5 +1,5 @@
 import pandas as pd
-from consts import SKIP_INCLUDING, EXTRACT_INCLUDING
+from comnet.downloader.consts import SKIP_INCLUDING, EXTRACT_INCLUDING
 
 def create_diff_csv(larger_filename: str = "data/download_all.csv", 
                     smaller_filename: str = "data/download_filter.csv", 

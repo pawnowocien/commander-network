@@ -9,21 +9,21 @@ class InvalidParse:
     def __str__(self) -> str:
         return "Invalid parse"
 
-@dataclass (unsafe_hash=True) # TODO
+@dataclass
 class ParseCountry:
     name: str
 
     def __str__(self) -> str:
         return self.name
 
-@dataclass(unsafe_hash=True) # TODO
+@dataclass
 class ParseCommander:
     name: str
-    allegiance: ParseCountry | None
+    allegiance: list[ParseCountry]
 
     def __str__(self) -> str:
         if self.allegiance:
-            return f"{self.name} ({self.allegiance.name})"
+            return f"{self.name} ({', '.join([country.name for country in self.allegiance])})"
         return self.name
 
 @dataclass

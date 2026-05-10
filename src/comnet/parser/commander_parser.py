@@ -1,5 +1,5 @@
 import mwparserfromhell as mwp
-from consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, MULTI_ALLEGIANCE_COMMANDER_NAMES, RANK_WIKILINKS_TO_REMOVE
+from comnet.parser.consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, RANK_WIKILINKS_TO_REMOVE
 from .models import InvalidParse, ParseCommander, ParseCountry, CommanderListType
 import logging
 import re
@@ -182,10 +182,8 @@ def _single_ubl_to_list(commander_code: mwp.wikicode.Wikicode) -> list[ParseComm
         country = commander_code.filter_templates()[0].get(1).value.strip_code().strip() if commander_code.filter_templates() else None
         for param in ubl_templates[0].params:
             commander = _get_commander(mwp.parse(param.value.strip()))
-            if country and commander.allegiance:
-                logging.error("Detected commander with multiple allegiances in single ubl commander format. Wikicode: %s", commander_code)
-            elif country:
-                commander.allegiance = ParseCountry(name=country)
+            if country and commander:
+                commander.allegiance.append(ParseCountry(name=country))
             lst.append(commander)
 
     # list[flagicon? commander]
@@ -221,6 +219,8 @@ def _br_to_list(commander_code: mwp.wikicode.Wikicode) -> list[ParseCommander | 
     for br in parts:
         lst.append(_get_commander(mwp.parse(br.strip())))
     return lst
+
+
 
 def _no_list_multi_to_list(commander_code: mwp.wikicode.Wikicode) -> list[ParseCommander | None]:
     lst = []
@@ -266,26 +266,22 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
 
     # Get country
 
-    commander = ParseCommander("", None)
-    commander_multi_allegiance = False
+    commander = ParseCommander("", [])
     
+    STATUSES_TO_REMOVE = ["kia", "wia", "mia"]
     for temp in commander_code.filter_templates():
         if _is_template_flagicon(temp):
             country_name = temp.get(1).value.strip_code().strip()
-            if commander.allegiance:
-                commander_multi_allegiance = True
-            commander.allegiance = ParseCountry(name=country_name)
+            commander.allegiance.append(ParseCountry(name=country_name))
             commander_code.remove(temp)
-        elif temp.name.strip().lower() in ["kia", "wia", "mia"]:
+        elif temp.name.strip().lower() in STATUSES_TO_REMOVE:
             commander_code.remove(temp)
 
     for link in commander_code.filter_wikilinks():
         title = link.title.strip_code().strip().lower()
         if title.startswith(("file:", "image:")):
             filename = title.split(":", 1)[1].strip()
-            if commander.allegiance:
-                commander_multi_allegiance = True
-            commander.allegiance = ParseCountry(name=filename)
+            commander.allegiance.append(ParseCountry(name=filename))
             commander_code.remove(link)
         
         # Handle "Petsamo_expeditions.txt" case
@@ -297,8 +293,7 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
 
     wikilinks = commander_code.filter_wikilinks()
     if wikilinks and len(wikilinks) == 1:
-        commander.name = _clean_wikilink(wikilinks[0])
-        # print(wikilinks[0])
+        commander.name = _clean_wikilink(wikilinks[0]) or ""
     else:
         logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
         clean_name = _clean_corner_cases(commander_code.strip_code())
@@ -317,22 +312,18 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
 
     if wikilinks and len(wikilinks) > 1:
         logging.warning("Detected multiple wikilinks in commander code, there could be a better naming. Wikicode: %s", code_for_logs)
-    if commander_multi_allegiance:
-        if commander.name in MULTI_ALLEGIANCE_COMMANDER_NAMES:
-            logging.warning("Detected commander with multiple allegiances, it's a known case (%s)", (commander.name))
-        else:
-            logging.error("Detected commander with multiple allegiances (%s). Wikicode: %s", commander.name, code_for_logs)
 
     if not commander.name:
         logging.error("Commander has no name. Wikicode: %s", code_for_logs)
     return commander
 
 
-INTERLANG_RE = re.compile(r"^:[a-z]{2,3}:")
+
 def _clean_wikilink(wikilink: mwp.nodes.wikilink.Wikilink) -> str | None:
     # Filter out :xxx: links (to other language wikis)
-    title = wikilink.title.strip_code()
+    INTERLANG_RE = re.compile(r"^:[a-z]{2,3}:")
 
+    title = wikilink.title.strip_code()
     if INTERLANG_RE.match(title):
         name = wikilink.text
         if not name:
@@ -342,9 +333,11 @@ def _clean_wikilink(wikilink: mwp.nodes.wikilink.Wikilink) -> str | None:
     return _clean_corner_cases(title)
 
 
+
 def _clean_corner_cases(name: str) -> str | None:
     # Example - Romanian campaign (1917)
-    for date_pat in ["(from", "(until", "(after", "(before"]:
+    DATE_PATTERNS = ["(from", "(until", "(after", "(before"]
+    for date_pat in DATE_PATTERNS:
         if date_pat in name.lower():
             return None
 
@@ -356,14 +349,15 @@ def _clean_corner_cases(name: str) -> str | None:
         name = name.replace(item, "")
     name = name.strip()
     
-    banned = ["15th Division (North Army):", "1st Army:", "2nd Army:",            # Battle of the Southern Carpathians
-              "Garrison commander:", "Among others", "Punitive force commander:", # 1916 uprising in Hilla
-              "No centralized leadership",                                        # 1915 uprising in Karbala
-              "Until 26 July:",                                                   # Battle of Baku
-              "Support:",                                                         # Battle of Łowczówek
-              "High Command:",                                                    # Romanian Campaign (1917)
-              ]
-    if name in banned:
+    BANNED_NAMES = [
+        "15th Division (North Army):", "1st Army:", "2nd Army:",            # Battle of the Southern Carpathians
+        "Garrison commander:", "Among others", "Punitive force commander:", # 1916 uprising in Hilla
+        "No centralized leadership",                                        # 1915 uprising in Karbala
+        "Until 26 July:",                                                   # Battle of Baku
+        "Support:",                                                         # Battle of Łowczówek
+        "High Command:",                                                    # Romanian Campaign (1917)
+    ]
+    if name in BANNED_NAMES:
         return None
     
     if not name:

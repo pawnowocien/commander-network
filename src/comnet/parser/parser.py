@@ -2,12 +2,12 @@ import logging
 import os
 
 import mwparserfromhell as mwp
-from comnet.shared.consts import BR_NAMES, FILES_TO_SKIP, INFOBOX_NAMES
+from comnet.parser.consts import INFOBOX_NAMES
 from comnet.shared.log_utils import setup_logging_parse
 from comnet.parser.combatant_parser import parse_combatant
 from comnet.parser.commander_parser import parse_commander
 from comnet.shared.utils import get_all_wiki_files
-from .models import ParseBattle, InvalidParse
+from comnet.parser.models import ParseBattle, InvalidParse
 
 setup_logging_parse()
 
