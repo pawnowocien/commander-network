@@ -2,5 +2,8 @@
 __pycache__/
 *.pyc
 *.log
+*.egg-info/
+
 data/wiki_pages
 logs
+tmp/

@@ -60,6 +60,22 @@ com_flagdeco2 = mwp.parse("{{flagdeco|Austria-Hungary}} [[Franz Graf Conrad von 
                           "{{flagdeco|German Empire}} [[Felix von Bothmer]]<br />"
                           "{{flagdeco|Ottoman Empire}} [[Cevat Pasha]]")
 
+# Battle of Antrea
+com_flagicon_image = mwp.parse("{{flagicon image|Flag of Finland 1918 (state).svg}} [[Herman Wärnhjelm]] <br>"
+                               "{{flagicon image|Flag of Finland 1918 (state).svg}} [[Aarne Sihvo]]")
+
+# Battle of Taif (1916)
+com_flag_icon = mwp.parse("{{Flag icon|Arab Revolt}} [[Abdullah I of Jordan|Abdullah bin Hussein]]<br/>{{Flag icon|Arab Revolt}} [[Faajir bin Sheliweh al-'Atawi]]")
+
+# Second Battle of Cobadin
+com_flagicon = mwp.parse("{{flagicon|Kingdom of Romania}} [[Alexandru Averescu]]<br/>" \
+"{{flagicon|Kingdom of Romania}} {{ill|Alexandru Socec|ro}}<br/>" \
+"{{flagicon|Kingdom of Romania}} {{ill|Alexandru Hartel|ro}}<br/>" \
+"{{flagicon|Kingdom of Romania}} {{ill|Constantin Scărișoreanu|ro}}<br />" \
+"{{flagicon|Kingdom of Romania}} {{ill|Traian Găiseanu|ro}}<br/>" \
+"{{flagicon|Kingdom of Romania}} [[Eremia Grigorescu]]<br/>" \
+"{{flagicon image|Flag_of_Russia_(1914-1917).svg}} [[Andrei Zayonchkovski]]")
+
 # First Battle of Ypres
 com_multiple_plainlist = mwp.parse("""{{Plainlist}}
 * {{flagicon|German Empire}} [[Erich von Falkenhayn]]
@@ -113,22 +129,69 @@ com_tree_list = mwp.parse("""{{tree list}}
 * [[Simko Shikak]]<ref name="Bruinessen 2006 18–21">{{cite book|last=Bruinessen|first=Martin|author-link=Martin van Bruinessen|editor1-last=Atabaki|editor1-first=Touraj|editor1-link=Touraj Atabaki|chapter=Chapter 5: A Kurdish warlord on the Turkish-Persian frontier in the early Twentieth century: Isma'il Aqa Simko|title=Iran and the First World War: Battleground of the Great Powers|series=Library of modern Middle East studies, 43|publisher=[[I.B. Tauris]]|location=London; New York|pages=18–21|chapter-url=https://www.academia.edu/3555229|year=2006|isbn=9781860649646|oclc=56455579}}</ref>
 {{tree list/end}}""")
 
+# Air Battle on Istrana
+com_collapsible_list = mwp.parse(""" {{Collapsible list
+|bullets = yes
+|title = '''Known List:'''
+|{{flagdeco|German Empire}} [[Georg Est]]{{KIA}}
+|{{flagdeco|German Empire}} [[Franz Hertling]]{{KIA}}
+|{{flagicon|Austria-Hungary}} [[Lieutenant|Lt.]] Kessler{{POW}}
+|{{flagdeco|German Empire}} [[Lieutenant|Lt.]] Edehbole{{KIA}}
+|{{flagdeco|German Empire}} [[Karl Uecker]]{{KIA}}
+|{{flagdeco|German Empire}} [[Heinrich Pfeiffer (aviator)|Heinrich Pfeiffer]]{{KIA}}
+|{{flagicon|Austria-Hungary}} Pallasch{{POW}}
+|{{flagicon|Austria-Hungary}} [[Pohlmann (aviator)|Pohlmann]]{{POW}}
+|{{flagicon|Austria-Hungary}} [[Schlamm]]{{POW}}
+}}""")
+
+# Battle of Halen
+com_plainlist_other = mwp.parse("""{{Plain list|
+* {{flagicon|Belgium}} [[Léon de Witte de Haelen|Léon De Witte]]
+* {{flagicon|Belgium}} [[Adolf Proost]]
+}}""")
+
+# Battle of Choloki
+com_weird_flag_format = mwp.parse("""{{flagicon|Transcaucasian Democratic Federative Republic
+}} [[Giorgi Mazniashvili]]""")
+
+# Siege of Mora
+com_ref = mwp.parse("{{flagicon|British Empire}} [[Frederick Hugh Cunliffe]]<br>{{flagicon|British Empire}} R. W. Fox<br>"
+                    "{{flagicon|French Third Republic}} Brisett<br>{{flagicon|French Third Republic}} Ferrandi<ref name=\"TSB\">Fecitte.</ref>")
+
+# Petsamo expeditions
+com_wia = mwp.parse("{{flagicon|United Kingdom}} Captain Vincent Brown ([[Wounded in action|WIA]])<br>{{flagicon|United Kingdom|naval}} Captain James Farie")
+
+
 all_com_test_cases = [
     com_ubl,
     com_ubl_one_flag,
     com_ubl_many_flags,
+    com_ubl_flag_no_flag,
+    com_ubli,
+    com_multi_flag_person,
     com_br,
     com_br2,
+    com_br3,
     com_single,
     com_plainlist,
     com_none,
     com_upper_plainlist,
     com_flagdeco,
     com_flagdeco2,
+    com_flagicon_image,
+    com_flag_icon,
+    com_flagicon,
     com_multiple_plainlist,
     com_almost_empty,
     com_unbulleted_list,
     com_no_list_multi,
+    com_weird_format,
+    com_single_ill,
     com_question_mark,
     com_tree_list,
+    com_collapsible_list,
+    com_plainlist_other,
+    com_weird_flag_format,
+    com_ref,
+    com_wia,
 ]
