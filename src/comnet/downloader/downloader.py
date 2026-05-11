@@ -34,6 +34,7 @@ def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
         time.sleep(DOWNLOAD_INTERVAL_SEC)
 
 def _is_saved(output_dir: str, title: str) -> bool:
+    title = page_title_to_filename(title)
     path = os.path.join(output_dir, f"{title}.txt")
     return os.path.exists(path)
     

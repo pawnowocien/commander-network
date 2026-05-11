@@ -8,5 +8,6 @@ version = "0.1.0"
 dependencies = [
     "requests",
     "pandas",
-    "mwparserfromhell"
+    "mwparserfromhell",
+    "pytest"
 ]

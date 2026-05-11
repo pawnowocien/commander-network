@@ -12,8 +12,6 @@ FILES_NO_INFOBOXES = [
     "Mines_in_the_Battle_of_Messines_(1917).txt",   # not a battle
     "SMS_Cap_Trafalgar.txt",                        # not a battle
     ]
-from comnet.shared.utils import get_redirects
-FILES_REDIRECTS = get_redirects()
 
 EXCEPTIONS = [
     "Action_of_8_June_1915.txt",        # Unique battle format, not parseable with current code
@@ -77,4 +75,4 @@ FILES_NOT_BATTLES = [
     # Offensives are ~ok~
 ]
 
-FILES_TO_SKIP = FILES_NO_INFOBOXES + FILES_REDIRECTS + EXCEPTIONS + FILES_NOT_BATTLES
+STATIC_FILES_TO_SKIP = FILES_NO_INFOBOXES + EXCEPTIONS + FILES_NOT_BATTLES

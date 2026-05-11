@@ -17,7 +17,6 @@ def get_commanders(battle_list: list[Battle]) -> set[Commander]:
                 if commander.name:
                     commanders.add(commander)
     return commanders
-
 def get_countries(battle_list: list[Battle]) -> set[Country]:
     countries = set()
     for battle in battle_list:
@@ -26,6 +25,28 @@ def get_countries(battle_list: list[Battle]) -> set[Country]:
                 if commander.allegiance:
                     countries.add(commander.allegiance)
     return countries
+
+
+
+def save_battles(battle_list: list[Battle], file_path: str = "tmp/battles.txt") -> None:
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, "w", encoding="utf-8") as f:
+        for battle in sorted(battle_list, key=lambda b: b.name):
+            f.write(f"{battle.name}\n")
+def save_commanders(battle_list: list[Battle], file_path: str = "tmp/commanders.txt") -> None:
+    commanders = get_commanders(battle_list)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, "w", encoding="utf-8") as f:
+        for commander in sorted(commanders, key=lambda c: c.name):
+            f.write(f"{commander.name}\n")
+def save_countries(battle_list: list[Battle], file_path: str = "tmp/countries.txt") -> None:
+    countries = get_countries(battle_list)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, "w", encoding="utf-8") as f:
+        for country in sorted(countries, key=lambda c: str(c)):
+            f.write(f"{country}\n")
+
+
 
 def get_all_commander_names(battle_list: list[Battle]) -> dict[str, set[str]]:
     names = {}
@@ -40,8 +61,6 @@ def get_all_commander_names(battle_list: list[Battle]) -> dict[str, set[str]]:
                     names[commander.name].add(battle.name)
 
     return names
-
-
 def save_commander_names(battle_list: list[Battle], file_path: str = "tmp/commander_names.txt") -> None:
     names = get_all_commander_names(battle_list)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
@@ -161,3 +180,7 @@ if __name__ == "__main__":
     print(f"Total battles: {len(battles)}")
     print(f"Total commanders: {len(commanders)}")
     print(f"Total countries: {len(countries)}")
+
+    save_battles(battles)
+    save_commanders(battles)
+    save_countries(battles)

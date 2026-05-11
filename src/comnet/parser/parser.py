@@ -3,11 +3,12 @@ import os
 
 import mwparserfromhell as mwp
 from comnet.parser.consts import INFOBOX_NAMES
+from comnet.parser.test import test_objects
 from comnet.shared.log_utils import setup_logging_parse
 from comnet.parser.combatant_parser import parse_combatant
 from comnet.parser.commander_parser import parse_commander
-from comnet.shared.utils import get_all_wiki_files
-from comnet.parser.models import ParseBattle, InvalidParse, ParseSide
+from comnet.shared.utils import get_filtered_wiki_files
+from comnet.parser.models import ParseBattle, ParseSide
 
 setup_logging_parse()
 
@@ -15,7 +16,7 @@ def parse_files(file_paths: list[str] | str | None = None) -> list[ParseBattle]:
     if isinstance(file_paths, str):
         file_paths = [file_paths]
     elif file_paths is None:
-        file_paths = get_all_wiki_files()
+        file_paths = get_filtered_wiki_files()
     battles = []
     for file_path in file_paths:
         battle = _parse_single_file(file_path)
@@ -90,5 +91,12 @@ def _get_battle_info(infobox: mwp.nodes.template.Template, raw_battle_name: str)
     return ParseBattle(raw_battle_name, conflict_name, sides)
 
 if __name__ == "__main__":
-    battle = parse_files("data/wiki_pages/Battle_of_Baku.txt")
-    print(battle[0])
+    battles = parse_files()
+    # for battle in battles:
+    #     print(battle)
+    # for test_object in test_objects.all_com_test_cases:
+    #     battle = _get_battle_infobox(test_object)
+    #     print(battle)
+
+    # battle = parse_files("data/wiki_pages/Battle_of_Baku.txt")
+    # print(battle[0])

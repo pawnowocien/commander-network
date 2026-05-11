@@ -258,7 +258,13 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
 
     # Skip ill template
     if commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ill"):
+        flagicon_part = ""
+        for temp in commander_code.filter_templates():
+            if _is_template_flagicon(temp):
+                flagicon_part = str(temp) + " "
+                break
         commander_code = commander_code.filter_templates(matches=lambda t: t.name.strip().lower() == "ill")[0].get(1).value
+        commander_code = mwp.parse(flagicon_part + str(commander_code))
 
     for tag in commander_code.filter_tags():
         if str(tag.tag).lower() in ["ref"]:
