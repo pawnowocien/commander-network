@@ -1,12 +1,18 @@
 import os
 
-from comnet.shared.consts import STATIC_FILES_TO_SKIP
+from comnet.shared.consts import STATIC_BATTLES_TO_SKIP
 
-def page_title_to_filename(title: str) -> str:
-    return title.replace("/", "__")
 
-def raw_name_to_link(name: str) -> str:
+def rawname_to_filename(title: str) -> str:
+    return title.replace("/", "__") + ".txt"
+def filename_to_rawname(filename: str) -> str:
+    return filename.replace("__", "/").replace(".txt", "")
+
+def rawname_to_link(name: str) -> str:
     return f"https://en.wikipedia.org/wiki/{name}"
+
+def filepath_to_rawname(filepath: str) -> str:
+    return filename_to_rawname(os.path.basename(filepath))
 
 def get_all_wiki_files(directory: str = "data/wiki_pages") -> list[str]:
     return [os.path.join(directory, f) for f in os.listdir(directory)]
@@ -17,7 +23,8 @@ def get_filtered_wiki_files(directory: str = "data/wiki_pages") -> list[str]:
     return [f for f in all_files if os.path.basename(f) not in files_to_skip]
 
 def get_files_to_skip() -> list[str]:
-    return STATIC_FILES_TO_SKIP + get_redirects()
+    filenames = [rawname_to_filename(f) for f in STATIC_BATTLES_TO_SKIP]
+    return filenames + get_redirects()
 
 def get_redirects(directory: str = "data/wiki_pages") -> list[str]:
     redirects = []

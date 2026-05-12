@@ -299,7 +299,11 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
 
     wikilinks = commander_code.filter_wikilinks()
     if wikilinks and len(wikilinks) == 1:
-        commander.name = _clean_wikilink(wikilinks[0]) or ""
+        name = _clean_wikilink(wikilinks[0])
+        if not name:
+            logging.warning("Commander skipped due to empty name after cleaning wikilink. Wikicode: %s", code_for_logs)
+            return None
+        commander.name = name
     else:
         logging.warning("No single wikilink found for commander, using stripped code as name. Wikicode: %s", code_for_logs)
         clean_name = _clean_corner_cases(commander_code.strip_code())
@@ -363,6 +367,9 @@ def _clean_corner_cases(name: str) -> str | None:
         "From 26 July:",                                                    # Battle of Baku
         "Support:",                                                         # Battle of Łowczówek
         "High Command:",                                                    # Romanian Campaign (1917)
+        "Siege of Najaf (1918)#Rebels",                                     # Siege of Najaf (1918)
+        "I Caucasian Corps (Ottoman Empire)",                               # Battle of Sardarabad
+        "Tribesmen leader",                                                 # Operations in the Tochi
     ]
     if name in BANNED_NAMES:
         return None

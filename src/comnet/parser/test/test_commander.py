@@ -113,8 +113,11 @@ def test_flags():
                                             ParseCommander("Traian Găiseanu", [rom]),
                                             ParseCommander("Eremia Grigorescu", [rom]),
                                             ParseCommander("Andrei Zayonchkovski", [rus])]
-
     
+    # Sinking of SS Kaiser Wilhelm der Grosse
+    com_flagd = mwp.parse("{{flagd|United Kingdom|naval}} Henry T. Buller")
+    assert parse_commander(com_flagd) == [ParseCommander("Henry T. Buller", [ParseCountry("United Kingdom")])]
+
     # Battle of Choloki
     com_weird_flag_format = mwp.parse("""{{flagicon|Transcaucasian Democratic Federative Republic
 }} [[Giorgi Mazniashvili]]""")

@@ -4,7 +4,7 @@ from comnet.config import USER_AGENT, DOWNLOAD_INTERVAL_SEC
 import requests
 import logging
 from comnet.shared.log_utils import setup_logging_download
-from comnet.shared.utils import page_title_to_filename
+from comnet.shared.utils import rawname_to_filename
 
 setup_logging_download()
 
@@ -34,7 +34,7 @@ def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
         time.sleep(DOWNLOAD_INTERVAL_SEC)
 
 def _is_saved(output_dir: str, title: str) -> bool:
-    title = page_title_to_filename(title)
+    title = rawname_to_filename(title)
     path = os.path.join(output_dir, f"{title}.txt")
     return os.path.exists(path)
     
@@ -59,7 +59,7 @@ def download_page(title: str, output_dir="data/wiki_pages") -> None:
     _save_overwrite(output_dir, title, wikitext)
 
 def _save_overwrite(output_dir: str, title: str, wikitext: str) -> None:
-    path = os.path.join(output_dir, f"{page_title_to_filename(title)}.txt")
+    path = os.path.join(output_dir, f"{rawname_to_filename(title)}.txt")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

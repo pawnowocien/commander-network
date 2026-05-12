@@ -2,12 +2,13 @@ import logging
 import os
 
 import mwparserfromhell as mwp
-from comnet.parser.consts import INFOBOX_NAMES
+from comnet.parser.consts import HANDLED_EXCEPTION_BATTLES, INFOBOX_NAMES
 from comnet.parser.test import test_objects
+from comnet.shared.consts import BATTLES_EXCEPTIONS
 from comnet.shared.log_utils import setup_logging_parse
 from comnet.parser.combatant_parser import parse_combatant
 from comnet.parser.commander_parser import parse_commander
-from comnet.shared.utils import get_filtered_wiki_files
+from comnet.shared.utils import filepath_to_rawname, get_filtered_wiki_files
 from comnet.parser.models import ParseBattle, ParseSide
 
 setup_logging_parse()
@@ -25,7 +26,17 @@ def parse_files(file_paths: list[str] | str | None = None) -> list[ParseBattle]:
     return battles
 
 def _parse_single_file(file_path: str) -> ParseBattle | None:
+    raw_battle_name = filepath_to_rawname(file_path)
+    
     logging.info(f"Parsing file: {file_path}")
+
+    if raw_battle_name in BATTLES_EXCEPTIONS:
+        if raw_battle_name in HANDLED_EXCEPTION_BATTLES:
+            logging.info(f"Using hardcoded battle info for {raw_battle_name}")
+            return HANDLED_EXCEPTION_BATTLES[raw_battle_name]
+        else:
+            logging.error(f"Battle {raw_battle_name} is in EXCEPTIONS but not in HANDLED_EXCEPTION_BATTLES")
+            return None
 
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -36,7 +47,6 @@ def _parse_single_file(file_path: str) -> ParseBattle | None:
         logging.warning("No battle infobox found in file: %s", file_path)
         return None
 
-    raw_battle_name = file_path.split(os.sep)[-1].replace(".txt", "").replace("__", "/")
     return _get_battle_info(infobox, raw_battle_name=raw_battle_name)
 
 def _get_battle_infobox(wikicode: mwp.wikicode.Wikicode) -> mwp.nodes.template.Template | None:
@@ -91,12 +101,4 @@ def _get_battle_info(infobox: mwp.nodes.template.Template, raw_battle_name: str)
     return ParseBattle(raw_battle_name, conflict_name, sides)
 
 if __name__ == "__main__":
-    battles = parse_files()
-    # for battle in battles:
-    #     print(battle)
-    # for test_object in test_objects.all_com_test_cases:
-    #     battle = _get_battle_infobox(test_object)
-    #     print(battle)
-
-    # battle = parse_files("data/wiki_pages/Battle_of_Baku.txt")
-    # print(battle[0])
+    parse_files()

@@ -3,7 +3,7 @@ from comnet.shared.models import Battle, Commander, Country
 import os.path
 
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME
-from comnet.shared.utils import raw_name_to_link
+from comnet.shared.utils import rawname_to_link
 
 def get_all_battles() -> list[Battle]:
     from comnet.parser.parser import parse_files
@@ -118,7 +118,7 @@ def save_commanders_without_allegiance(battle_list: list[Battle]) -> None:
             for commander in side.commanders:
                 if commander.name not in commanders:
                     commanders[commander.name] = set()
-                commanders[commander.name].add(raw_name_to_link(battle.raw_name))
+                commanders[commander.name].add(rawname_to_link(battle.raw_name))
 
                 if not commander.allegiance:
                     continue
@@ -151,7 +151,7 @@ def print_commanders_with_allegiance(battle_list: list[Battle]) -> None:
                 if country:
                     dict_commanders[commander.name][0].add(country)
                 
-                dict_commanders[commander.name][1].add(raw_name_to_link(battle.raw_name))
+                dict_commanders[commander.name][1].add(rawname_to_link(battle.raw_name))
                     
     
     for commander_name in sorted(dict_commanders):
