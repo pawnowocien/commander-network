@@ -1,6 +1,10 @@
+import json
+import os
+from dataclasses import asdict
+
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME, NAME_TO_COUNTRY
 from comnet.normalizer.consts.name_dict import CLEAN_NAME_DICT, COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
-from comnet.parser.models import InvalidParse, ParseBattle, ParseCommander, ParseCountry
+from comnet.parser.models import ParseBattle, ParseCommander, ParseCountry
 from comnet.shared.models import Battle, Commander, Country, Side
 
 
@@ -22,9 +26,7 @@ def normalize_battles(parsed_battles: list[ParseBattle]) -> list[Battle]:
     return battles
         
 
-def _normalize_countries(parsed_countries: list[ParseCountry] | InvalidParse) -> list[Country]:
-    if isinstance(parsed_countries, InvalidParse):
-        return []
+def _normalize_countries(parsed_countries: list[ParseCountry]) -> list[Country]:
     return [_normalize_country(parsed_country) for parsed_country in parsed_countries]
     
 def _normalize_country(parsed_country: ParseCountry) -> Country:
@@ -35,10 +37,7 @@ def _normalize_country(parsed_country: ParseCountry) -> Country:
     
     return Country(country_name)
 
-def _normalize_commanders(parsed_commanders:list[ParseCommander] | InvalidParse) -> list[Commander]:
-    if isinstance(parsed_commanders, InvalidParse):
-        return []
-    
+def _normalize_commanders(parsed_commanders:list[ParseCommander]) -> list[Commander]:    
     return [_normalize_commander(commander) for commander in parsed_commanders]
 
 
@@ -102,8 +101,18 @@ def _normalize_allegiance(allegiance: list[ParseCountry], norm_name: str) -> set
     return set()
 
 
-def _normalize_battle_name(name: str | InvalidParse) -> str:
-    if isinstance(name, InvalidParse):
-        return "ERROR" # TODO log
-    
+def _normalize_battle_name(name: str) -> str:
     return name.strip()
+
+def save_normalized(battles: list[Battle], output_file: str = "data/normalized/normalized_battles.json") -> None:
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    battle_dict = [asdict(battle) for battle in battles]
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(battle_dict, f, ensure_ascii=False, indent=4)
+
+
+if __name__ == "__main__":
+    with open("data/parsed/parsed_battles.json", "r", encoding="utf-8") as f:
+        parsed_battle_dicts = json.load(f)
+    
+    

@@ -1,11 +1,11 @@
 import mwparserfromhell as mwp
 from comnet.parser.consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, RANK_WIKILINKS_TO_REMOVE
-from .models import InvalidParse, ParseCommander, ParseCountry, CommanderListType
+from .models import ParseCommander, ParseCountry, CommanderListType
 import logging
 import re
 
 
-def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[ParseCommander] | InvalidParse:
+def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[ParseCommander]:
     commanders = []
     match _get_commander_list_type(commander_code):
         case CommanderListType.PLAINLIST:
@@ -46,10 +46,10 @@ def parse_commander(commander_code: mwp.wikicode.Wikicode) -> list[ParseCommande
             return []
         case None:
             logging.error("Could not determine commander list type for code: %s", commander_code)
-            return InvalidParse()
+            return []
         case _:
             logging.error("Unhandled commander list type for code: %s", commander_code)
-            return InvalidParse()
+            return []
     
     return _clear_list(commanders)
 

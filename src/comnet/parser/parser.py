@@ -1,4 +1,6 @@
+import json
 import logging
+from dataclasses import asdict
 import os
 
 import mwparserfromhell as mwp
@@ -100,5 +102,17 @@ def _get_battle_info(infobox: mwp.nodes.template.Template, raw_battle_name: str)
 
     return ParseBattle(raw_battle_name, conflict_name, sides)
 
+def save_parse(file_paths: list[str] | str | None = None, output_file: str = "data/parsed/parsed_battles.json") -> None:
+    battles = parse_files(file_paths)
+    save_battles(battles, output_file)
+
+def save_battles(battles: list[ParseBattle], output_file: str = "data/parsed/parsed_battles.json") -> None:
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+    battle_dict = [asdict(battle) for battle in battles]
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(battle_dict, f, ensure_ascii=False, indent=4)
+
+
 if __name__ == "__main__":
-    parse_files()
+    save_parse()
