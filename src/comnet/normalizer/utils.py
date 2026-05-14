@@ -1,13 +1,13 @@
-from comnet.normalizer.normalizer import normalize_battles
-from comnet.shared.models import Battle, Commander, Country
 import os.path
 
+# from comnet.normalizer.normalizer import normalize_battles
+from comnet.shared.models import Battle, Commander, Country
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME
 from comnet.shared.utils import rawname_to_link
 
-def get_all_battles() -> list[Battle]:
-    from comnet.parser.parser import parse_files
-    return normalize_battles(parse_files())
+# def get_all_battles() -> list[Battle]:
+#     from comnet.parser.parser import parse_files
+#     return normalize_battles(parse_files())
 
 def get_commanders(battle_list: list[Battle]) -> set[Commander]:
     commanders = set()
@@ -171,16 +171,3 @@ def get_all_countries_list(battle_list: list[Battle]) -> list[Country]:
                 if country:
                     countries.add(country)
     return sorted(countries, key=lambda c: str(c))
-        
-if __name__ == "__main__":
-    battles = get_all_battles()
-    commanders = get_commanders(battles)
-    countries = get_countries(battles)
-
-    print(f"Total battles: {len(battles)}")
-    print(f"Total commanders: {len(commanders)}")
-    print(f"Total countries: {len(countries)}")
-
-    save_battles(battles)
-    save_commanders(battles)
-    save_countries(battles)

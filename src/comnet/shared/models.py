@@ -22,7 +22,7 @@ class Country:
 @dataclass(frozen=True)
 class Commander:
     name: str
-    allegiance: Country | None
+    allegiance: Country
 
     def __str__(self) -> str:
         if self.allegiance:

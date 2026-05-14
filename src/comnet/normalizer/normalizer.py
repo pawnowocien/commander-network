@@ -1,9 +1,12 @@
+import itertools
 import json
 import os
 from dataclasses import asdict
 
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME, NAME_TO_COUNTRY
 from comnet.normalizer.consts.name_dict import CLEAN_NAME_DICT, COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
+from comnet.normalizer.models import BattleRow, CommanderRow
+from comnet.normalizer.utils import get_commanders
 from comnet.parser.models import ParseBattle, ParseCommander, ParseCountry
 from comnet.shared.models import Battle, Commander, Country, Side
 
@@ -110,9 +113,49 @@ def save_normalized(battles: list[Battle], output_file: str = "data/normalized/n
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(battle_dict, f, ensure_ascii=False, indent=4)
 
+def save_to_csv(battles: list[Battle], output_dir: str = "data/normalized/") -> None:
+    os.makedirs(output_dir, exist_ok=True)
+
+    commanders = get_commanders(battles)
+    commander_rows: list[CommanderRow] = [_get_row_from_commander(commander) for commander in commanders]
+
+    battle_rows = []
+    for battle in battles:
+        battle_rows.extend(_get_rows_from_battle(battle))
+
+    os.makedirs(os.path.dirname(output_dir), exist_ok=True)
+    with open(os.path.join(output_dir, "battles.csv"), "w", encoding="utf-8") as f:
+        f.write("name,commander1,commander2\n")
+        for row in battle_rows:
+            f.write(f"{row.name},{row.commander1},{row.commander2}\n")
+    
+    with open(os.path.join(output_dir, "commanders.csv"), "w", encoding="utf-8") as f:
+        f.write("name,country\n")
+        for row in commander_rows:
+            f.write(f"{row.name},{row.country}\n")
+
+
+def _get_rows_from_battle(battle: Battle) -> list[BattleRow]:
+    rows = []
+    # for side1, side2 in itertools.combinations(battle.sides, 2):
+    #     for commander1 in side1.commanders:
+    #         for commander2 in side2.commanders:
+    #             rows.append(BattleRow(battle.name, commander1.name, commander2.name))
+    for side in battle.sides:
+        for commander1, commander2 in itertools.combinations(side.commanders, 2):
+            rows.append(BattleRow(battle.name, commander1.name, commander2.name))
+    return rows
+
+def _get_row_from_commander(commander: Commander) -> CommanderRow:
+    return CommanderRow(commander.name, commander.allegiance.name)
+
+
 
 if __name__ == "__main__":
     with open("data/parsed/parsed_battles.json", "r", encoding="utf-8") as f:
         parsed_battle_dicts = json.load(f)
+        parsed_battles = [ParseBattle.from_dict(battle_dict) for battle_dict in parsed_battle_dicts]
+        battles = normalize_battles(parsed_battles)
+        save_to_csv(battles)
     
     
