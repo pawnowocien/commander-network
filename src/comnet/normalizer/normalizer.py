@@ -122,6 +122,7 @@ def save_to_csv(battles: list[Battle], output_dir: str = "data/normalized/") -> 
     battle_rows = []
     for battle in battles:
         battle_rows.extend(_get_rows_from_battle(battle))
+    print(len(_get_edges(battle_rows)))
 
     os.makedirs(os.path.dirname(output_dir), exist_ok=True)
     with open(os.path.join(output_dir, "battles.csv"), "w", encoding="utf-8") as f:
@@ -146,6 +147,13 @@ def _get_rows_from_battle(battle: Battle) -> list[BattleRow]:
             rows.append(BattleRow(battle.name, commander1.name, commander2.name))
     return rows
 
+def _get_edges(battle_rows: list[BattleRow]) -> set[tuple[str, str]]:
+    edges = set()
+    for row in battle_rows:
+        edge = tuple(sorted((row.commander1, row.commander2)))
+        edges.add(edge)
+    return edges
+
 def _get_row_from_commander(commander: Commander) -> CommanderRow:
     return CommanderRow(commander.name, commander.allegiance.name)
 
@@ -157,5 +165,5 @@ if __name__ == "__main__":
         parsed_battles = [ParseBattle.from_dict(battle_dict) for battle_dict in parsed_battle_dicts]
         battles = normalize_battles(parsed_battles)
         save_to_csv(battles)
-    
+        
     

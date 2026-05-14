@@ -9,5 +9,8 @@ dependencies = [
     "requests",
     "pandas",
     "mwparserfromhell",
-    "pytest"
+    "pytest",
+    "matplotlib",
+    "networkx",
+    "scipy"
 ]
