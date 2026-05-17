@@ -9,6 +9,7 @@ from comnet.normalizer.models import BattleRow, CommanderRow
 from comnet.normalizer.utils import get_commanders
 from comnet.parser.models import ParseBattle, ParseCommander, ParseCountry
 from comnet.shared.models import Battle, Commander, Country, Side
+from comnet.shared.utils import rawname_to_safename
 
 
 def normalize_battles(parsed_battles: list[ParseBattle]) -> list[Battle]:
@@ -122,13 +123,12 @@ def save_to_csv(battles: list[Battle], output_dir: str = "data/normalized/") -> 
     battle_rows = []
     for battle in battles:
         battle_rows.extend(_get_rows_from_battle(battle))
-    print(len(_get_edges(battle_rows)))
 
     os.makedirs(os.path.dirname(output_dir), exist_ok=True)
     with open(os.path.join(output_dir, "battles.csv"), "w", encoding="utf-8") as f:
         f.write("name,commander1,commander2\n")
         for row in battle_rows:
-            f.write(f"{row.name},{row.commander1},{row.commander2}\n")
+            f.write(f"{rawname_to_safename(row.name)},{row.commander1},{row.commander2}\n")
     
     with open(os.path.join(output_dir, "commanders.csv"), "w", encoding="utf-8") as f:
         f.write("name,country\n")
@@ -158,12 +158,12 @@ def _get_row_from_commander(commander: Commander) -> CommanderRow:
     return CommanderRow(commander.name, commander.allegiance.name)
 
 
-
-if __name__ == "__main__":
+def main():
     with open("data/parsed/parsed_battles.json", "r", encoding="utf-8") as f:
         parsed_battle_dicts = json.load(f)
         parsed_battles = [ParseBattle.from_dict(battle_dict) for battle_dict in parsed_battle_dicts]
         battles = normalize_battles(parsed_battles)
         save_to_csv(battles)
-        
-    
+
+if __name__ == "__main__":
+    main()

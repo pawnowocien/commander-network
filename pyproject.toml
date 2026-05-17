@@ -2,6 +2,12 @@
 requires = ["setuptools>=82"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [project]
 name = "comnet"
 version = "0.1.0"
@@ -14,3 +20,10 @@ dependencies = [
     "networkx",
     "scipy"
 ]
+
+[project.scripts]
+comnet-download = "comnet.downloader.downloader:main"
+comnet-parse = "comnet.parser.parser:main"
+comnet-norm = "comnet.normalizer.normalizer:main"
+comnet-viz = "comnet.visualizer.visualizer:main"
+comnet-main = "comnet.main:main"

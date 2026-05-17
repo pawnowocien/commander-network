@@ -146,8 +146,9 @@ COMPLEX_NAME_DICT = {
     "George Milne": "George Milne",
     "George Milne, 1st Baron Milne": "George Milne",
 
-    "Grand Duke Nicholas": "Tsar Nicholas II",
-    "Grand Duke Nicholas Nikolaevich of Russia (1856–1929)": "Tsar Nicholas II",
+    "Grand Duke Nicholas": "Grand Duke Nicholas",
+    "Grand Duke Nicholas Nikolaevich of Russia (1856–1929)": "Grand Duke Nicholas",
+    
     "Tsar Nicholas II": "Tsar Nicholas II",
     "Nicholas II": "Tsar Nicholas II",
 

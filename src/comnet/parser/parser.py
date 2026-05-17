@@ -113,6 +113,8 @@ def save_battles(battles: list[ParseBattle], output_file: str = "data/parsed/par
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(battle_dict, f, ensure_ascii=False, indent=4)
 
+def main():
+    save_parse()
 
 if __name__ == "__main__":
-    save_parse()
+    main()

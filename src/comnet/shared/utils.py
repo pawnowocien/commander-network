@@ -2,11 +2,15 @@ import os
 
 from comnet.shared.consts import STATIC_BATTLES_TO_SKIP
 
+def rawname_to_safename(title: str) -> str:
+    return title.replace("/", "__").replace(",", "--")
+def safename_to_rawname(safename: str) -> str:
+    return safename.replace("__", "/").replace("--", ",")
 
 def rawname_to_filename(title: str) -> str:
-    return title.replace("/", "__") + ".txt"
+    return rawname_to_safename(title) + ".txt"
 def filename_to_rawname(filename: str) -> str:
-    return filename.replace("__", "/").replace(".txt", "")
+    return safename_to_rawname(filename.replace(".txt", ""))
 
 def rawname_to_link(name: str) -> str:
     return f"https://en.wikipedia.org/wiki/{name}"

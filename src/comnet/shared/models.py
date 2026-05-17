@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from src.comnet.shared.consts import WIKI_PREFIX
+from comnet.shared.consts import WIKI_PREFIX
 
 @dataclass(frozen=True)
 class Country:

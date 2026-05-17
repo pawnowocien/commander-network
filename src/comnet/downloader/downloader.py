@@ -21,7 +21,6 @@ DEFAULT_PARAMS = {
     "formatversion": 2
 }
 
-
 def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
     for i, title in enumerate(titles):
         print(f"{i}/{len(titles)}")
@@ -34,8 +33,7 @@ def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
         time.sleep(DOWNLOAD_INTERVAL_SEC)
 
 def _is_saved(output_dir: str, title: str) -> bool:
-    title = rawname_to_filename(title)
-    path = os.path.join(output_dir, f"{title}.txt")
+    path = os.path.join(output_dir, f"{rawname_to_filename(title)}")
     return os.path.exists(path)
     
 def download_page(title: str, output_dir="data/wiki_pages") -> None:
@@ -59,7 +57,7 @@ def download_page(title: str, output_dir="data/wiki_pages") -> None:
     _save_overwrite(output_dir, title, wikitext)
 
 def _save_overwrite(output_dir: str, title: str, wikitext: str) -> None:
-    path = os.path.join(output_dir, f"{rawname_to_filename(title)}.txt")
+    path = os.path.join(output_dir, f"{rawname_to_filename(title)}")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -74,6 +72,10 @@ def get_titles_from_csv(file: str = "data/download_combined.csv") -> list[str]:
     df = pd.read_csv(file)
     return df['title'].tolist()
 
-if __name__ == "__main__":
+
+def main():
     titles_to_download = get_titles_from_csv()
     download_pages(titles_to_download)
+
+if __name__ == "__main__":
+    main()

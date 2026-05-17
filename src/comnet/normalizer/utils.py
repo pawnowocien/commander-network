@@ -102,8 +102,8 @@ def save_commander_countries(commanders: set[Commander], file_path: str = "tmp/c
             allegiance_str = str(commander.allegiance)
             if allegiance_str in NORMALIZE_COUNTRY_NAME.keys():
                 allegiance_str = NORMALIZE_COUNTRY_NAME[allegiance_str]
-            elif allegiance_str not in countries:
-                print(allegiance_str)
+            # elif allegiance_str not in countries:
+            #     print(allegiance_str)
             countries.add(allegiance_str)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w", encoding="utf-8") as f:

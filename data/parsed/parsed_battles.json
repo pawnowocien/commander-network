@@ -142,6 +142,42 @@
         ]
     },
     {
+        "raw_name": "Actions_of_the_Bluff,_1916",
+        "name": "Actions of the Bluff, 1916",
+        "sides": [
+            {
+                "countries": [],
+                "commanders": [
+                    {
+                        "name": "Erich von Falkenhayn",
+                        "allegiance": [
+                            {
+                                "name": "German Empire"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "countries": [
+                    {
+                        "name": "United Kingdom of Great Britain and Ireland"
+                    }
+                ],
+                "commanders": [
+                    {
+                        "name": "Douglas Haig",
+                        "allegiance": [
+                            {
+                                "name": "British Empire"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "raw_name": "Actions_of_the_Hohenzollern_Redoubt",
         "name": "Actions of the Hohenzollern Redoubt",
         "sides": [
@@ -26651,6 +26687,30 @@
         ]
     },
     {
+        "raw_name": "Gheluvelt_Plateau_actions,_July–August_1917",
+        "name": "Gheluvelt Plateau actions, July–August 1917",
+        "sides": [
+            {
+                "countries": [],
+                "commanders": [
+                    {
+                        "name": "Douglas Haig",
+                        "allegiance": []
+                    }
+                ]
+            },
+            {
+                "countries": [],
+                "commanders": [
+                    {
+                        "name": "Crown Prince Rupprecht",
+                        "allegiance": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "raw_name": "Gorlice–Tarnów_offensive",
         "name": "Gorlice–Tarnów offensive",
         "sides": [
@@ -26965,6 +27025,42 @@
                     {
                         "name": "Erich von Falkenhayn",
                         "allegiance": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "raw_name": "Hohenzollern_Redoubt_action,_2–18_March_1916",
+        "name": "Hohenzollern Redoubt action, 2–18 March 1916",
+        "sides": [
+            {
+                "countries": [],
+                "commanders": [
+                    {
+                        "name": "Douglas Haig",
+                        "allegiance": [
+                            {
+                                "name": "UKGBI"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "countries": [
+                    {
+                        "name": "German Empire"
+                    }
+                ],
+                "commanders": [
+                    {
+                        "name": "Erich von Falkenhayn",
+                        "allegiance": [
+                            {
+                                "name": "German Empire"
+                            }
+                        ]
                     }
                 ]
             }
@@ -27948,6 +28044,11 @@
         "sides": []
     },
     {
+        "raw_name": "Liberation_of_Serbia,_Albania_and_Montenegro_(1918)",
+        "name": "Liberation of Serbia, Albania and Montenegro (1918)",
+        "sides": []
+    },
+    {
         "raw_name": "Lochnagar_mine",
         "name": "Lochnagar mine",
         "sides": [
@@ -28821,6 +28922,21 @@
         ]
     },
     {
+        "raw_name": "Operations_against_the_Mohmands,_Bunerwals_and_Swatis_in_1915",
+        "name": "Operations against the Mohmands, Bunerwals and Swatis in 1915",
+        "sides": [
+            {
+                "countries": [],
+                "commanders": [
+                    {
+                        "name": "Frederick Campbell (British Army officer, born 1860)",
+                        "allegiance": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "raw_name": "Operations_in_the_Tochi",
         "name": "Operations in the Tochi",
         "sides": [
@@ -28861,6 +28977,57 @@
         "sides": [
             {
                 "countries": [],
+                "commanders": [
+                    {
+                        "name": "Douglas Haig",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Hubert Gough",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Henry Rawlinson, 1st Baron Rawlinson",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Robert Nivelle",
+                        "allegiance": []
+                    }
+                ]
+            },
+            {
+                "countries": [],
+                "commanders": [
+                    {
+                        "name": "Erich Ludendorff",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Kronprinz Rupprecht von Bayern",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Max von Gallwitz",
+                        "allegiance": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "raw_name": "Operations_on_the_Ancre,_January–March_1917",
+        "name": "Operations on the Ancre, January–March 1917",
+        "sides": [
+            {
+                "countries": [
+                    {
+                        "name": "UKGBI"
+                    },
+                    {
+                        "name": "French Third Republic"
+                    }
+                ],
                 "commanders": [
                     {
                         "name": "Douglas Haig",
@@ -29881,6 +30048,62 @@
                         "allegiance": [
                             {
                                 "name": "Austria-Hungary-flag-1869-1914-naval-1786-1869-merchant.svg"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "raw_name": "Raid_on_Scarborough,_Hartlepool_and_Whitby",
+        "name": "Raid on Scarborough, Hartlepool and Whitby",
+        "sides": [
+            {
+                "countries": [
+                    {
+                        "name": "German Empire"
+                    }
+                ],
+                "commanders": [
+                    {
+                        "name": "Franz Hipper",
+                        "allegiance": [
+                            {
+                                "name": "German Empire"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Friedrich von Ingenohl",
+                        "allegiance": [
+                            {
+                                "name": "German Empire"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "countries": [
+                    {
+                        "name": "United Kingdom of Great Britain and Ireland"
+                    }
+                ],
+                "commanders": [
+                    {
+                        "name": "George Warrender, 7th Baronet",
+                        "allegiance": [
+                            {
+                                "name": "United Kingdom of Great Britain and Ireland"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "David Beatty, 1st Earl Beatty",
+                        "allegiance": [
+                            {
+                                "name": "UKGBI"
                             }
                         ]
                     }
@@ -35074,6 +35297,66 @@
                                 "name": "Flag_of_Russia_(1914-1917).svg"
                             }
                         ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "raw_name": "Western_Front_tactics,_1917",
+        "name": "Western Front tactics, 1917",
+        "sides": [
+            {
+                "countries": [
+                    {
+                        "name": "French Third Republic"
+                    },
+                    {
+                        "name": "French colonial empire"
+                    },
+                    {
+                        "name": "Belgian government at Sainte-Adresse"
+                    },
+                    {
+                        "name": "Russian Expeditionary Force in France"
+                    },
+                    {
+                        "name": "First Portuguese Republic"
+                    }
+                ],
+                "commanders": [
+                    {
+                        "name": "Joseph Joffre",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Robert Nivelle",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Philippe Pétain",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Douglas Haig",
+                        "allegiance": []
+                    }
+                ]
+            },
+            {
+                "countries": [
+                    {
+                        "name": "German Empire"
+                    }
+                ],
+                "commanders": [
+                    {
+                        "name": "Paul von Hindenburg",
+                        "allegiance": []
+                    },
+                    {
+                        "name": "Erich Ludendorff",
+                        "allegiance": []
                     }
                 ]
             }
