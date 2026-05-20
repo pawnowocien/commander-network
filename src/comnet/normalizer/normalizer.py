@@ -5,8 +5,8 @@ from dataclasses import asdict
 
 from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME, NAME_TO_COUNTRY
 from comnet.normalizer.consts.name_dict import CLEAN_NAME_DICT, COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
-from comnet.normalizer.models import BattleRow, CommanderRow
-from comnet.normalizer.utils import get_commanders
+from comnet.shared.models import BattleRow, CommanderRow
+from comnet.normalizer.utils import get_commanders, get_norm_countries
 from comnet.parser.models import ParseBattle, ParseCommander, ParseCountry
 from comnet.shared.models import Battle, Commander, Country, Side
 from comnet.shared.utils import rawname_to_safename
@@ -14,7 +14,8 @@ from comnet.shared.utils import rawname_to_safename
 
 def normalize_battles(parsed_battles: list[ParseBattle]) -> list[Battle]:
     battles = []
-    for parsed_battle in parsed_battles:
+    for i, parsed_battle in enumerate(parsed_battles):
+        print(f"\rNormalizing battles... {i+1}/{len(parsed_battles)}", end="")
         sides = []
         for parsed_side in parsed_battle.sides:
             countries = _normalize_countries(parsed_side.countries)
@@ -27,6 +28,7 @@ def normalize_battles(parsed_battles: list[ParseBattle]) -> list[Battle]:
             sides=sides
         )
         battles.append(battle)
+    print()
     return battles
         
 
@@ -101,7 +103,6 @@ def _normalize_allegiance(allegiance: list[ParseCountry], norm_name: str) -> set
     if norm_name in NAME_TO_COUNTRY:
         return {NAME_TO_COUNTRY[norm_name]}
 
-    # print("No allegiance for commander: %s" % commander.name)
     return set()
 
 

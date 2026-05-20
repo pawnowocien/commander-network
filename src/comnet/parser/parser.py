@@ -21,10 +21,12 @@ def parse_files(file_paths: list[str] | str | None = None) -> list[ParseBattle]:
     elif file_paths is None:
         file_paths = get_filtered_wiki_files()
     battles = []
-    for file_path in file_paths:
+    for i, file_path in enumerate(file_paths):
+        print(f"\rParsing files... {i+1}/{len(file_paths)}", end="")
         battle = _parse_single_file(file_path)
         if battle:
             battles.append(battle)
+    print()
     return battles
 
 def _parse_single_file(file_path: str) -> ParseBattle | None:

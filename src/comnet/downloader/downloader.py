@@ -23,7 +23,7 @@ DEFAULT_PARAMS = {
 
 def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
     for i, title in enumerate(titles):
-        print(f"{i}/{len(titles)}")
+        print(f"\rDownloading files... {i+1}/{len(titles)}", end="")
         
         if _is_saved(output_dir, title):
             logging.warning(f"Page '{title}' already downloaded. Skipping.")
@@ -31,6 +31,7 @@ def download_pages(titles: list[str], output_dir="data/wiki_pages") -> None:
 
         download_page(title, output_dir)
         time.sleep(DOWNLOAD_INTERVAL_SEC)
+    print()
 
 def _is_saved(output_dir: str, title: str) -> bool:
     path = os.path.join(output_dir, f"{rawname_to_filename(title)}")

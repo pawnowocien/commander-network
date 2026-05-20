@@ -314,8 +314,6 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
         if clean_name in ["?", "Unknown", "Unknown officer", "unknown", "None"]:
             logging.warning("Commander name is unknown/none, setting commander to None. Wikicode: %s", code_for_logs)
             return None
-        elif "?" in clean_name:
-            print(clean_name)
 
         if clean_name and len(clean_name) > 1:
             commander.name = clean_name

@@ -12,11 +12,11 @@ def save_ww1_graph(output_file: str = "data/visualized/ww1_graph.png"):
     countries = set()
     for commander in get_commanders_from_csv("data/normalized/commanders.csv"):
         countries.add(commander.country)
-    print(countries)
 
     save_graph_as_img(g, colors, output_file)
 
 def main():
+    print("Visualizing...")
     save_ww1_graph()
 
 if __name__ == "__main__":

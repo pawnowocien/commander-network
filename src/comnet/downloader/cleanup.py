@@ -49,4 +49,3 @@ def combine_files(file1: str = "data/download_filter.csv",
 if __name__ == "__main__":
     create_diff_csv()
     combine_files()
-    # print_titles_and_links(just_links=True)

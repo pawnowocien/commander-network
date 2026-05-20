@@ -5,12 +5,15 @@ import networkx as nx
 
 def save_graph_as_img(g, colors = None, output_file: str = "data/visualized/graph.png", show_labels: bool = False):
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    plt.figure(figsize=(30, 30))
+
+    fig, ax = plt.subplots(figsize=(25, 25))
+
     pos = nx.spring_layout(g)
 
     nx.draw_networkx_edges(
         g,
         pos,
+        ax=ax,
         edge_color="black",
         alpha=0.4
     )
@@ -19,20 +22,17 @@ def save_graph_as_img(g, colors = None, output_file: str = "data/visualized/grap
     nx.draw_networkx_nodes(
         g,
         pos,
-        node_size=100,
+        ax=ax,
+        node_size=300,
+        alpha=0.8,
         edgecolors="black",
         node_color=node_color,
         linewidths=1
     )
 
     if show_labels:
-        nx.draw_networkx_labels(g, pos, font_size=8)
+        nx.draw_networkx_labels(g, pos, ax=ax, font_size=8)
 
-    # if colors:
-    #     _colors = [colors.get(node, "gray") for node in g.nodes()]
-    #     nx.draw(g, pos, with_labels=show_labels, node_color=_colors, edge_color="gray", node_size=350, linewidths=1, edgecolors="black", font_size=8)
-    # else:
-    #     nx.draw(g, pos, with_labels=show_labels, edge_color="gray", node_size=50, linewidths=1, edgecolors="black")
-
-    plt.savefig(output_file)
+    ax.set_axis_off()
+    fig.savefig(output_file, bbox_inches="tight")
     plt.close()

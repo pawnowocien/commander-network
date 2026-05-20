@@ -1,5 +1,5 @@
 from comnet.normalizer.consts.country_dict import COUNTRY_TO_COLOR
-from comnet.normalizer.models import BattleRow, CommanderRow
+from comnet.shared.models import BattleRow, CommanderRow
 from comnet.shared.models import Commander
 
 

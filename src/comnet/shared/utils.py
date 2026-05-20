@@ -38,6 +38,3 @@ def get_redirects(directory: str = "data/wiki_pages") -> list[str]:
             if "#REDIRECT" in content or "#redirect" in content:
                 redirects.append(file)
     return redirects
-
-if __name__ == "__main__":
-    print(get_redirects())
