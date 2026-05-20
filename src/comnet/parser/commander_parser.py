@@ -278,7 +278,8 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
     for temp in commander_code.filter_templates():
         if _is_template_flagicon(temp):
             country_name = temp.get(1).value.strip_code().strip()
-            commander.allegiance.append(ParseCountry(name=country_name))
+            if country_name:
+                commander.allegiance.append(ParseCountry(name=country_name))
             commander_code.remove(temp)
         elif temp.name.strip().lower() in STATUSES_TO_REMOVE:
             commander_code.remove(temp)
@@ -287,7 +288,8 @@ def _get_commander(commander_code: mwp.wikicode.Wikicode) -> ParseCommander | No
         title = link.title.strip_code().strip().lower()
         if title.startswith(("file:", "image:")):
             filename = title.split(":", 1)[1].strip()
-            commander.allegiance.append(ParseCountry(name=filename))
+            if filename:
+                commander.allegiance.append(ParseCountry(name=filename))
             commander_code.remove(link)
         
         # Handle "Petsamo_expeditions.txt" case

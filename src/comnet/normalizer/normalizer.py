@@ -119,45 +119,47 @@ def save_to_csv(battles: list[Battle], output_dir: str = "data/normalized/") -> 
     os.makedirs(output_dir, exist_ok=True)
 
     commanders = get_commanders(battles)
-    commander_rows: list[CommanderRow] = [_get_row_from_commander(commander) for commander in commanders]
+    commander_rows = _get_commander_rows(commanders)
 
-    battle_rows = []
-    for battle in battles:
-        battle_rows.extend(_get_rows_from_battle(battle))
+    battle_rows = _get_battle_rows(battles)
 
     os.makedirs(os.path.dirname(output_dir), exist_ok=True)
     with open(os.path.join(output_dir, "battles.csv"), "w", encoding="utf-8") as f:
-        f.write("name,commander1,commander2\n")
         for row in battle_rows:
-            f.write(f"{rawname_to_safename(row.name)},{row.commander1},{row.commander2}\n")
+            f.write(f"{rawname_to_safename(row.name)};{row.commander1};{row.commander2}\n")
     
     with open(os.path.join(output_dir, "commanders.csv"), "w", encoding="utf-8") as f:
-        f.write("name,country\n")
         for row in commander_rows:
-            f.write(f"{row.name},{row.country}\n")
+            f.write(f"{row.name};{row.country}\n")
+
+def _get_commander_rows(commanders: set[Commander]) -> list[CommanderRow]:
+    comm_to_country: dict[str, set[str]] = {}
+    for commander in commanders:
+        if commander.name not in comm_to_country:
+            comm_to_country[commander.name] = set()
+        if commander.allegiance.name:
+            comm_to_country[commander.name].add(commander.allegiance.name)
+    
+    commander_rows = []
+    for commander_name, countries in comm_to_country.items():
+        if commander_name in NAME_TO_COUNTRY:
+            commander_rows.append(CommanderRow(commander_name, NAME_TO_COUNTRY[commander_name]))
+            continue
+        if len(countries) == 1:
+            commander_rows.append(CommanderRow(commander_name, list(countries)[0]))
+            continue
+
+        print(f"Warning: Commander {commander_name} has {len(countries)} countries: {countries}")
+    return commander_rows
 
 
-def _get_rows_from_battle(battle: Battle) -> list[BattleRow]:
+def _get_battle_rows(battles: list[Battle]) -> list[BattleRow]:
     rows = []
-    # for side1, side2 in itertools.combinations(battle.sides, 2):
-    #     for commander1 in side1.commanders:
-    #         for commander2 in side2.commanders:
-    #             rows.append(BattleRow(battle.name, commander1.name, commander2.name))
-    for side in battle.sides:
-        for commander1, commander2 in itertools.combinations(side.commanders, 2):
-            rows.append(BattleRow(battle.name, commander1.name, commander2.name))
+    for battle in battles:
+        for side in battle.sides:
+            for commander1, commander2 in itertools.combinations(side.commanders, 2):
+                rows.append(BattleRow(battle.name, commander1.name, commander2.name))
     return rows
-
-def _get_edges(battle_rows: list[BattleRow]) -> set[tuple[str, str]]:
-    edges = set()
-    for row in battle_rows:
-        edge = tuple(sorted((row.commander1, row.commander2)))
-        edges.add(edge)
-    return edges
-
-def _get_row_from_commander(commander: Commander) -> CommanderRow:
-    return CommanderRow(commander.name, commander.allegiance.name)
-
 
 def main():
     with open("data/parsed/parsed_battles.json", "r", encoding="utf-8") as f:

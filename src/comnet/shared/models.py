@@ -28,6 +28,11 @@ class Commander:
         if self.allegiance:
             return f"{self.name} ({self.allegiance.name})"
         return self.name
+
+    def __lt__(self, other):
+        if not isinstance(other, Commander):
+            return NotImplemented
+        return self.name < other.name
     
 @dataclass(frozen=True)
 class Side:
@@ -73,7 +78,7 @@ class BattleRow:
 
     @staticmethod
     def from_csv(line: str):
-        parts = line.strip().split(",")
+        parts = line.strip().split(";")
         return BattleRow(name=parts[0], commander1=parts[1], commander2=parts[2])
 
 
@@ -84,5 +89,5 @@ class CommanderRow:
 
     @staticmethod
     def from_csv(line: str):
-        parts = line.strip().split(",")
+        parts = line.strip().split(";")
         return CommanderRow(name=parts[0], country=parts[1])

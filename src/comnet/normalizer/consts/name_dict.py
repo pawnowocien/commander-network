@@ -317,4 +317,7 @@ COMPLEX_NAME_DICT = {
 
     "Mustafa Kemal Atatürk": "Mustafa Kemal Atatürk",
     "Mustafa Kemal Pasha": "Mustafa Kemal Atatürk",
+
+    "Frederick Campbell (British Army officer, born 1860)": "Frederick Campbell",
+    "Frederick Campbell": "Frederick Campbell",
 }

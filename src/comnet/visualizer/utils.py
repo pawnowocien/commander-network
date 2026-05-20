@@ -29,5 +29,6 @@ def get_color_dict(commander_rows: list[CommanderRow]) -> dict[str, str]:
         if row.country in COUNTRY_TO_COLOR:
             color_dict[row.name] = COUNTRY_TO_COLOR[row.country]
         else:
+            print(f"Warning: Country {row.country} not found in COUNTRY_TO_COLOR, using default color")
             color_dict[row.name] = COUNTRY_TO_COLOR["Default"]
     return color_dict

@@ -47,3 +47,28 @@ def save_countries(battle_list: list[Battle], file_path: str = "tmp/countries.tx
     with open(file_path, "w", encoding="utf-8") as f:
         for country in sorted(countries, key=lambda c: str(c)):
             f.write(f"{country}\n")
+
+
+def get_countries_to_commanders(battle_list: list[Battle]) -> dict[Country, set[Commander]]:
+    country_to_commanders: dict[Country, set[Commander]] = {}
+    for battle in battle_list:
+        for side in battle.sides:
+            for commander in side.commanders:
+                if commander.allegiance:
+                    if commander.allegiance not in country_to_commanders:
+                        country_to_commanders[commander.allegiance] = set()
+                    country_to_commanders[commander.allegiance].add(commander)
+    return country_to_commanders
+
+def get_coun_com_batt(battle_list: list[Battle]) -> dict[Country, dict[Commander, set[str]]]:
+    country_to_commander_to_battles: dict[Country, dict[Commander, set[str]]] = {}
+    for battle in battle_list:
+        for side in battle.sides:
+            for commander in side.commanders:
+                if commander.allegiance:
+                    if commander.allegiance not in country_to_commander_to_battles:
+                        country_to_commander_to_battles[commander.allegiance] = {}
+                    if commander not in country_to_commander_to_battles[commander.allegiance]:
+                        country_to_commander_to_battles[commander.allegiance][commander] = set()
+                    country_to_commander_to_battles[commander.allegiance][commander].add(battle.name)
+    return country_to_commander_to_battles
