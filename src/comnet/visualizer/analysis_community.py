@@ -42,19 +42,29 @@ def _run_analysis(G: nx.Graph, colors_countries: dict,
 def _run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> dict[str, dict[str, float]]:
     n_communities = len(set(colors.values()))
 
-    greedy_guessed = nx.community.greedy_modularity_communities(G)
-    greedy_colors = colors_from_sets(greedy_guessed)
-    save_graph_as_img(G, greedy_colors, f"{output_path}greedy.png", pos=pos)
+    scores = {}
 
     random_guessed = [set() for _ in range(n_communities)]
     for node in G.nodes:
         random_guessed[random.randint(0, n_communities - 1)].add(node)
     random_colors = colors_from_sets(random_guessed)
     save_graph_as_img(G, random_colors, f"{output_path}random.png", pos=pos)
-    scores = {
-        "greedy": _evaluate_prediction(G, colors, greedy_guessed),
-        "random": _evaluate_prediction(G, colors, random_guessed)
-    }
+    scores['random'] = _evaluate_prediction(G, colors, random_guessed)
+
+    greedy_guessed = nx.community.greedy_modularity_communities(G)
+    greedy_colors = colors_from_sets(greedy_guessed)
+    save_graph_as_img(G, greedy_colors, f"{output_path}greedy.png", pos=pos)
+    scores['greedy'] = _evaluate_prediction(G, colors, greedy_guessed)
+
+    louvain_guessed = nx.community.louvain_communities(G, seed=42)
+    louvain_colors = colors_from_sets(louvain_guessed)
+    save_graph_as_img(G, louvain_colors, f"{output_path}louvain.png", pos=pos)
+    scores['louvain'] = _evaluate_prediction(G, colors, louvain_guessed)
+
+    label_prop_guessed = nx.community.label_propagation_communities(G)
+    label_prop_colors = colors_from_sets(label_prop_guessed)
+    save_graph_as_img(G, label_prop_colors, f"{output_path}label_prop.png", pos=pos)
+    scores['label_prop'] = _evaluate_prediction(G, colors, label_prop_guessed)
 
     return scores
 
