@@ -1,4 +1,5 @@
 import itertools
+import random
 
 import networkx as nx
 
@@ -17,30 +18,52 @@ def predict_communities(output_dir: str = "data/visualized/ww1/community/"):
     edges = get_edges_from_csv("data/normalized/battles.csv")
     G = nx.Graph()
     G.add_edges_from(edges)
-    pos = nx.spring_layout(G, seed=42)
 
-    save_graph_as_img(G, colors_countries, f"{output_dir}countries.png", pos=pos)
-    save_graph_as_img(G, colors_regions, f"{output_dir}regions.png", pos=pos)
-
+    scores = _run_analysis(G, colors_countries, colors_regions, output_dir)
+    _pretty_print("Original graph scores", scores)
 
     G_cut = remove_small_components(G)
-    pos = nx.spring_layout(G_cut, seed=42)
+    scores = _run_analysis(G_cut, colors_countries, colors_regions, f"{output_dir}cut")
+    _pretty_print("\nCut graph scores", scores)
 
-    save_graph_as_img(G_cut, colors_countries, f"{output_dir}countries_cut.png", pos=pos)
-    save_graph_as_img(G_cut, colors_regions, f"{output_dir}regions_cut.png", pos=pos)
+def _run_analysis(G: nx.Graph, colors_countries: dict, 
+                  colors_regions: dict, output_path: str) -> dict[str, dict[str, dict[str, float]]]:
+    pos = nx.spring_layout(G, seed=42)
+    save_graph_as_img(G, colors_countries, f"{output_path}countries.png", pos=pos)
+    save_graph_as_img(G, colors_regions, f"{output_path}regions.png", pos=pos)
+    
+    scores = {}
+    scores['countries'] = _run_predictions(G, colors_countries, pos, f"{output_path}countries_pred.png")
+    scores['regions'] = _run_predictions(G, colors_regions, pos, f"{output_path}regions_pred.png")
+    return scores
 
+def _run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> dict[str, dict[str, float]]:
+    n_communities = len(set(colors.values()))
 
-    guessed_communities = nx.community.greedy_modularity_communities(G_cut)
-    colors_communities = colors_from_sets(guessed_communities)
+    greedy_guessed = nx.community.greedy_modularity_communities(G)
+    greedy_colors = colors_from_sets(greedy_guessed)
+    save_graph_as_img(G, greedy_colors, output_path, pos=pos)
 
-    target = { com: colors_regions[com] for com in G_cut.nodes }
+    random_guessed = [set() for _ in range(n_communities)]
+    for node in G.nodes:
+        random_guessed[random.randint(0, n_communities - 1)].add(node)
+    random_colors = colors_from_sets(random_guessed)
+    save_graph_as_img(G, random_colors, output_path, pos=pos)
+    scores = {
+        "greedy": _evaluate_prediction(G, colors, greedy_guessed),
+        "random": _evaluate_prediction(G, colors, random_guessed)
+    }
+
+    return scores
+
+def _evaluate_prediction(G: nx.Graph, colors: dict, guessed_communities: list) -> dict[str, float]:
+    target = { com: colors[com] for com in G.nodes }
     pred = sets_to_dict(guessed_communities)
     conf_matrix = _pair_conf_matrix(target, pred)
-    print(_pair_accuracy(conf_matrix))
-    print(_pairwise_f1(conf_matrix))
-
-    save_graph_as_img(G_cut, colors_communities, f"{output_dir}communities_cut.png", pos=pos)
-
+    return {
+        "accuracy": _pair_accuracy(conf_matrix),
+        "f1_score": _pairwise_f1(conf_matrix)
+    }
 
 def _pair_conf_matrix(target: dict, pred: dict) -> ConfMatrix:
     keys = set(target.keys())
@@ -72,6 +95,15 @@ def _pairwise_f1(mat: ConfMatrix) -> float:
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
     f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
     return f1_score
+
+
+def _pretty_print(section: str, scores: dict[str, dict[str, dict[str, float]]]):
+    print(f"{section}:")
+    for graph_type, preds in scores.items():
+        print(f"{graph_type}:")
+        for pred_type, metrics in preds.items():
+            for metric, score in metrics.items():
+                print(f"\t{pred_type} - {metric}: {score:.4f}")
 
 if __name__ == "__main__":
     predict_communities()
