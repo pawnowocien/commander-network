@@ -23,6 +23,12 @@ def get_commanders_from_csv(filepath: str) -> list[CommanderRow]:
             commanders.append(commander_row)
     return commanders
 
+def sets_to_dict(sets: list[set] | list[frozenset]) -> dict:
+    result = {}
+    for i, s in enumerate(sets):
+        for item in s:
+            result[item] = i
+    return result
 
 def get_color_dict(commander_rows: list[CommanderRow]) -> dict[str, str]:
     color_dict = {}
