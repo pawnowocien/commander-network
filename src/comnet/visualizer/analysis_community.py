@@ -19,22 +19,24 @@ def predict_communities(output_dir: str = "data/visualized/ww1/community/"):
     G = nx.Graph()
     G.add_edges_from(edges)
 
-    scores = _run_analysis(G, colors_countries, colors_regions, output_dir)
+    scores = _run_analysis(G, colors_countries, colors_regions, f"{output_dir}full/")
     _pretty_print("Original graph scores", scores)
 
     G_cut = remove_small_components(G)
-    scores = _run_analysis(G_cut, colors_countries, colors_regions, f"{output_dir}cut")
+    scores = _run_analysis(G_cut, colors_countries, colors_regions, f"{output_dir}cut/")
     _pretty_print("\nCut graph scores", scores)
 
 def _run_analysis(G: nx.Graph, colors_countries: dict, 
                   colors_regions: dict, output_path: str) -> dict[str, dict[str, dict[str, float]]]:
     pos = nx.spring_layout(G, seed=42)
-    save_graph_as_img(G, colors_countries, f"{output_path}countries.png", pos=pos)
-    save_graph_as_img(G, colors_regions, f"{output_path}regions.png", pos=pos)
-    
     scores = {}
-    scores['countries'] = _run_predictions(G, colors_countries, pos, f"{output_path}countries_pred.png")
-    scores['regions'] = _run_predictions(G, colors_regions, pos, f"{output_path}regions_pred.png")
+
+    scores['countries'] = _run_predictions(G, colors_countries, pos, f"{output_path}countries_pred_")
+    save_graph_as_img(G, colors_countries, f"{output_path}countries.png", pos=pos)
+
+    scores['regions'] = _run_predictions(G, colors_regions, pos, f"{output_path}regions_pred_")
+    save_graph_as_img(G, colors_regions, f"{output_path}regions.png", pos=pos)
+
     return scores
 
 def _run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> dict[str, dict[str, float]]:
@@ -42,13 +44,13 @@ def _run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> 
 
     greedy_guessed = nx.community.greedy_modularity_communities(G)
     greedy_colors = colors_from_sets(greedy_guessed)
-    save_graph_as_img(G, greedy_colors, output_path, pos=pos)
+    save_graph_as_img(G, greedy_colors, f"{output_path}greedy.png", pos=pos)
 
     random_guessed = [set() for _ in range(n_communities)]
     for node in G.nodes:
         random_guessed[random.randint(0, n_communities - 1)].add(node)
     random_colors = colors_from_sets(random_guessed)
-    save_graph_as_img(G, random_colors, output_path, pos=pos)
+    save_graph_as_img(G, random_colors, f"{output_path}random.png", pos=pos)
     scores = {
         "greedy": _evaluate_prediction(G, colors, greedy_guessed),
         "random": _evaluate_prediction(G, colors, random_guessed)
