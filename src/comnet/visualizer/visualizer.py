@@ -8,7 +8,6 @@ import networkx as nx
 
 def main():
     print("Visualizing...")
-    print("Detecting communities...")
     predict_communities()
 
 if __name__ == "__main__":
