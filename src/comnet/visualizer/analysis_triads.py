@@ -23,12 +23,14 @@ def analyse_triads(output_file: str = "data/visualized/ww1/triads/analysis.txt")
     G_all.add_edges_from(enemies)
     count_triads(G_all)
 
-
+    _correct_triads(allies, enemies)
 
 
 
 def count_triads(G: nx.Graph):
-    print(f"Open: {_count_open_triads(G)}\nClosed: {_count_closed_triads(G)}")
+    _closed_count = _count_closed_triads(G)
+    _open_count = _count_open_triads(G)
+    print(f"Closed: {_closed_count}\nOpen: {_open_count}, Ratio: {_closed_count / _open_count if _open_count > 0 else 'N/A'}")
 
 def _count_open_triads(G: nx.Graph) -> int:
     count = 0
@@ -40,4 +42,22 @@ def _count_open_triads(G: nx.Graph) -> int:
     return count    
 
 def _count_closed_triads(G: nx.Graph) -> int:
-    return sum(nx.triangles(G).values()) // 3
+    _dict = nx.triangles(G)
+    assert isinstance(_dict, dict)
+    return sum(_dict.values()) // 3
+
+def _correct_triads(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
+    n_pos = {
+        k: 0 for k in range(4)
+    }
+    G = nx.Graph()
+    G.add_edges_from(edges_pos, pos=1, sign=1)
+    G.add_edges_from(edges_neg, pos=0, sign=-1)
+
+    for u, v, w in nx.all_triangles(G):
+        n_pos[G[u][v]['pos'] + G[v][w]['pos'] + G[w][u]['pos']] += 1
+    
+    for k in range(4):
+        print(f"Triads with {k} positive edges: {n_pos[k]}")
+
+    # print(f"Correct: {corr}, Incorrect: {incorr}, % correct: {corr / (corr + incorr) * 100 if (corr + incorr) > 0 else 'N/A'}")

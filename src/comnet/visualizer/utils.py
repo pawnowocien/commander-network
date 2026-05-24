@@ -4,7 +4,7 @@ from comnet.shared.models import Commander
 import networkx as nx
 
 
-def get_edges_from_csv(filepath: str):
+def get_edges_from_csv(filepath: str) -> set[tuple[str, str]]:
     edges = set()
     with open(filepath, "r", encoding="utf-8") as f:
         for line in f:
@@ -12,8 +12,9 @@ def get_edges_from_csv(filepath: str):
             edges.add(_get_edge_from_battle_row(battle_row))
     return edges
 
-def _get_edge_from_battle_row(battle_row: BattleRow):
-    return tuple(sorted([battle_row.commander1, battle_row.commander2]))
+def _get_edge_from_battle_row(battle_row: BattleRow) -> tuple[str, str]:
+    com1, com2 = sorted([battle_row.commander1, battle_row.commander2])
+    return com1, com2
 
 def get_commanders_from_csv(filepath: str) -> list[CommanderRow]:
     commanders = []
