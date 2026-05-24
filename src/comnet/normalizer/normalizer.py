@@ -121,11 +121,16 @@ def save_to_csv(battles: list[Battle], output_dir: str = "data/normalized/") -> 
     commanders = get_commanders(battles)
     commander_rows = _get_commander_rows(commanders)
 
-    battle_rows = _get_battle_rows(battles)
-
     os.makedirs(os.path.dirname(output_dir), exist_ok=True)
-    with open(os.path.join(output_dir, "battles.csv"), "w", encoding="utf-8") as f:
-        for row in battle_rows:
+
+    battle_rows_allies = _get_battle_rows_allies(battles)
+    with open(os.path.join(output_dir, "battles_allies.csv"), "w", encoding="utf-8") as f:
+        for row in battle_rows_allies:
+            f.write(f"{rawname_to_safename(row.name)};{row.commander1};{row.commander2}\n")
+
+    battle_rows_enemies = _get_battle_rows_enemies(battles)
+    with open(os.path.join(output_dir, "battles_enemies.csv"), "w", encoding="utf-8") as f:
+        for row in battle_rows_enemies:
             f.write(f"{rawname_to_safename(row.name)};{row.commander1};{row.commander2}\n")
     
     with open(os.path.join(output_dir, "commanders.csv"), "w", encoding="utf-8") as f:
@@ -153,12 +158,20 @@ def _get_commander_rows(commanders: set[Commander]) -> list[CommanderRow]:
     return commander_rows
 
 
-def _get_battle_rows(battles: list[Battle]) -> list[BattleRow]:
+def _get_battle_rows_allies(battles: list[Battle]) -> list[BattleRow]:
     rows = []
     for battle in battles:
         for side in battle.sides:
             for commander1, commander2 in itertools.combinations(side.commanders, 2):
                 rows.append(BattleRow(battle.name, commander1.name, commander2.name))
+    return rows
+def _get_battle_rows_enemies(battles: list[Battle]) -> list[BattleRow]:
+    rows = []
+    for battle in battles:
+        sides_combinations = itertools.combinations(battle.sides, 2)
+        for side1, side2 in sides_combinations:
+            for com1, com2 in itertools.product(side1.commanders, side2.commanders):
+                rows.append(BattleRow(battle.name, com1.name, com2.name))
     return rows
 
 def main():

@@ -14,10 +14,11 @@ def predict_communities(output_dir: str = "data/visualized/ww1/community/"):
     colors_countries = get_color_dict(commanders)
     colors_regions = get_color_dict_region(commanders)
 
-
-    edges = get_edges_from_csv("data/normalized/battles.csv")
+    allies = get_edges_from_csv("data/normalized/battles_allies.csv")
+    enemies = get_edges_from_csv("data/normalized/battles_enemies.csv")
     G = nx.Graph()
-    G.add_edges_from(edges)
+    G.add_edges_from(allies)
+    G.add_edges_from(enemies)
 
     scores = _run_analysis(G, colors_countries, colors_regions, f"{output_dir}full/")
     _pretty_print("Original graph scores", scores)
