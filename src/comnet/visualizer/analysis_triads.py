@@ -7,30 +7,32 @@ def analyse_triads(output_file: str = "data/visualized/ww1/triads/analysis.txt")
     allies = get_edges_from_csv("data/normalized/battles_allies.csv")
     enemies = get_edges_from_csv("data/normalized/battles_enemies.csv")
     
-    print("Allied")
     G_allies = nx.Graph()
     G_allies.add_edges_from(allies)
-    count_triads(G_allies)
+    n_closed, n_open = count_triads(G_allies)
+    _pretty_print_count("Allied", n_closed, n_open)
 
-    print("Opposed")
     G_enemies = nx.Graph()
     G_enemies.add_edges_from(enemies)
-    count_triads(G_enemies)
+    n_closed, n_open = count_triads(G_enemies)
+    _pretty_print_count("Opposed", n_closed, n_open)
 
-    print("All")
     G_all = nx.Graph()
     G_all.add_edges_from(allies)
     G_all.add_edges_from(enemies)
-    count_triads(G_all)
+    n_closed, n_open = count_triads(G_all)
+    _pretty_print_count("All", n_closed, n_open)
 
-    _correct_triads(allies, enemies)
+    print(_open_triad_types(allies, enemies))
+    print(_closed_triad_types(allies, enemies))
+
+    _get_exceptions(allies, enemies)
 
 
-
-def count_triads(G: nx.Graph):
+def count_triads(G: nx.Graph) -> tuple[int, int]:
     _closed_count = _count_closed_triads(G)
     _open_count = _count_open_triads(G)
-    print(f"Closed: {_closed_count}\nOpen: {_open_count}, Ratio: {_closed_count / _open_count if _open_count > 0 else 'N/A'}")
+    return _closed_count, _open_count
 
 def _count_open_triads(G: nx.Graph) -> int:
     count = 0
@@ -46,18 +48,80 @@ def _count_closed_triads(G: nx.Graph) -> int:
     assert isinstance(_dict, dict)
     return sum(_dict.values()) // 3
 
-def _correct_triads(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
+def _open_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
+    n_pos = {
+        k: 0 for k in range(3)
+    }
+    G = nx.Graph()
+    G.add_edges_from(edges_pos, pos=1, sign=1)
+    G.add_edges_from(edges_neg, pos=0, sign=-1)
+
+    exceptions = _get_exceptions(edges_pos, edges_neg)
+    for u, v in exceptions:
+        G[u][v].update(exc=True)
+
+    for node in G.nodes:
+        neighbors = G.neighbors(node)
+        for n1, n2 in itertools.combinations(neighbors, 2):
+            if G.has_edge(n1, n2):
+                continue
+            
+            if 'exc' not in G[node][n1] and 'exc' not in G[node][n2]:
+                n_pos[G[node][n1]['pos'] + G[node][n2]['pos']] += 1
+                continue
+            
+            n1_opt = (G[node][n1]['pos'],) if 'exc' not in G[node][n1] else (0, 1)
+            n2_opt = (G[node][n2]['pos'],) if 'exc' not in G[node][n2] else (0, 1)
+
+            for n1_pos, n2_pos in itertools.product(n1_opt, n2_opt):
+                n_pos[n1_pos + n2_pos] += 1
+
+    return n_pos
+        
+
+def _closed_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
     n_pos = {
         k: 0 for k in range(4)
     }
     G = nx.Graph()
     G.add_edges_from(edges_pos, pos=1, sign=1)
     G.add_edges_from(edges_neg, pos=0, sign=-1)
+    
+    exceptions = _get_exceptions(edges_pos, edges_neg)
+    for u, v in exceptions:
+        G[u][v].update(exc=True)
 
     for u, v, w in nx.all_triangles(G):
-        n_pos[G[u][v]['pos'] + G[v][w]['pos'] + G[w][u]['pos']] += 1
-    
-    for k in range(4):
-        print(f"Triads with {k} positive edges: {n_pos[k]}")
+        if 'exc' not in G[u][v] and 'exc' not in G[v][w] and 'exc' not in G[w][u]:
+            n_pos[G[u][v]['pos'] + G[v][w]['pos'] + G[w][u]['pos']] += 1
+            continue
+        
+        uv_opt = (G[u][v]['pos'],) if 'exc' not in G[u][v] else (0, 1)
+        vw_opt = (G[v][w]['pos'],) if 'exc' not in G[v][w] else (0, 1)
+        wu_opt = (G[w][u]['pos'],) if 'exc' not in G[w][u] else (0, 1)
 
-    # print(f"Correct: {corr}, Incorrect: {incorr}, % correct: {corr / (corr + incorr) * 100 if (corr + incorr) > 0 else 'N/A'}")
+        for uv, vw, wu in itertools.product(uv_opt, vw_opt, wu_opt):
+            n_pos[uv + vw + wu] += 1
+
+    return n_pos
+
+
+def _get_exceptions(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]) -> list[tuple[str, str]]:
+    sorted_p = sorted(sorted(edge) for edge in edges_pos)
+    sorted_n = sorted(sorted(edge) for edge in edges_neg)
+
+    exceptions = []
+    for edge in sorted_p:
+        if edge in sorted_n:
+            exceptions.append(edge)
+            
+    return exceptions
+
+def _pretty_print_count(title: str, n_closed: int, n_open: int):
+    print(_pretty_string_count(title, n_closed, n_open))
+
+def _pretty_print_corr():
+    pass
+    
+def _pretty_string_count(title: str, n_closed: int, n_open: int) -> str:
+    return f"{title}\nClosed triads: {n_closed}\nOpen triads: {n_open}\n"
