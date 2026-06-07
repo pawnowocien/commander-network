@@ -23,8 +23,8 @@ def analyse_triads(output_file: str = "data/visualized/ww1/triads/analysis.txt")
     n_closed, n_open = count_triads(G_all)
     _pretty_print_count("All", n_closed, n_open)
 
-    print(_open_triad_types(allies, enemies))
-    print(_closed_triad_types(allies, enemies))
+    print(open_triad_types(allies, enemies))
+    print(closed_triad_types(allies, enemies))
 
     _get_exceptions(allies, enemies)
 
@@ -48,7 +48,7 @@ def _count_closed_triads(G: nx.Graph) -> int:
     assert isinstance(_dict, dict)
     return sum(_dict.values()) // 3
 
-def _open_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
+def open_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
     n_pos = {
         k: 0 for k in range(3)
     }
@@ -76,10 +76,10 @@ def _open_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str,
             for n1_pos, n2_pos in itertools.product(n1_opt, n2_opt):
                 n_pos[n1_pos + n2_pos] += 1
 
-    return n_pos
+    return n_pos, exceptions
         
 
-def _closed_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
+def closed_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]):
     n_pos = {
         k: 0 for k in range(4)
     }
@@ -103,7 +103,7 @@ def _closed_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[st
         for uv, vw, wu in itertools.product(uv_opt, vw_opt, wu_opt):
             n_pos[uv + vw + wu] += 1
 
-    return n_pos
+    return n_pos, exceptions
 
 
 def _get_exceptions(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]) -> list[tuple[str, str]]:
@@ -119,9 +119,6 @@ def _get_exceptions(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, s
 
 def _pretty_print_count(title: str, n_closed: int, n_open: int):
     print(_pretty_string_count(title, n_closed, n_open))
-
-def _pretty_print_corr():
-    pass
     
 def _pretty_string_count(title: str, n_closed: int, n_open: int) -> str:
     return f"{title}\nClosed triads: {n_closed}\nOpen triads: {n_open}\n"
