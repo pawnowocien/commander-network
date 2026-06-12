@@ -1,5 +1,5 @@
 import mwparserfromhell as mwp
-from comnet.parser.consts import BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, RANK_WIKILINKS_TO_REMOVE
+from comnet.parser.consts import BANNED_NAMES_WW2, BR_NAMES, FLAG_ICON_TEMPLATE_NAMES, RANK_WIKILINKS_TO_REMOVE
 from .models import ParseCommander, ParseCountry, CommanderListType
 import logging
 import re
@@ -353,7 +353,7 @@ def _clean_corner_cases(name: str) -> str | None:
 
     # ()        - Petsamo Expeditions (after removing WIA link)
     # '''       - Battle of the Southern Carpathians
-    to_remove = ["()", "'''"]
+    to_remove = ["()", "'''", "• "]
 
     for item in to_remove:
         name = name.replace(item, "")
@@ -371,7 +371,7 @@ def _clean_corner_cases(name: str) -> str | None:
         "I Caucasian Corps (Ottoman Empire)",                               # Battle of Sardarabad
         "Tribesmen leader",                                                 # Operations in the Tochi
     ]
-    if name in BANNED_NAMES:
+    if name in BANNED_NAMES + BANNED_NAMES_WW2:
         return None
     
     if not name:

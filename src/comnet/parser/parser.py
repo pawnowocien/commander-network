@@ -4,8 +4,7 @@ from dataclasses import asdict
 import os
 
 import mwparserfromhell as mwp
-from comnet.parser.consts import HANDLED_EXCEPTION_BATTLES, INFOBOX_NAMES
-from comnet.parser.test import test_objects
+from comnet.parser.consts import HANDLED_EXCEPTION_BATTLES, INFOBOX_NAMES, PARSED_BATTLES_PATH
 from comnet.shared.consts import BATTLES_EXCEPTIONS
 from comnet.shared.log_utils import setup_logging_parse
 from comnet.parser.combatant_parser import parse_combatant
@@ -104,11 +103,11 @@ def _get_battle_info(infobox: mwp.nodes.template.Template, raw_battle_name: str)
 
     return ParseBattle(raw_battle_name, conflict_name, sides)
 
-def save_parse(file_paths: list[str] | str | None = None, output_file: str = "data/parsed/parsed_battles.json") -> None:
+def save_parse(file_paths: list[str] | str | None = None, output_file: str = PARSED_BATTLES_PATH) -> None:
     battles = parse_files(file_paths)
     save_battles(battles, output_file)
 
-def save_battles(battles: list[ParseBattle], output_file: str = "data/parsed/parsed_battles.json") -> None:
+def save_battles(battles: list[ParseBattle], output_file: str = PARSED_BATTLES_PATH) -> None:
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     battle_dict = [asdict(battle) for battle in battles]
@@ -116,7 +115,10 @@ def save_battles(battles: list[ParseBattle], output_file: str = "data/parsed/par
         json.dump(battle_dict, f, ensure_ascii=False, indent=4)
 
 def main():
-    save_parse()
+    # ww2_files = [os.path.join("data/ww2/wiki_pages", f) for f in os.listdir("data/ww2/wiki_pages")]
+    files = get_filtered_wiki_files()
+
+    save_parse(files, output_file=PARSED_BATTLES_PATH)
 
 if __name__ == "__main__":
     main()

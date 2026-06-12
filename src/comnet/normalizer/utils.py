@@ -2,8 +2,7 @@ import os.path
 
 # from comnet.normalizer.normalizer import normalize_battles
 from comnet.shared.models import Battle, Commander, Country
-from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME
-from comnet.shared.utils import rawname_to_link
+from comnet.shared.dicts.country_dict import NORMALIZE_COUNTRY_NAME
 
 def get_commanders(battle_list: list[Battle]) -> set[Commander]:
     commanders = set()

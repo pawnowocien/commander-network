@@ -1,11 +1,12 @@
 import networkx as nx
 import itertools
 
+from comnet.visualizer.const import ALLIES_PATH, ENEMIES_PATH
 from comnet.visualizer.utils import get_edges_from_csv
 
-def analyse_triads(output_file: str = "data/visualized/ww1/triads/analysis.txt"):
-    allies = get_edges_from_csv("data/normalized/battles_allies.csv")
-    enemies = get_edges_from_csv("data/normalized/battles_enemies.csv")
+def analyse_triads():
+    allies = get_edges_from_csv(ALLIES_PATH)
+    enemies = get_edges_from_csv(ENEMIES_PATH)
     
     G_allies = nx.Graph()
     G_allies.add_edges_from(allies)

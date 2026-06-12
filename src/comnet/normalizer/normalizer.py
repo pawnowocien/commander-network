@@ -3,13 +3,14 @@ import json
 import os
 from dataclasses import asdict
 
-from comnet.normalizer.consts.country_dict import NORMALIZE_COUNTRY_NAME, NAME_TO_COUNTRY
-from comnet.normalizer.consts.name_dict import CLEAN_NAME_DICT, COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
+from comnet.shared.dicts.country_dict import NORMALIZE_COUNTRY_NAME, NAME_TO_COUNTRY
+from comnet.shared.dicts.name_dict import CLEAN_NAME_DICT, COMPLEX_NAME_DICT, LETTER_DICT, SIMPLE_NAME_DICT
 from comnet.shared.models import BattleRow, CommanderRow
-from comnet.normalizer.utils import get_commanders, get_norm_countries
+from comnet.normalizer.utils import get_commanders, get_countries, get_countries_to_commanders, get_norm_countries
 from comnet.parser.models import ParseBattle, ParseCommander, ParseCountry
 from comnet.shared.models import Battle, Commander, Country, Side
 from comnet.shared.utils import rawname_to_safename
+from comnet.config import pipeline_type
 
 
 def normalize_battles(parsed_battles: list[ParseBattle]) -> list[Battle]:
@@ -109,7 +110,7 @@ def _normalize_allegiance(allegiance: list[ParseCountry], norm_name: str) -> set
 def _normalize_battle_name(name: str) -> str:
     return name.strip()
 
-def save_normalized(battles: list[Battle], output_file: str = "data/normalized/normalized_battles.json") -> None:
+def save_normalized(battles: list[Battle], output_file: str = f"data/{pipeline_type}/normalized/normalized_battles.json") -> None:
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     battle_dict = [asdict(battle) for battle in battles]
     with open(output_file, "w", encoding="utf-8") as f:
@@ -175,11 +176,13 @@ def _get_battle_rows_enemies(battles: list[Battle]) -> list[BattleRow]:
     return rows
 
 def main():
-    with open("data/parsed/parsed_battles.json", "r", encoding="utf-8") as f:
+
+    with open(f"data/{pipeline_type}/parsed/battles.json", "r", encoding="utf-8") as f:
         parsed_battle_dicts = json.load(f)
         parsed_battles = [ParseBattle.from_dict(battle_dict) for battle_dict in parsed_battle_dicts]
         battles = normalize_battles(parsed_battles)
-        save_to_csv(battles)
+        save_to_csv(battles, output_dir=f"data/{pipeline_type}/normalized/")
+
 
 if __name__ == "__main__":
     main()

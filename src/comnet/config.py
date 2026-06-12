@@ -5,4 +5,9 @@ ERASE_PREVIOUS_LOGS = True
 USER_AGENT = "WikiBattlesDownloader/1.0"
 DOWNLOAD_INTERVAL_SEC = 1.0 # Should be at least 1.0
 
-# Plots
+
+
+
+# Pipeline type
+pipeline_type = "ww1" # "ww1" or "ww2"
+# pipeline_type = "ww2"

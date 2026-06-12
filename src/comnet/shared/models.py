@@ -79,6 +79,8 @@ class BattleRow:
     @staticmethod
     def from_csv(line: str):
         parts = line.strip().split(";")
+        if len(parts) != 3:
+            raise ValueError(f"Invalid line format: {line}")
         return BattleRow(name=parts[0], commander1=parts[1], commander2=parts[2])
 
 

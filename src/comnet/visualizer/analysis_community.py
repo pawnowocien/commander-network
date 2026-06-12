@@ -4,78 +4,77 @@ import random
 
 import networkx as nx
 
-from comnet.normalizer.consts.country_dict import COUNTRY_TO_REGION
 from comnet.visualizer.models import ConfMatrix
 from comnet.visualizer.plotter import colors_from_sets, save_graph_as_img
-from comnet.visualizer.utils import get_color_dict, get_color_dict_region, get_commanders_from_csv, get_edges_from_csv, remove_small_components, sets_to_dict
+from comnet.visualizer.utils import sets_to_dict
 
 
-def predict_communities(output_dir: str = "data/visualized/ww1/community/", analysis_file_path: str = "data/visualized/ww1/community/scores.txt"):
-    ANALYSIS_COUNT = 6
-    current_analysis_num = 0
-    def update_print():
-        nonlocal current_analysis_num
-        current_analysis_num +=1
-        print(f"\rDetecting communities... {current_analysis_num} / {ANALYSIS_COUNT} ", end="")
+# def predict_communities(output_dir: str = "data/visualized/ww1/community/", analysis_file_path: str = "data/visualized/ww1/community/scores.txt"):
+#     ANALYSIS_COUNT = 6
+#     current_analysis_num = 0
+#     def update_print():
+#         nonlocal current_analysis_num
+#         current_analysis_num +=1
+#         print(f"\rDetecting communities... {current_analysis_num} / {ANALYSIS_COUNT} ", end="")
         
 
-    commanders = get_commanders_from_csv("data/normalized/commanders.csv")
-    colors_countries = get_color_dict(commanders)
-    colors_regions = get_color_dict_region(commanders)
+#     commanders = get_commanders_from_csv("data/normalized/commanders.csv")
+#     colors_countries = get_color_dict(commanders)
+#     colors_regions = get_color_dict_region(commanders)
 
-    allies = get_edges_from_csv("data/normalized/battles_allies.csv")
-    enemies = get_edges_from_csv("data/normalized/battles_enemies.csv")
+#     allies = get_edges_from_csv("data/normalized/battles_allies.csv")
+#     enemies = get_edges_from_csv("data/normalized/battles_enemies.csv")
 
-    analysis_str = ""
+#     analysis_str = ""
 
-    # Allies (default)
-    analysis_str += "Allied commanders\n"
+#     # Allies (default)
+#     analysis_str += "Allied commanders\n"
 
-    update_print()
-    G_allies = nx.Graph()
-    G_allies.add_edges_from(allies)
-    scores = _run_analysis(G_allies, colors_countries, colors_regions, f"{output_dir}allies_full/")
-    analysis_str += _pretty_string("Original graph scores", scores)
+#     update_print()
+#     G_allies = nx.Graph()
+#     G_allies.add_edges_from(allies)
+#     scores = _run_analysis(G_allies, colors_countries, colors_regions, f"{output_dir}allies_full/")
+#     analysis_str += _pretty_string("Original graph scores", scores)
 
-    update_print()
-    G_allies_cut = remove_small_components(G_allies)
-    scores = _run_analysis(G_allies_cut, colors_countries, colors_regions, f"{output_dir}allies_cut/")
-    analysis_str += _pretty_string("Cut graph scores", scores)
+#     update_print()
+#     G_allies_cut = remove_small_components(G_allies)
+#     scores = _run_analysis(G_allies_cut, colors_countries, colors_regions, f"{output_dir}allies_cut/")
+#     analysis_str += _pretty_string("Cut graph scores", scores)
     
-    # Enemies
-    analysis_str += "Opposed commanders\n"
+#     # Enemies
+#     analysis_str += "Opposed commanders\n"
 
-    update_print()
-    G_enemies = nx.Graph()
-    G_enemies.add_edges_from(enemies)
-    scores = _run_analysis(G_enemies, colors_countries, colors_regions, f"{output_dir}enemies_full/")
-    analysis_str += _pretty_string("Original graph scores", scores)
+#     update_print()
+#     G_enemies = nx.Graph()
+#     G_enemies.add_edges_from(enemies)
+#     scores = _run_analysis(G_enemies, colors_countries, colors_regions, f"{output_dir}enemies_full/")
+#     analysis_str += _pretty_string("Original graph scores", scores)
 
-    update_print()
-    G_enemies_cut = remove_small_components(G_enemies)
-    scores = _run_analysis(G_enemies_cut, colors_countries, colors_regions, f"{output_dir}enemies_cut/")
-    analysis_str += _pretty_string("Cut graph scores", scores)
+#     update_print()
+#     G_enemies_cut = remove_small_components(G_enemies)
+#     scores = _run_analysis(G_enemies_cut, colors_countries, colors_regions, f"{output_dir}enemies_cut/")
+#     analysis_str += _pretty_string("Cut graph scores", scores)
 
-    # Complete
-    analysis_str += "All commanders\n"
+#     # Complete
+#     analysis_str += "All commanders\n"
 
-    update_print()
-    G_all = nx.Graph()
-    G_all.add_edges_from(allies)
-    G_all.add_edges_from(enemies)
-    scores = _run_analysis(G_all, colors_countries, colors_regions, f"{output_dir}all_full/")
-    analysis_str += _pretty_string("Original graph scores", scores)
+#     update_print()
+#     G_all = nx.Graph()
+#     G_all.add_edges_from(allies)
+#     G_all.add_edges_from(enemies)
+#     scores = _run_analysis(G_all, colors_countries, colors_regions, f"{output_dir}all_full/")
+#     analysis_str += _pretty_string("Original graph scores", scores)
 
-    update_print()
-    G_all_cut = remove_small_components(G_all)
-    scores = _run_analysis(G_all_cut, colors_countries, colors_regions, f"{output_dir}all_cut/")
-    analysis_str += _pretty_string("Cut graph scores", scores)
+#     update_print()
+#     G_all_cut = remove_small_components(G_all)
+#     scores = _run_analysis(G_all_cut, colors_countries, colors_regions, f"{output_dir}all_cut/")
+#     analysis_str += _pretty_string("Cut graph scores", scores)
 
-    print()
+#     print()
 
-    os.makedirs(os.path.dirname(analysis_file_path), exist_ok=True)
-    with open(analysis_file_path, "w", encoding="utf-8") as f:
-        f.write(analysis_str)
+#     os.makedirs(os.path.dirname(analysis_file_path), exist_ok=True)
+#     with open(analysis_file_path, "w", encoding="utf-8") as f:
+#         f.write(analysis_str)
 
 
 def _run_analysis(G: nx.Graph, colors_countries: dict, 
@@ -121,7 +120,7 @@ def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> d
     return scores
 
 def _evaluate_prediction(G: nx.Graph, colors: dict, guessed_communities: list) -> dict[str, float]:
-    target = { com: colors[com] for com in G.nodes }
+    target = { com: colors[com] for com in G.nodes if com in colors }
     pred = sets_to_dict(guessed_communities)
     conf_matrix = _pair_conf_matrix(target, pred)
     return {
@@ -181,4 +180,5 @@ def _pretty_print(section: str, scores: dict[str, dict[str, dict[str, float]]]):
 
 
 if __name__ == "__main__":
-    predict_communities()
+    # predict_communities()
+    pass

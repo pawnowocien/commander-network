@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as clr
 import networkx as nx
 
+from comnet.visualizer.const import VIZ_DIR
 from comnet.visualizer.utils import get_com_to_col
 
 
-def save_graph_as_img(G, colors = None, output_file: str = "data/visualized/graph.png", show_labels: bool = False, pos=None, weights=False):
+def save_graph_as_img(G, colors = None, output_file: str = f"{VIZ_DIR}graph.png", show_labels: bool = False, pos=None, weights=False):
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     fig, ax = plt.subplots(figsize=(25, 25))
@@ -61,7 +62,7 @@ def colors_from_sets(sets):
 
 
 
-def save_edges_as_img(allies: set[tuple], enemies: set[tuple], colors = None, output_file: str = "data/visualized/edges.png",
+def save_edges_as_img(allies: set[tuple], enemies: set[tuple], colors = None, output_file: str = f"{VIZ_DIR}edges.png",
                       pos=None, weights=False):
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
@@ -151,9 +152,9 @@ def _save_single_community_stat(measure_name: str, scores: list[tuple[float, str
     fig, ax = plt.subplots(figsize=(10, 5))
 
     ax.bar(labels, values, color=colors)
-    ax.set_xlabel('Graph Type')
+    ax.set_xlabel('Detection Method')
     ax.set_ylabel('Score')
-    ax.set_title(f'{measure_name.capitalize()} by Graph Type')
+    ax.set_title(f'{measure_name.replace("_", " ").capitalize()} by Detection Method')
 
     plt.tight_layout()
     fig.savefig(output_file)

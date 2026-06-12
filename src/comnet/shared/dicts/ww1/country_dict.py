@@ -1,3 +1,5 @@
+
+
 NORMALIZE_COUNTRY_NAME = {
     **{ k: "Arabia"                     for k in ["Arab Revolt"] },
     **{ k: "Armenia"                    for k in ["First Republic of Armenia", "flag of armenia (1918–1922).svg"] },
@@ -196,41 +198,43 @@ COUNTRY_TO_COLOR = {
     "anarchists":               "#000000",
 }
 
-COUNTRY_TO_REGION = {
-    **{ k: "Austria-Hungary"            for k in ["Austria-Hungary", "Bohemia"] },
-    **{ k: "Belgium"                    for k in ["Belgium", "Belgian Congo"] },
-    **{ k: "British Empire"             for k in ["Australia", "British Empire", "British India", "Canada", "Egypt", "South Africa", "New Zealand",] },
-    **{ k: "Germany"                    for k in ["German Colonies", "Germany"] },
-    **{ k: "Russian breakaways"         for k in ["Armenia", "Azerbaijan", "Estonia", "Poland", "Transcaucasian Republic", "Ukraine",
-                                                  "anarchists", # a bit of a stretch
-                                                  ] },
+# Not used
 
-    **{ k: "Finland"                    for k in ["Finnish Whites", "Finland"] },
+# COUNTRY_TO_REGION = {
+#     **{ k: "Austria-Hungary"            for k in ["Austria-Hungary", "Bohemia"] },
+#     **{ k: "Belgium"                    for k in ["Belgium", "Belgian Congo"] },
+#     **{ k: "British Empire"             for k in ["Australia", "British Empire", "British India", "Canada", "Egypt", "South Africa", "New Zealand",] },
+#     **{ k: "Germany"                    for k in ["German Colonies", "Germany"] },
+#     **{ k: "Russian breakaways"         for k in ["Armenia", "Azerbaijan", "Estonia", "Poland", "Transcaucasian Republic", "Ukraine",
+#                                                   "anarchists", # a bit of a stretch
+#                                                   ] },
 
-    **{ k: "Reds"                       for k in ["Finnish Reds", "Soviets", "socialists"] },
+#     **{ k: "Finland"                    for k in ["Finnish Whites", "Finland"] },
 
-    **{ k: "Middle East"                for k in ["Arabia", "Assyria", "Persia", "Kurdistan", "Lahej"] },
+#     **{ k: "Reds"                       for k in ["Finnish Reds", "Soviets", "socialists"] },
 
-    **{ k: "Entente Overseas"           for k in ["Brazil", "Liberia", "Portugal",  "Japan",] },
-    **{ k: "Entente Balkans"            for k in ["Greece", "Montenegro", "Serbia"] },
+#     **{ k: "Middle East"                for k in ["Arabia", "Assyria", "Persia", "Kurdistan", "Lahej"] },
 
-    **{ k: k                            for k in ["Bulgaria",
-                                                "France", "Italy"
-                                                "Ottoman Empire", "Romania", "Russia",
-                                                "United States"] },
+#     **{ k: "Entente Overseas"           for k in ["Brazil", "Liberia", "Portugal",  "Japan",] },
+#     **{ k: "Entente Balkans"            for k in ["Greece", "Montenegro", "Serbia"] },
 
-    **{ k: "Other"                      for k in ["Other", "Sweden"]}
-}
+#     **{ k: k                            for k in ["Bulgaria",
+#                                                 "France", "Italy"
+#                                                 "Ottoman Empire", "Romania", "Russia",
+#                                                 "United States"] },
 
-REGION_TO_COLOR = {
-    "Austria-Hungary":          "#f8f8f8",
-    "Belgium":                  "#e4c620",
-    "British Empire":           "#ff0a0a",
-    "Germany":                  "#26282C",
-    "Russian breakaways":       "#3B7A00",
-    "Nonreds":                  "#aef1e1",
-    "Reds":                     "#640000",
-    "Middle East":              "#c7a669",
-    "Entente Overseas":           "#218b7d",
-    "Entente Balkans":            "#3a3d5c",
-}
+#     **{ k: "Other"                      for k in ["Other", "Sweden"]}
+# }
+
+# REGION_TO_COLOR = {
+#     "Austria-Hungary":          "#f8f8f8",
+#     "Belgium":                  "#e4c620",
+#     "British Empire":           "#ff0a0a",
+#     "Germany":                  "#26282C",
+#     "Russian breakaways":       "#3B7A00",
+#     "Nonreds":                  "#aef1e1",
+#     "Reds":                     "#640000",
+#     "Middle East":              "#c7a669",
+#     "Entente Overseas":           "#218b7d",
+#     "Entente Balkans":            "#3a3d5c",
+# }

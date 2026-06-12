@@ -1,14 +1,14 @@
-from comnet.normalizer.consts.country_dict import COUNTRY_TO_COLOR, COUNTRY_TO_REGION, REGION_TO_COLOR
+from comnet.shared.dicts.country_dict import COUNTRY_TO_COLOR
 from comnet.shared.models import BattleRow, CommanderRow
-from comnet.shared.models import Commander
 import networkx as nx
 
+from comnet.visualizer.const import ALLIES_PATH, ENEMIES_PATH
 
 def get_allies_edges_w() -> set[tuple[str, str, int]]:
-    return get_weight_edges_from_csv("data/normalized/battles_allies.csv")
+    return get_weight_edges_from_csv(ALLIES_PATH)
 
 def get_enemies_edges_w() -> set[tuple[str, str, int]]:
-    return get_weight_edges_from_csv("data/normalized/battles_enemies.csv")
+    return get_weight_edges_from_csv(ENEMIES_PATH)
 
 
 
@@ -19,6 +19,8 @@ def get_weight_edges_from_csv(filepath: str) -> set[tuple[str, str, int]]:
         for line in f:
             battle_row = BattleRow.from_csv(line)
             edge = _get_edge_from_battle_row(battle_row)
+            if edge is None:
+                continue
             if edge in edges:
                 edges[edge] += 1
             else:
@@ -30,10 +32,16 @@ def get_edges_from_csv(filepath: str) -> set[tuple[str, str]]:
     with open(filepath, "r", encoding="utf-8") as f:
         for line in f:
             battle_row = BattleRow.from_csv(line)
-            edges.add(_get_edge_from_battle_row(battle_row))
+            edge = _get_edge_from_battle_row(battle_row)
+            if edge is not None:
+                edges.add(edge)
     return edges
 
-def _get_edge_from_battle_row(battle_row: BattleRow) -> tuple[str, str]:
+def _get_edge_from_battle_row(battle_row: BattleRow) -> tuple[str, str] | None:
+    if not battle_row.commander1 or not battle_row.commander2:
+        return None
+    if battle_row.commander1 == battle_row.commander2:
+        return None
     com1, com2 = sorted([battle_row.commander1, battle_row.commander2])
     return com1, com2
 
@@ -61,16 +69,18 @@ def get_color_dict(commander_rows: list[CommanderRow]) -> dict[str, str]:
             print(f"Warning: Country {row.country} not found in COUNTRY_TO_COLOR, using default color")
             color_dict[row.name] = COUNTRY_TO_COLOR["Default"]
     return color_dict
-def get_color_dict_region(commander_rows: list[CommanderRow]) -> dict[str, str]:
-    color_dict = {}
-    for row in commander_rows:
-        region = COUNTRY_TO_REGION.get(row.country, "Other")
-        if region in REGION_TO_COLOR:
-            color_dict[row.name] = REGION_TO_COLOR[region]
-        else:
-            color_dict[row.name] = COUNTRY_TO_COLOR.get(row.country, COUNTRY_TO_COLOR["Default"])
+
+# Not used
+# def get_color_dict_region(commander_rows: list[CommanderRow]) -> dict[str, str]:
+#     color_dict = {}
+#     for row in commander_rows:
+#         region = COUNTRY_TO_REGION.get(row.country, "Other")
+#         if region in REGION_TO_COLOR:
+#             color_dict[row.name] = REGION_TO_COLOR[region]
+#         else:
+#             color_dict[row.name] = COUNTRY_TO_COLOR.get(row.country, COUNTRY_TO_COLOR["Default"])
             
-    return color_dict
+#     return color_dict
 
 
 def remove_small_components(G, min_size=5) -> nx.Graph:

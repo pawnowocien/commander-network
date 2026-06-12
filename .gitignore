@@ -5,6 +5,9 @@ __pycache__/
 *.egg-info/
 *.png
 
-data/wiki_pages
+wiki_pages/
+parsed/
+normalized/
+visualized/
 logs
 tmp/
