@@ -8,11 +8,7 @@ from comnet.visualizer.const import VIZ_DIR
 from comnet.visualizer.utils import get_com_to_col
 
 
-def save_graph_as_img(G, colors = None, output_file: str = f"{VIZ_DIR}graph.png", show_labels: bool = False, pos=None, weights=False):
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-
-    fig, ax = plt.subplots(figsize=(25, 25))
-
+def make_plot_on_ax(G, ax, colors = None, show_labels: bool = False, pos=None, weights=False, title: str | None = None):
     if pos is None:
         pos = nx.spring_layout(G, weight='weight' if weights else None)
 
@@ -47,8 +43,21 @@ def save_graph_as_img(G, colors = None, output_file: str = f"{VIZ_DIR}graph.png"
         nx.draw_networkx_labels(G, pos, ax=ax, font_size=8)
 
     ax.set_axis_off()
+
+    if title:
+        ax.set_title(title, fontsize=72)
+
+
+def save_graph_as_img(G, colors = None, output_file: str = f"{VIZ_DIR}graph.png", show_labels: bool = False, pos=None, weights=False):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+    fig, ax = plt.subplots(figsize=(25, 25))
+
+    make_plot_on_ax(G, ax, colors=colors, show_labels=show_labels, pos=pos, weights=weights)
+
     fig.savefig(output_file, bbox_inches="tight")
     plt.close()
+
 
 def colors_from_sets(sets):
     color_dict = {}
@@ -57,6 +66,11 @@ def colors_from_sets(sets):
         for node in s:
             color_dict[node] = color
     return color_dict
+
+
+
+
+
 
 
 

@@ -2,10 +2,11 @@ import itertools
 import os
 import random
 
+from matplotlib import pyplot as plt
 import networkx as nx
 
 from comnet.visualizer.models import ConfMatrix
-from comnet.visualizer.plotter import colors_from_sets, save_graph_as_img
+from comnet.visualizer.plotter import colors_from_sets, make_plot_on_ax, save_graph_as_img
 from comnet.visualizer.utils import sets_to_dict
 
 
@@ -90,7 +91,7 @@ def _run_analysis(G: nx.Graph, colors_countries: dict,
 
     return scores
 
-def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> dict[str, dict[str, float]]:
+def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> tuple[dict[str, dict[str, float]], dict[str, dict]]:
     n_communities = len(set(colors.values()))
 
     scores = {}
@@ -99,25 +100,32 @@ def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> d
     for node in G.nodes:
         random_guessed[random.randint(0, n_communities - 1)].add(node)
     random_colors = colors_from_sets(random_guessed)
-    save_graph_as_img(G, random_colors, f"{output_path}_random.png", pos=pos)
+    # save_graph_as_img(G, random_colors, f"{output_path}_random.png", pos=pos)
     scores['random'] = _evaluate_prediction(G, colors, random_guessed)
 
     greedy_guessed = nx.community.greedy_modularity_communities(G)
     greedy_colors = colors_from_sets(greedy_guessed)
-    save_graph_as_img(G, greedy_colors, f"{output_path}_greedy.png", pos=pos)
+    # save_graph_as_img(G, greedy_colors, f"{output_path}_greedy.png", pos=pos)
     scores['greedy'] = _evaluate_prediction(G, colors, greedy_guessed)
 
     louvain_guessed = nx.community.louvain_communities(G, seed=42)
     louvain_colors = colors_from_sets(louvain_guessed)
-    save_graph_as_img(G, louvain_colors, f"{output_path}_louvain.png", pos=pos)
+    # save_graph_as_img(G, louvain_colors, f"{output_path}_louvain.png", pos=pos)
     scores['louvain'] = _evaluate_prediction(G, colors, louvain_guessed)
 
     label_prop_guessed = nx.community.label_propagation_communities(G)
     label_prop_colors = colors_from_sets(label_prop_guessed)
-    save_graph_as_img(G, label_prop_colors, f"{output_path}_label_prop.png", pos=pos)
+    # save_graph_as_img(G, label_prop_colors, f"{output_path}_label_prop.png", pos=pos)
     scores['label_prop'] = _evaluate_prediction(G, colors, label_prop_guessed)
 
-    return scores
+    _colors = {
+        "random": random_colors,
+        "greedy": greedy_colors,
+        "louvain": louvain_colors,
+        "label_prop": label_prop_colors
+    }
+
+    return scores, _colors
 
 def _evaluate_prediction(G: nx.Graph, colors: dict, guessed_communities: list) -> dict[str, float]:
     target = { com: colors[com] for com in G.nodes if com in colors }
