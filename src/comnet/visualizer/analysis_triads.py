@@ -92,9 +92,15 @@ def closed_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str
     for u, v in exceptions:
         G[u][v].update(exc=True)
 
+    unbalanced_nodes = []
+
     for u, v, w in nx.all_triangles(G):
         if 'exc' not in G[u][v] and 'exc' not in G[v][w] and 'exc' not in G[w][u]:
-            n_pos[G[u][v]['pos'] + G[v][w]['pos'] + G[w][u]['pos']] += 1
+            triad_type = G[u][v]['pos'] + G[v][w]['pos'] + G[w][u]['pos']
+            if triad_type in [0, 2]:
+                unbalanced_nodes.append((u, v, w))
+
+            n_pos[triad_type] += 1
             continue
         
         uv_opt = (G[u][v]['pos'],) if 'exc' not in G[u][v] else (0, 1)
@@ -102,9 +108,13 @@ def closed_triad_types(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str
         wu_opt = (G[w][u]['pos'],) if 'exc' not in G[w][u] else (0, 1)
 
         for uv, vw, wu in itertools.product(uv_opt, vw_opt, wu_opt):
-            n_pos[uv + vw + wu] += 1
+            triad_type = uv + vw + wu
+            if triad_type in [0, 2]:
+                unbalanced_nodes.append((u, v, w))
+            n_pos[triad_type] += 1
 
-    return n_pos, exceptions
+
+    return n_pos, exceptions, unbalanced_nodes
 
 
 def _get_exceptions(edges_pos: set[tuple[str, str]], edges_neg: set[tuple[str, str]]) -> list[tuple[str, str]]:

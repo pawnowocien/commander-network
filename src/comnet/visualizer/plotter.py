@@ -161,9 +161,13 @@ def _save_single_community_stat(measure_name: str, scores: list[tuple[float, str
     labels = [s[1] for s in scores]
 
     assert labels == ["random", "greedy", "louvain", "label_prop"]
+    labels = ["Random", "Clauset-Newman-Moore", "Louvain", "Label Propagation"]
+
     colors = ['slategray', 'goldenrod', 'royalblue', 'brown']
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(6, 5))
+
+
 
     ax.bar(labels, values, color=colors)
     ax.set_xlabel('Detection Method')
@@ -174,6 +178,25 @@ def _save_single_community_stat(measure_name: str, scores: list[tuple[float, str
     fig.savefig(output_file)
     plt.close()
 
+
+def make_community_pie_chart(community: set, com_to_country: dict[str, str], country_to_color: dict[str, str], ax):
+    country_counts = {}
+    for com in community:
+        country = com_to_country.get(com, "Unknown")
+        country_counts[country] = country_counts.get(country, 0) + 1
+
+    labels_orig = list(country_counts.keys())
+    sizes = list(country_counts.values())
+    colors = [country_to_color.get(label, "gray") for label in labels_orig]
+
+    total = sum(sizes)
+    legend_labels = [f"{label} ({size/total * 100:.1f}%)" for label, size in zip(labels_orig, sizes)]
+
+    wedges, texts = ax.pie(sizes, colors=colors, startangle=140)
+    
+    ax.legend(wedges, legend_labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), frameon=False, fontsize=16)
+    
+    ax.axis('equal')
 
 
 def save_triad_stats(stats: dict[int, int], output_file: str):
@@ -200,7 +223,7 @@ def save_triad_stats(stats: dict[int, int], output_file: str):
         colors = ['firebrick', 'indianred', 'yellowgreen', 'forestgreen']
 
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(4, 5))
 
     _sum = sum(new_stats.values())
     frac_values = [v / _sum for v in new_stats.values()]
@@ -218,12 +241,36 @@ def save_triad_stats(stats: dict[int, int], output_file: str):
     plt.close()
 
 
+def make_unbalanced_pie_chart(unbalanced_nodes: list[tuple[str, str, str]], com_to_country: dict[str, str], country_to_color: dict[str, str], output_file: str):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
+    country_counts = {}
+    for u, v, w in unbalanced_nodes:
+        countries = {com_to_country.get(u, "Unknown"), com_to_country.get(v, "Unknown"), com_to_country.get(w, "Unknown")}
+        for country in countries:
+            country_counts[country] = country_counts.get(country, 0) + 1
+    
+    total = sum(country_counts.values())
 
+    sorted_counts = dict(sorted(country_counts.items(), key=lambda item: item[1], reverse=True))
 
+    labels_orig = list(sorted_counts.keys())
+    sizes = list(sorted_counts.values())
+    colors = [country_to_color.get(label, "gray") for label in labels_orig]
 
+    legend_labels = [f"{label} ({size/total * 100:.1f}%)" for label, size in zip(labels_orig, sizes)]
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
 
+    wedges = ax.pie(sizes, startangle=140, colors=colors)[0]
+    ax.legend(wedges, legend_labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), frameon=False, fontsize=16)
+    ax.axis('equal')
 
+    plt.suptitle(f"Unbalanced Nodes by Country", fontsize=20)
+
+    plt.tight_layout()
+    fig.savefig(output_file, bbox_inches='tight')
+    plt.close(fig)
 
 
 def save_centrality_stats(stats: list[tuple[float, str]], com_to_country: dict[str, str], country_to_col: dict[str, str], output_file: str, name: str):

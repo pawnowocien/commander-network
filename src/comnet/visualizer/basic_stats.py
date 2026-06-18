@@ -1,9 +1,16 @@
 import networkx as nx
+from networkx.algorithms import community
 
 def analyze_basic_stats(G: nx.Graph, com_to_country: dict[str, str]):
     n_nodes = G.number_of_nodes()
     n_edges = G.number_of_edges()
     density = float(nx.density(G))
+    communities = {country: set() for country in set(com_to_country.values())}
+    for node in G.nodes():
+        country = com_to_country.get(node, "Unknown")
+        communities[country].add(node)
+
+    modularity = community.modularity(G, communities.values())
 
     components = list(nx.connected_components(G))
 
@@ -30,6 +37,7 @@ def analyze_basic_stats(G: nx.Graph, com_to_country: dict[str, str]):
         "n_nodes": n_nodes,
         "n_edges": n_edges,
         "density": density,
+        "modularity": modularity,
         "n_components": n_components,
         "three_largest_components": three_largest_components,
         "avg_component_size": avg_component_size,

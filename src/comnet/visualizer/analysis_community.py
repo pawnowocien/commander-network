@@ -91,10 +91,12 @@ def _run_analysis(G: nx.Graph, colors_countries: dict,
 
     return scores
 
-def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> tuple[dict[str, dict[str, float]], dict[str, dict]]:
+def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> tuple[dict[str, dict[str, float]], dict[str, dict], dict[str, list[set]]]:
     n_communities = len(set(colors.values()))
 
     scores = {}
+
+    communities = {}
 
     random_guessed = [set() for _ in range(n_communities)]
     for node in G.nodes:
@@ -102,21 +104,25 @@ def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> t
     random_colors = colors_from_sets(random_guessed)
     # save_graph_as_img(G, random_colors, f"{output_path}_random.png", pos=pos)
     scores['random'] = _evaluate_prediction(G, colors, random_guessed)
+    communities['random'] = random_guessed
 
     greedy_guessed = nx.community.greedy_modularity_communities(G)
     greedy_colors = colors_from_sets(greedy_guessed)
     # save_graph_as_img(G, greedy_colors, f"{output_path}_greedy.png", pos=pos)
     scores['greedy'] = _evaluate_prediction(G, colors, greedy_guessed)
+    communities['greedy'] = greedy_guessed
 
     louvain_guessed = nx.community.louvain_communities(G, seed=42)
     louvain_colors = colors_from_sets(louvain_guessed)
     # save_graph_as_img(G, louvain_colors, f"{output_path}_louvain.png", pos=pos)
     scores['louvain'] = _evaluate_prediction(G, colors, louvain_guessed)
+    communities['louvain'] = louvain_guessed
 
-    label_prop_guessed = nx.community.label_propagation_communities(G)
+    label_prop_guessed = list(nx.community.label_propagation_communities(G))
     label_prop_colors = colors_from_sets(label_prop_guessed)
     # save_graph_as_img(G, label_prop_colors, f"{output_path}_label_prop.png", pos=pos)
     scores['label_prop'] = _evaluate_prediction(G, colors, label_prop_guessed)
+    communities['label_prop'] = label_prop_guessed
 
     _colors = {
         "random": random_colors,
@@ -125,7 +131,7 @@ def run_predictions(G: nx.Graph, colors: dict, pos: dict, output_path: str) -> t
         "label_prop": label_prop_colors
     }
 
-    return scores, _colors
+    return scores, _colors, communities
 
 def _evaluate_prediction(G: nx.Graph, colors: dict, guessed_communities: list) -> dict[str, float]:
     target = { com: colors[com] for com in G.nodes if com in colors }
@@ -133,7 +139,8 @@ def _evaluate_prediction(G: nx.Graph, colors: dict, guessed_communities: list) -
     conf_matrix = _pair_conf_matrix(target, pred)
     return {
         "accuracy": _pair_accuracy(conf_matrix),
-        "f1_score": _pairwise_f1(conf_matrix)
+        "f1_score": _pairwise_f1(conf_matrix),
+        "modularity": nx.community.modularity(G, guessed_communities)
     }
 
 def _pair_conf_matrix(target: dict, pred: dict) -> ConfMatrix:
