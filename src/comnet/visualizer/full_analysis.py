@@ -2,6 +2,7 @@ import os
 
 from matplotlib import pyplot as plt
 import networkx as nx
+import json
 
 from comnet.visualizer.analysis_centrality import run_centrality_analysis
 from comnet.visualizer.analysis_community import run_predictions
@@ -10,6 +11,7 @@ from comnet.visualizer.const import VIZ_DIR
 from comnet.visualizer.plotter import make_plot_on_ax, save_centrality_stats, save_communities_stats, save_graph_as_img, save_triad_stats
 from comnet.visualizer.utils import get_com_to_col, remove_small_components
 from comnet.config import pipeline_type
+from comnet.visualizer.basic_stats import analyze_basic_stats
 
 
 def do_full_analysis(allies_edges: set[tuple[str, str, int]], enemies_edges: set[tuple[str, str, int]], com_to_country, country_to_col):
@@ -19,13 +21,30 @@ def do_full_analysis(allies_edges: set[tuple[str, str, int]], enemies_edges: set
 
     G_allies = nx.Graph()
     G_allies.add_weighted_edges_from(allies_edges)
+    
 
     G_full = nx.Graph()
     G_full.add_weighted_edges_from(allies_edges)
     G_full.add_weighted_edges_from(enemies_edges)
 
+    # Basic stats before cutting small components
+
+    _save_basic_stats(G_allies, com_to_country, name="coop")
+    _save_basic_stats(G_full, com_to_country, name="all")
+
+
     G_allies, pos_allies = _show_and_cut(G_allies, com_to_country, country_to_col, name="coop")
     G_full, pos_full = _show_and_cut(G_full, com_to_country, country_to_col, name="all")
+
+    # Basic stats
+
+    _save_basic_stats(G_allies, com_to_country, name="coop_cut")
+    _save_basic_stats(G_full, com_to_country, name="all_cut")
+
+    basic_stats_dir = f"{VIZ_DIR}basic_stats/"
+    all_paths = (f"{basic_stats_dir}all_stats.json", f"{basic_stats_dir}all_cut_stats.json")
+    coop_paths = (f"{basic_stats_dir}coop_stats.json", f"{basic_stats_dir}coop_cut_stats.json")
+    _create_latex_table(all_paths, coop_paths)
 
 
     # Community detection
@@ -108,3 +127,57 @@ def _do_centrality_analysis(G: nx.Graph, com_to_country: dict[str, str], country
         sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
         save_centrality_stats(list((d[1], d[0]) for d in sorted_scores),
                               com_to_country, country_to_col, f"{VIZ_DIR}centrality/{name}_{centrality}.png", name=centrality)
+
+
+def _save_basic_stats(G: nx.Graph, com_to_country: dict[str, str], name: str):
+    stats = analyze_basic_stats(G, com_to_country)
+    os.makedirs(f"{VIZ_DIR}basic_stats/", exist_ok=True)
+
+    with open(f"{VIZ_DIR}basic_stats/{name}_stats.json", "w", encoding="utf-8") as f:
+        json.dump(stats, f, indent=4)
+
+
+def _create_latex_table(all_paths: tuple[str, str], coop_paths: tuple[str, str]):
+    """(all_stats_path, all_cut_stats_path), (coop_stats_path, coop_cut_stats_path)"""
+
+    all_stats = [None, None]
+    coop_stats = [None, None]
+    with open(all_paths[0], "r", encoding="utf-8") as f:
+        all_stats[0] = json.load(f)
+    with open(all_paths[1], "r", encoding="utf-8") as f:
+        all_stats[1] = json.load(f)
+
+    with open(coop_paths[0], "r", encoding="utf-8") as f:
+        coop_stats[0] = json.load(f)
+    with open(coop_paths[1], "r", encoding="utf-8") as f:
+        coop_stats[1] = json.load(f)
+
+    combined_dict = {}
+
+    for key in all_stats[0].keys():
+        combined_dict[key] = [all_stats[0][key], coop_stats[0][key], all_stats[1][key], coop_stats[1][key]]
+
+
+    latex_string = ""
+    keys_to_show = [("n_nodes", "nodes"), ("n_edges", "edges"), ("density", "density"),
+                    ("n_components", "components"), ("avg_component_size", "compavg"), ("std_component_size", "compstd"), ("median_component_size", "compmed"),
+                    ("n_countries", "countries"), ("avg_country_size", "countryavg"), ("std_country_size", "countrystd"), ("median_country_size", "countrymed")]
+
+    for key, name in keys_to_show:
+        values = combined_dict[key]
+        values_formatted = []
+        for v in values:
+            if isinstance(v, float):
+                if key == "density":
+                    values_formatted.append(f"{v:.4f}")
+                else:
+                    values_formatted.append(f"{v:.2f}")
+            else:
+                values_formatted.append(str(v))
+                
+        lst = " & ".join(values_formatted)
+
+        latex_string += f"  {name} = {{ {lst} }}, \n"
+
+    latex_string = f"\\networktable{{,\n{latex_string}}}"
+    print(latex_string)
