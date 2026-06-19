@@ -21,11 +21,11 @@ from comnet.config import pipeline_type
 dict_setup = {
     "ww1": {
         "norm_country": NORMALIZE_COUNTRY_NAME_WW1,
-        "country_to_color": COUNTRY_TO_COLOR_WW1
+        "country_to_color": COUNTRY_TO_COLOR_WW1,
     },
     "ww2": {
         "norm_country": NORMALIZE_COUNTRY_NAME_WW2,
-        "country_to_color": COUNTRY_TO_COLOR_WW2
+        "country_to_color": COUNTRY_TO_COLOR_WW2,
     }
 }
 

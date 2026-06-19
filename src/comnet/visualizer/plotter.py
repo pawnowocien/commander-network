@@ -1,11 +1,17 @@
+from collections.abc import Mapping
+import itertools
 import os
+from typing import Any
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as clr
 import networkx as nx
 
+from comnet.shared.dicts.marshals_dict import HIGH_RANKED, HIGH_RANKED_SET
 from comnet.visualizer.const import VIZ_DIR
 from comnet.visualizer.utils import get_com_to_col
+from sklearn.metrics import roc_curve, auc
+from comnet.config import pipeline_type
 
 
 def make_plot_on_ax(G, ax, colors = None, show_labels: bool = False, pos=None, weights=False, title: str | None = None):
@@ -223,7 +229,7 @@ def save_triad_stats(stats: dict[int, int], output_file: str):
         colors = ['firebrick', 'indianred', 'yellowgreen', 'forestgreen']
 
 
-    fig, ax = plt.subplots(figsize=(4, 5))
+    fig, ax = plt.subplots(figsize=(3, 3))
 
     _sum = sum(new_stats.values())
     frac_values = [v / _sum for v in new_stats.values()]
@@ -276,10 +282,10 @@ def make_unbalanced_pie_chart(unbalanced_nodes: list[tuple[str, str, str]], com_
 def save_centrality_stats(stats: list[tuple[float, str]], com_to_country: dict[str, str], country_to_col: dict[str, str], output_file: str, name: str):
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-    values = [s[0] for s in stats[:20]][::-1]
-    labels = [s[1] for s in stats[:20]][::-1]
+    values = [s[0] for s in stats[:10]][::-1]
+    labels = [s[1] for s in stats[:10]][::-1]
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(6, 4))
 
     colors = [get_com_to_col({label: com_to_country.get(label, "Unknown")}, country_to_col).get(label, "gray") for label in labels]
     ax.barh(labels, values, color=colors)
@@ -289,6 +295,43 @@ def save_centrality_stats(stats: list[tuple[float, str]], com_to_country: dict[s
     ax.set_xlabel(f'Centrality Score')
     ax.set_ylabel('Commander')
     ax.set_title(f'{name.capitalize()} Centrality')
+
+    for tick_label in ax.get_yticklabels():
+        if tick_label.get_text() in HIGH_RANKED:
+            tick_label.set_fontweight('bold')
+    
+
+    plt.tight_layout()
+    fig.savefig(output_file)
+    plt.close()
+
+def save_centrality_roc_chart(measures: dict[str, Mapping[Any, float]], output_file: str, name: str):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+    fig, ax = plt.subplots(figsize=(6, 4)) # Made it slightly taller for ROC standard square-ish look
+
+    colors = ['royalblue', 'darkorange', 'forestgreen', 'crimson', 'purple', 'teal', 'goldenrod', 'darkred']
+
+    for i, (measure_name, scores_dict) in enumerate(measures.items()):
+        y_true = [1 if node_id in HIGH_RANKED_SET else 0 for node_id in scores_dict.keys()]
+        y_scores = list(scores_dict.values())
+
+        fpr, tpr, thresholds = roc_curve(y_true, y_scores)
+        roc_auc = auc(fpr, tpr)
+
+        ax.plot(fpr, tpr, lw=2, color=colors[i % len(colors)], label=f'{measure_name.capitalize()} (AUC = {roc_auc:.3f})')
+
+
+    ax.plot([0, 1], [0, 1], color='gray', lw=2, linestyle='--')
+
+    ax.set_xlim((0.0, 1.0))
+    ax.set_ylim((0.0, 1.05))
+    ax.set_xlabel('False Positive Rate (Incorrectly Flagged Non-Targets)')
+    ax.set_ylabel('True Positive Rate (Correctly Found High-Command)')
+    ax.set_title(f'ROC Curve: Centrality Measures ({pipeline_type.upper()}, {name})')
+    
+    ax.grid(True, linestyle='--', alpha=0.6)
+    ax.legend(loc="lower right")
 
     plt.tight_layout()
     fig.savefig(output_file)

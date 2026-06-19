@@ -1,6 +1,9 @@
+from collections.abc import Mapping
+from typing import Any
+
 import networkx as nx
 
-def run_centrality_analysis(G: nx.Graph) -> dict[str, dict[str, float]]:
+def run_centrality_analysis(G: nx.Graph) -> dict[str, Mapping[Any, float]]:
     degree_centrality = nx.degree_centrality(G)
     closeness_centrality = nx.closeness_centrality(G)
     harmonic_centrality = nx.harmonic_centrality(G)

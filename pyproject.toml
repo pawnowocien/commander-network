@@ -18,7 +18,8 @@ dependencies = [
     "pytest",
     "matplotlib",
     "networkx",
-    "scipy"
+    "scipy",
+    "scikit-learn"
 ]
 
 [project.scripts]

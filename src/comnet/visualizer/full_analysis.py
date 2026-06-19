@@ -8,7 +8,7 @@ from comnet.visualizer.analysis_centrality import run_centrality_analysis
 from comnet.visualizer.analysis_community import run_predictions
 from comnet.visualizer.analysis_triads import closed_triad_types, open_triad_types
 from comnet.visualizer.const import VIZ_DIR
-from comnet.visualizer.plotter import make_community_pie_chart, make_plot_on_ax, make_unbalanced_pie_chart, save_centrality_stats, save_communities_stats, save_graph_as_img, save_triad_stats
+from comnet.visualizer.plotter import make_community_pie_chart, make_plot_on_ax, make_unbalanced_pie_chart, save_centrality_roc_chart, save_centrality_stats, save_communities_stats, save_graph_as_img, save_triad_stats
 from comnet.visualizer.utils import get_com_to_col, remove_small_components
 from comnet.config import pipeline_type
 from comnet.visualizer.basic_stats import analyze_basic_stats
@@ -167,6 +167,9 @@ def _do_centrality_analysis(G: nx.Graph, com_to_country: dict[str, str], country
         sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
         save_centrality_stats(list((d[1], d[0]) for d in sorted_scores),
                               com_to_country, country_to_col, f"{VIZ_DIR}centrality/{name}_{centrality}.png", name=centrality)
+    
+    save_centrality_roc_chart(centrality_scores, f"{VIZ_DIR}centrality/{name}_roc_chart.png", name=name)   
+
 
 
 def _save_basic_stats(G: nx.Graph, com_to_country: dict[str, str], name: str):

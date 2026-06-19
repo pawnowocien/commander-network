@@ -42,11 +42,14 @@ NORMALIZE_COUNTRY_NAME = {
     **{ k: "Thailand"                   for k in ["Thailand"] },
     **{ k: "United States"              for k in ["United States", "USA", "United States of America", "US"] },
     **{ k: "Vichy France"               for k in ["Vichy France"] },
+
+    **{ k: "Serbia"       for k in ["Flag of Serbian State Guard.svg"] },
+
     **{ k: "Yugoslavia"                 for k in ["Chetniks", "Chetniks Flag.svg", "Communist Party of Yugoslavia Flag-cyr (1920–1952).svg", 
                                             "Kingdom of Yugoslavia", "Yugoslav Partisans", "Yugoslav Partisans flag (1942-1945).svg", 
                                             "Flag of the Serbian Partisans.svg", "Flag of the Slovene Partisans.svg",
                                             "Democratic Federal Yugoslavia", "Flag of Yugoslavia (1943–1946).svg",
-                                            "Flag of Serbian State Guard.svg",] },
+                                            ] },
 
     **{ k: "Slovenia"                    for k in ["Flag of the Slovene Home Guard.svg"] },
     **{ k: "Montenegro"                  for k in ["Flag of the Principality of Montenegro.svg"] },
@@ -95,7 +98,7 @@ COUNTRY_TO_COLOR = {
     "Malayan Union":            "#7A7DAD",
     "Manchukuo":                "#c08a58",
     "Mengjiang":                "#daac82",
-    "Montenegro":                "#b38aff",
+    "Montenegro":               "#b38aff",
     "Netherlands":              "#a38e48",
     "New Zealand":              "#7a2432",
     "Norway":                   "#4E3C3C",
@@ -109,6 +112,7 @@ COUNTRY_TO_COLOR = {
     "Soviet Union":             "#640000",
     "Thailand":                 "#a78e6e",
     "United States":            "#5fbce7",
+    "Serbia":                   "#529782",
     "Yugoslavia":               "#1d1e4e",
     "Vichy France":             "#26415a",
 

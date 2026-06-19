@@ -104,4 +104,15 @@ COMPLEX_NAME_DICT = {
     "Eugen von Schobert Horia Macellariu": "Eugen von Schobert", # also a hack
 
     "Wolfram Freiherr von Richthofen": "Wolfram von Richthofen",
+
+   "John H. D. Cunningham": "John H. D. Cunningham",
+    "John Cunningham (Royal Navy officer)": "John H. D. Cunningham",
+
+    "Walther von Reichenau": "Walter von Reichenau",
+    "Walther von Reichenau#Second World War": "Walter von Reichenau",
+    "Walter von Reichenau": "Walter von Reichenau",
+
+    "William Halsey(3rd Fleet)": "William Halsey Jr.",
+    "William Halsey": "William Halsey Jr.",
+    "William Halsey Jr.": "William Halsey Jr.",
 }
